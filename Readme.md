@@ -1,4 +1,4 @@
-# <IntegrationProjectCLOUDYPI >
+# <IntegrationProjectCLOUDYPI>
 
 ## Description ☁️☁️
 
@@ -17,7 +17,7 @@ Our academic project consists of 3 phases:
 How do I run the application?
 
     1. Installation command: npm install
-    
+
     2. Execution command: npm run serve (for Backend) and ng serve (for Frontend)
 
 ## Credits
