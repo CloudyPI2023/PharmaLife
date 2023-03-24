@@ -1,6 +1,7 @@
 package tn.esprit.Services;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.Entities.Reclamation;
 import tn.esprit.Entities.User;
@@ -11,7 +12,10 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ReclamationService implements IReclamationService {
+    @Autowired
     ReclamationRepository reclamationRepository;
+    @Autowired
+
     UserRepository userRepository;
 
 
@@ -24,9 +28,8 @@ public class ReclamationService implements IReclamationService {
 
     @Override
     public Reclamation addReclamation(Reclamation r) {
-       // User currentUser=reclamationRepository.getReclamationByIdUser(1);
-       // User currentUser=userRepository.findById(1).get();
-        //r.setUserProduct(currentUser);
+        User currentUser=reclamationRepository.getReclamationByIdUser(1);
+        r.setUserProduct(currentUser);
         reclamationRepository.save(r);
         return r;
     }

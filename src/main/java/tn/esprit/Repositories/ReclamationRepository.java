@@ -12,8 +12,8 @@ import java.util.List;
 
 @Repository
 public interface ReclamationRepository extends JpaRepository<Reclamation,Integer> {
-   /* @Query("SELECT r FROM Reclamation r WHERE r.userProduct =:user")
-    User getReclamationByIdUser(@Param("user") User user);*/
+    @Query("SELECT r FROM Reclamation r WHERE r.idUser =:user")
+    User getReclamationByIdUser(@Param("user") int user);
 
 
 

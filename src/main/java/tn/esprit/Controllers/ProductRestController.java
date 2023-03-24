@@ -1,20 +1,24 @@
 package tn.esprit.Controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.Entities.Gift;
 import tn.esprit.Entities.Product;
 import tn.esprit.Services.IGiftService;
 import tn.esprit.Services.IProductService;
+import tn.esprit.Services.ProductService;
 
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/product")
 public class ProductRestController {
-    IProductService productService;
+    @Autowired
+    ProductService productService;
 
     @GetMapping("/all-products")
     public List<Product> getAllProducts(){
+
         return productService.retrieveAllProducts();
     }
 

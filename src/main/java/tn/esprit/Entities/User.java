@@ -49,5 +49,4 @@ public class User implements Serializable {
     private Set<Product> ProductsUser;
 
 
-
 }
