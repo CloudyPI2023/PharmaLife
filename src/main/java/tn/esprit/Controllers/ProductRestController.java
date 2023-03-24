@@ -9,7 +9,7 @@ import tn.esprit.Services.IProductService;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/Product")
+@RequestMapping("/product")
 public class ProductRestController {
     IProductService productService;
 

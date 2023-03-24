@@ -24,9 +24,9 @@ public class ReclamationService implements IReclamationService {
 
     @Override
     public Reclamation addReclamation(Reclamation r) {
-        //User currentUser=reclamationRepository.getReclamationByIdUser(1);
-        User currentUser=userRepository.findById(1).get();
-        r.setUserProduct(currentUser);
+       // User currentUser=reclamationRepository.getReclamationByIdUser(1);
+       // User currentUser=userRepository.findById(1).get();
+        //r.setUserProduct(currentUser);
         reclamationRepository.save(r);
         return r;
     }
