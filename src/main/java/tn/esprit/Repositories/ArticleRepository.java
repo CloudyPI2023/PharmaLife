@@ -1,4 +1,4 @@
 package tn.esprit.Repositories;
 
-public class ArticleRepository {
+public interface ArticleRepository {
 }
