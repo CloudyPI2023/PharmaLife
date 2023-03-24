@@ -25,6 +25,5 @@ public class Category implements Serializable {
     private String DescriptionCategory;
 
 
-    @OneToMany(mappedBy="categoryProduct")
-    private Set<Product> ProductsCategory;
+
 }

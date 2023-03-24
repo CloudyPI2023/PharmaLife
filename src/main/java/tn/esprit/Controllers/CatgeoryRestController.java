@@ -2,6 +2,7 @@ package tn.esprit.Controllers;
 
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.Entities.Category;
+import tn.esprit.Services.CategoryService;
 import tn.esprit.Services.ICategoryService;
 import tn.esprit.Services.IProductService;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/Category")
 public class CatgeoryRestController {
-   ICategoryService categoryService;
+   CategoryService categoryService;
 
     @GetMapping("/all-categories")
     public List<Category> getAllCategories(){

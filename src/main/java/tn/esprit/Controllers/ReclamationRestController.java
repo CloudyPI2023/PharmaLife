@@ -1,8 +1,10 @@
 package tn.esprit.Controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.Entities.Reclamation;
 import tn.esprit.Services.IReclamationService;
+import tn.esprit.Services.ReclamationService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,7 +12,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/Reclamation")
 public class ReclamationRestController {
-    IReclamationService reclamationService;
+    @Autowired
+    ReclamationService reclamationService;
     @GetMapping("/all-reclamations")
     public List<Reclamation> getAllReclamtions(){
         return reclamationService.retrieveAllReclamations();

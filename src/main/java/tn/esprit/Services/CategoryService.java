@@ -1,6 +1,7 @@
 package tn.esprit.Services;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.Entities.Category;
 import tn.esprit.Repositories.CategoryRepository;
@@ -9,6 +10,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class CategoryService implements ICategoryService {
+    @Autowired
     CategoryRepository categoryRepository;
     @Override
     public List<Category> retrieveAllCategories() {

@@ -1,6 +1,7 @@
 package tn.esprit.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,12 +17,11 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table( name = "User")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idUser")
-    private Integer idUser;
+
+    private int idUser;
     private String FirstName;
     private String LastName;
     private String Email;
@@ -46,6 +46,7 @@ public class User implements Serializable {
 
 
     @OneToMany(mappedBy="userProduct")
+
     private Set<Product> ProductsUser;
 
 

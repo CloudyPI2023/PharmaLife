@@ -9,6 +9,7 @@ public class PharmaLifeApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PharmaLifeApplication.class, args);
+
     }
 
 }

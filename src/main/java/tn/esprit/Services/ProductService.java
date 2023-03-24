@@ -31,7 +31,7 @@ public class ProductService implements IProductService{
 
     @Override
     public Product retrieveProduct(Integer idProduct) {
-        return productRepository.findById(idProduct).get();
+        return productRepository.findById(idProduct).orElse(null);
     }
 
     @Override
