@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,11 +27,11 @@ public class Reclamation implements Serializable {
     private LocalDate DateReclamation;
     //NoSQL
     private Integer idUser;
-
+    @ManyToOne
+    User userProduct;
 
     @ManyToOne
     Product product;
-
 
 
 }
