@@ -1,8 +1,10 @@
 package tn.esprit.Controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.Entities.Category;
 import tn.esprit.Entities.Gift;
+import tn.esprit.Services.GiftService;
 import tn.esprit.Services.ICategoryService;
 import tn.esprit.Services.IGiftService;
 
@@ -13,7 +15,8 @@ import java.util.List;
 @RequestMapping("/Gift")
 
 public class GiftRestController {
-    IGiftService giftService;
+    @Autowired
+    GiftService giftService;
 
     @GetMapping("/all-gifts")
     public List<Gift> getAllGifts(){
