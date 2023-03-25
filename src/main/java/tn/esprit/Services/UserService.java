@@ -28,7 +28,6 @@ public class UserService implements IUserService {
 
     @Override
     public List<User> getUsers() {
-       // return userRepository.findAll(Sort.by(Sort.Direction.DESC, "firstName"));
        return userRepository.findAll();
     }
 

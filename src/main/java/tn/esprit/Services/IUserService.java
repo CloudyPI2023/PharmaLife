@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface IUserService {
 
-   //  public void saveUser(User user);
 
     User findByEmail(String email);
 

@@ -5,6 +5,7 @@ import javax.validation.constraints.*;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table( name = "User")
+@CrossOrigin
 public class User implements Serializable{
 
     @Id

@@ -24,70 +24,61 @@ public class UserRestController {
     IUserService userService;
 
 
-      // http://localhost:8082/PharmaLife/user/addUser
-     @PostMapping("/addUser")
+     @PostMapping("/add-User")
      public User addUser(@RequestBody User u) {
        User user = userService.addUser(u);
        return user;
      }
 
 
-  // http://localhost:8082/PharmaLife/user/AllUsers
-  @GetMapping("/AllUsers")
+  @GetMapping("/all-Users")
     @ResponseBody
     public ResponseEntity<List<User>> getUsers(){
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
 
-  // http://localhost:8082/PharmaLife/user/findUserByEmail/{email}
-  @GetMapping("/findUserByEmail/{email}")
+  @GetMapping("/retrieve-UserByEmail/{emailUser}")
     @ResponseBody
-    public User findByEmail(@PathVariable("email") String email){
-        return userService.findByEmail(email);
+    public User findByEmail(@PathVariable("emailUser") String emailUser){
+        return userService.findByEmail(emailUser);
     }
 
 
-  // http://localhost:8082/PharmaLife/user/getUserById/{id}
-  @GetMapping("/getUserById/{id}")
+  @GetMapping("/retrieve-User/{idUser}")
   @ResponseBody
-  public User findById(@PathVariable("id") Integer id){
-    return userService.findById(id);
+  public User findById(@PathVariable("idUser") Integer idUser){
+    return userService.findById(idUser);
   }
 
 
-  // http://localhost:8082/PharmaLife/user/deleteUser/{id}
-  @DeleteMapping("/deleteUser/{id}")
+  @DeleteMapping("/delete-User/{idUser}")
   @ResponseBody
-  public void deleteUserById(@PathVariable("id") Integer id){
-    userService.deleteUserById(id);
+  public void deleteUserById(@PathVariable("idUser") Integer idUser){
+    userService.deleteUserById(idUser);
   }
 
 
-  // http://localhost:8082/PharmaLife/user/updateUser
-    @PutMapping("/updateUser")
+    @PutMapping("/update-User")
     @ResponseBody
     public void updateUser(@RequestBody User user) {
         userService.updateUser(user);
     }
 
-  // http://localhost:8082/PharmaLife/user/findByFirstNameContains/{firstName}
-  @GetMapping("/findByFirstNameContains/{firstName}")
+  @GetMapping("/find-ByFirstNameContains/{firstName}")
     @ResponseBody
     public List<User> findByFirstNameContains(@PathVariable("firstName") String firstName){
         return userService.findByFirstNameContains(firstName);
     }
 
 
-  // http://localhost:8082/PharmaLife/user/findByRole/{role}
-  @GetMapping("/findByRole/{role}")
+  @GetMapping("/find-ByRole/{role}")
     @ResponseBody
     public List<User> getRole(@PathVariable("role") Role role){
         return userService.getRole(role);
     }
 
 
-  // http://localhost:8082/PharmaLife/user/countRole
   @GetMapping("/countRole")
     @ResponseBody
     public List<Object[]> countTotalUsersByRole(){
