@@ -46,8 +46,7 @@ public class User implements Serializable {
 
 
     @OneToMany(mappedBy="userProduct")
-
+    @JsonIgnore
     private Set<Product> ProductsUser;
-
 
 }

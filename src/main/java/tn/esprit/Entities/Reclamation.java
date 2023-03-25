@@ -29,8 +29,8 @@ public class Reclamation implements Serializable{
     //NoSQL
     private Integer idUser;
     private Integer idProduct;
-
     @ManyToOne(cascade = CascadeType.ALL)
+    //@JsonIgnore
     private User userProduct;
 
     @ManyToOne(cascade = CascadeType.ALL)
