@@ -11,6 +11,7 @@ import tn.esprit.Repositories.ReclamationRepository;
 import tn.esprit.Repositories.UserRepository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -44,6 +45,7 @@ public class ReclamationService implements IReclamationService {
             Product rec_product = productOptional.get();
             r.setUserProduct(currentUser);
             r.setProduct(rec_product);
+            r.setDateReclamation(LocalDate.now());
             reclamationRepository.save(r);
             return r;
         } else {
