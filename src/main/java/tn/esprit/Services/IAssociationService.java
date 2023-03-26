@@ -10,7 +10,7 @@ public interface IAssociationService {
     Association updateAssociation (Association a);
     void deleteAssociation (Integer idAssociation);
 
-    Association retrieveAssociation(Integer idAssociation);
+    Association RetrieveAssociation(Integer idAssociation);
     List<Association> retrieveAllAssociations();
 
 }

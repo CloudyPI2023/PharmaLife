@@ -40,7 +40,7 @@ public class AssociationRestController {
     }
 
     @GetMapping("/retrieveAssociation/{id_association}")
-    public Association retrieveAssociation(@PathVariable("id_association")Integer IdAssociation){
-        return iAssociationService.retrieveAssociation(IdAssociation);
+    public Association RetrieveAssociation(@PathVariable("id_association")Integer IdAssociation){
+        return iAssociationService.RetrieveAssociation(IdAssociation);
     }
 }

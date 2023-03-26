@@ -33,7 +33,7 @@ public class AssociationService implements IAssociationService {
     }
 
     @Override
-    public Association retrieveAssociation(Integer idAssociation) {
+    public Association RetrieveAssociation(Integer idAssociation) {
         return associationRepository.findById(idAssociation).get();
     }
 }
