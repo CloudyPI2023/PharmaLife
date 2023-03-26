@@ -37,7 +37,7 @@ public class DonationService implements IDonationService {
         return (List<Donation>) donationRepository.findAll();
     }
 
-    public Donation retrieveDonation(Integer idDonation) {
+    public Donation RetrieveDonation(Integer idDonation) {
         return donationRepository.findById(idDonation).get();
     }
 

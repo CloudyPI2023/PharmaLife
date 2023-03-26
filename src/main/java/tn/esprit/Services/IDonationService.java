@@ -10,7 +10,7 @@ public interface IDonationService {
     Donation updateDonation (Donation d);
     void deleteDonation (Integer idDonation);
 
-    Donation retrieveDonation(Integer idDonation);
+    Donation RetrieveDonation(Integer idDonation);
     List<Donation> retrieveAllDonations();
 
 

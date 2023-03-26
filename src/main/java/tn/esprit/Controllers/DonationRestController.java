@@ -37,7 +37,7 @@ public class DonationRestController {
 
     @GetMapping("/retrieveDonation/{id_donation}")
     public Donation retrieveDonation(@PathVariable("id_donation")Integer IdDonation){
-        return iDonationService.retrieveDonation(IdDonation);
+        return iDonationService.RetrieveDonation(IdDonation);
     }
 
 }
