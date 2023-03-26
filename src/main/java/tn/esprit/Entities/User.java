@@ -1,6 +1,7 @@
 package tn.esprit.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +40,7 @@ public class User implements Serializable {
     private Set<Reservation> ReservationsUser;
 
     @OneToMany(mappedBy="userDonation")
+
     private Set<Donation> DonationsUser;
 
     @OneToMany(mappedBy="userArticle")

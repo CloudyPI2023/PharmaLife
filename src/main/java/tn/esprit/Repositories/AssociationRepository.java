@@ -1,4 +1,7 @@
 package tn.esprit.Repositories;
 
-public class AssociationRepository {
+import org.springframework.data.repository.CrudRepository;
+import tn.esprit.Entities.Association;
+
+public interface AssociationRepository extends CrudRepository<Association,Integer> {
 }
