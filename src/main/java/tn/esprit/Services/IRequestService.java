@@ -8,7 +8,7 @@ public interface IRequestService {
 
     Request addRequest (Request r);
     void cancelRequest (Integer idRequest);
-    Request retrieveRequest(Integer idRequest);
+    Request RetrieveRequest(Integer idRequest);
 
     List<Request> retrieveAllRequests();
 

@@ -32,7 +32,7 @@ public class RequestService implements IRequestService {
     }
 
     @Override
-    public Request retrieveRequest(Integer idRequest) {
+    public Request RetrieveRequest(Integer idRequest) {
         return requestRepository.findById(idRequest).get();
     }
 }

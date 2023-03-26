@@ -33,6 +33,6 @@ public class RequestRestController {
 
     @GetMapping("/retrieveRequest/{id_request}")
     public Request retrieveRequest(@PathVariable("id_request")Integer IdRequest){
-        return iRequestService.retrieveRequest(IdRequest);
+        return iRequestService.RetrieveRequest(IdRequest);
     }
 }
