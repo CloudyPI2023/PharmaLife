@@ -1,11 +1,9 @@
 package tn.esprit.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +14,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 public class Product implements Serializable {
 
@@ -29,6 +28,8 @@ public class Product implements Serializable {
     private Float PriceProduct;
     private Integer QuantityProduct;
     private Integer AvailabilityProduct;
+
+
     private LocalDate ExpirationDateProduct;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,6 +40,7 @@ public class Product implements Serializable {
     private Category categoryProduct;
 
     @ManyToOne
+    @JsonIgnore
     private Gift giftProduct;
 
     @OneToMany(mappedBy="product")
@@ -46,5 +48,6 @@ public class Product implements Serializable {
     private Set<Reclamation> ReclamationsProduct;
 
     @OneToMany(mappedBy="productComment")
+
     private Set<Comment> CommentProduct;
 }

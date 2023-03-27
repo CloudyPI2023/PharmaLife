@@ -11,7 +11,7 @@ import tn.esprit.Services.ProductService;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/Product")
 public class ProductRestController {
     @Autowired
     ProductService productService;

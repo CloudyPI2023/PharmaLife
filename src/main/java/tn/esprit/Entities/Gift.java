@@ -1,6 +1,8 @@
 package tn.esprit.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +24,15 @@ public class Gift implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idGift")
     private Integer idGift;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "M-d-yyyy")
     private LocalDate BeginsAtGift;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "M-d-yyyy")
     private LocalDate EndsAtGift;
     //NoSQL
     private Integer idUser;
+    private Integer idProduct;
 
-    @OneToMany(mappedBy="giftProduct")
+    @OneToMany(mappedBy="giftProduct",cascade = CascadeType.REMOVE)
     private Set<Product> ProductsGift;
 
 

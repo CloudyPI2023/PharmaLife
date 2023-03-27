@@ -1,5 +1,6 @@
 package tn.esprit.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,7 @@ public class Category implements Serializable {
     private String DescriptionCategory;
 
 
-
+    @OneToMany(mappedBy="categoryProduct",cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    private Set<Product> ProductsCategory;
 }

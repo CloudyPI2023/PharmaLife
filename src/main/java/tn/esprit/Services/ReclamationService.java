@@ -2,6 +2,7 @@ package tn.esprit.Services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import tn.esprit.Entities.Product;
 import tn.esprit.Entities.Reclamation;
@@ -41,11 +42,14 @@ public class ReclamationService implements IReclamationService {
         Optional<Product> productOptional = productRepository.findById(r.getIdProduct());
 
         if (userOptional.isPresent() && productOptional.isPresent()) {
-            User currentUser = userOptional.get();
-            Product rec_product = productOptional.get();
-            r.setUserProduct(currentUser);
-            r.setProduct(rec_product);
-            r.setDateReclamation(LocalDate.now());
+                User currentUser = userOptional.get();
+                Product rec_product = productOptional.get();
+                r.setUserProduct(currentUser);
+                r.setProduct(rec_product);
+                r.setDateReclamation(LocalDate.now());
+            if(currentUser.getIdUser()==r.getIdUser()){
+                throw new DuplicateKeyException("reclamation already exists with the same user");
+            }
             reclamationRepository.save(r);
             return r;
         } else {
