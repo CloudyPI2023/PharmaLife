@@ -20,8 +20,8 @@ public class Association implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idAssocation")
-    private int idAssocation;
+    @Column(name="idAssociation")
+    private int idAssociation;
     private String AssociationName;
     private String AdressAssociation;
     private String EmailAssocation;
