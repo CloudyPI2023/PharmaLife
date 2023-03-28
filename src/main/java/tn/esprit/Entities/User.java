@@ -95,7 +95,7 @@ public class User implements Serializable, UserDetails {
 
 
     @NotNull(message = "Password cannot be empty")
-    @Length(min = 7,max=50, message = "Password should be atleast 7 characters long")
+    @Length(min = 7, message = "Password should be atleast 7 characters long")
     @Column(nullable=false)
     private String password;
 
@@ -134,7 +134,21 @@ public class User implements Serializable, UserDetails {
     private Set<Product> ProductsUser;
 
 
+///constructeur
+public User(String firstName, String lastName, String email, String phoneNumber, LocalDate birthDate, String address, String city, String password, Role role, Gender gender) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
+    this.birthDate = birthDate;
+    this.address = address;
+    this.city = city;
+    this.password = password;
+    this.role = role;
+    this.gender = gender;
+}
 
+    //
 
 
     @Override

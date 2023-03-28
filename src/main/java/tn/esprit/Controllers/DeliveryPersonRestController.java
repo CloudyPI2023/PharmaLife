@@ -14,6 +14,7 @@ import java.util.List;
 @Tag(name = "Delivery Person management")
 @RequestMapping("/DeliveryPerson")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class DeliveryPersonRestController {
 
    IDeliveryPersonService deliveryPersonService;

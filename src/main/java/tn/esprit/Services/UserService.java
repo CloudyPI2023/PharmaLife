@@ -6,13 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tn.esprit.Entities.Role;
 import tn.esprit.Entities.User;
+import tn.esprit.Registration.Token.ConfirmationToken;
+import tn.esprit.Registration.Token.ConfirmationTokenService;
 import tn.esprit.Repositories.UserRepository;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -22,6 +27,8 @@ public class UserService implements IUserService, UserDetailsService {
     private final static String USER_NOT_FOUND_MSG =
             "user with email %s not found";
 
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ConfirmationTokenService confirmationTokenService;
      @Autowired
     private final UserRepository userRepository;
 
@@ -92,5 +99,43 @@ public class UserService implements IUserService, UserDetailsService {
                 .orElseThrow(() ->
                         new UsernameNotFoundException(
                                 String.format(USER_NOT_FOUND_MSG, email)));
+    }
+
+    public String signUpUser(User u){
+        boolean userExists = userRepository
+                .findByEmail(u.getEmail())
+                .isPresent();
+
+        if(userExists){
+            throw new IllegalStateException("Email already taken");
+        }
+        String encodedPassword = bCryptPasswordEncoder
+                .encode(u.getPassword());
+
+        u.setPassword(encodedPassword);
+
+        userRepository.save(u);
+
+        String  token = UUID.randomUUID().toString();
+        // TODO : send confirmation token
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                u
+        );
+
+
+        confirmationTokenService.saveConfirmationToken(
+                confirmationToken
+        );
+
+        //TODO: SEND EMAIL
+        return token;
+
+    }
+
+    public int enableUser(String email) {
+        return userRepository.enableUser(email);
     }
 }

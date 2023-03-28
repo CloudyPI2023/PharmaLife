@@ -1,9 +1,13 @@
-package tn.esprit.registration;
+package tn.esprit.Registration;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import tn.esprit.Entities.Gender;
+import tn.esprit.Entities.Role;
+
+import java.time.LocalDate;
 
 @Getter
 @ToString
@@ -15,4 +19,12 @@ public class RegistrationRequest {
     private final String lastName;
     private final String email;
     private final String password;
+    private final String phoneNumber;
+    private final String address;
+    private final String city;
+    private final Role role;
+    private final Gender gender;
+    private final LocalDate birthDate;
+
+
 }

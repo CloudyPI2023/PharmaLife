@@ -24,6 +24,14 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByFirstNameContains(String firstName);
 
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE User a " +
+            "SET a.enabled = TRUE WHERE a.email = ?1")
+    int enableUser(String email);
+
+
+
     @Query(value="select u from User u WHERE u.role like :x")
     public List<User> getRole(@Param("x")Role role);
 
