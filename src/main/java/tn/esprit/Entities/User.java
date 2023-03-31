@@ -93,12 +93,10 @@ public class User implements Serializable, UserDetails {
     @Column(nullable=false)
     private String city;
 
-
     @NotNull(message = "Password cannot be empty")
     @Length(min = 7, message = "Password should be atleast 7 characters long")
     @Column(nullable=false)
     private String password;
-
 
 
     @CreationTimestamp
@@ -134,6 +132,7 @@ public class User implements Serializable, UserDetails {
     private Set<Product> ProductsUser;
 
 
+
 ///constructeur
 public User(String firstName, String lastName, String email, String phoneNumber, LocalDate birthDate, String address, String city, String password, Role role, Gender gender) {
     this.firstName = firstName;
@@ -149,8 +148,6 @@ public User(String firstName, String lastName, String email, String phoneNumber,
 }
 
     //
-
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority =

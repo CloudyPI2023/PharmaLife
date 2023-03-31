@@ -19,7 +19,7 @@ import java.util.List;
 @Tag(name = "User management")
 @RequestMapping("/user")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin("*")
 public class UserRestController {
 
     IUserService userService;

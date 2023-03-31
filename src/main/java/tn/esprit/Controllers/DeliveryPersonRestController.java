@@ -14,13 +14,12 @@ import java.util.List;
 @Tag(name = "Delivery Person management")
 @RequestMapping("/DeliveryPerson")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin("*")
 public class DeliveryPersonRestController {
 
    IDeliveryPersonService deliveryPersonService;
 
-
-    @PostMapping("Add-DeliveryPerson")
+    @PostMapping("add-DeliveryPerson")
     public DeliveryPerson addUser(@RequestBody DeliveryPerson dp) {
         DeliveryPerson deliveryPerson = deliveryPersonService.addDeliveryPerson(dp);
         return dp;

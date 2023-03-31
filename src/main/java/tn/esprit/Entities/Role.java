@@ -6,5 +6,4 @@ public enum Role {
     Patient,
     AssociationMember,
     DrugsProvider
-
 }
