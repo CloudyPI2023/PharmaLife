@@ -1,5 +1,6 @@
 package tn.esprit.Services;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import tn.esprit.Entities.Role;
 import tn.esprit.Entities.User;
 
@@ -26,4 +27,11 @@ public interface IUserService {
 
     List<Object[]> countTotalUsersByRole();
 
-}
+    UserDetails loadUserByUsername(String email);
+
+    String signUpUser(User u);
+
+    int enableUser(String email);
+
+
+    }

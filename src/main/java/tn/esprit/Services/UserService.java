@@ -2,7 +2,9 @@ package tn.esprit.Services;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,12 +18,12 @@ import tn.esprit.Repositories.UserRepository;
 
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService implements IUserService, UserDetailsService {
 
     private final static String USER_NOT_FOUND_MSG =
@@ -35,6 +37,7 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public User addUser(User u) {
+        u.setPassword(bCryptPasswordEncoder.encode(u.getPassword()));
         userRepository.save(u);
         return u;
     }
@@ -92,15 +95,39 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
 
-    @Override
+  /*  @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
         return userRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new UsernameNotFoundException(
                                 String.format(USER_NOT_FOUND_MSG, email)));
-    }
+    }*/
+  @Override
+  public UserDetails loadUserByUsername(String email)
+          throws UsernameNotFoundException {
+      User user = userRepository.findByEmail(email).orElse(null);;
+      if(user == null){
+          throw new UsernameNotFoundException("User not found in the database");
 
+      }if(!user.isEnabled()) {
+          throw new UsernameNotFoundException("You need To Confirm your email");
+      }else{
+          log.info("User found in the database: {}", email);
+      }
+      List<SimpleGrantedAuthority> authorities = getUserAuthority(user.getRole().name());
+      System.out.println(user.getUsername());
+
+      return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(), authorities);    }
+
+     private List<SimpleGrantedAuthority> getUserAuthority(String userRoles) {
+        Set<SimpleGrantedAuthority> roles = new HashSet<SimpleGrantedAuthority>();
+
+        roles.add(new SimpleGrantedAuthority(userRoles));
+        List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>(roles);
+        return grantedAuthorities;
+
+  }
     public String signUpUser(User u){
         boolean userExists = userRepository
                 .findByEmail(u.getEmail())
