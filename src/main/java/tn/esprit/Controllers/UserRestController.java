@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @Tag(name = "User management")
-@RequestMapping("/user")
+@RequestMapping("/User")
 @AllArgsConstructor
 @CrossOrigin("*")
 public class UserRestController {
