@@ -29,32 +29,23 @@ public class GiftService implements IGiftService{
 
     @Override
     public Gift addGift(Gift g) {
-       /*Optional<Product> productOptional=productRepository.findById(g.getIdProduct());
-       Optional <User> userOptional=userRepository.findById(g.getIdUser());
-       Set<Product> setprod=null;
-       if(productOptional.isPresent()&&userOptional.isPresent()){
-           User currentUser=userOptional.get();
-           Product rec_product=productOptional.get();
-           productRepository.save(rec_product);
-           setprod.add(rec_product);
+        Optional<User> userOptional = userRepository.findById(g.getIdUser());
+        Optional<Product> productOptional = productRepository.findById(g.getIdProduct());
+        System.out.println("id produittt"+g.getIdProduct());
 
-           g.setProductsGift(setprod);
-           g.setBeginsAtGift(LocalDate.now());*/
+        if(userOptional.isPresent()&& productOptional.isPresent()){
+            User usergift=userOptional.get();
+            Product productgift=productOptional.get();
 
-       /* if(g.getEndsAtGift().compareTo(g.getBeginsAtGift())<0){
-            throw new RuntimeException("Ending date should be bigger than beginning date");
-        }*/
-        g.setBeginsAtGift(LocalDate.now());
-        for (Product p : g.getProductsGift()) {
-            p.setQuantityProduct(p.getQuantityProduct()-1);
+           // g.setProductsGift( productgift);
+            g.setUserGift(usergift);
+            giftRepository.save(g);
+            return g;
+        }else{
+            throw new NoSuchElementException("User or product not found.");
         }
-        giftRepository.save(g);
-        return g;
-       }
-       /*else {
-           throw new NoSuchElementException("User or product not found.");
-       }
-    }*/
+
+    }
 
     @Override
     public Gift updateGift(Gift g) {

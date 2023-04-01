@@ -5,7 +5,8 @@ import tn.esprit.Entities.Product;
 import java.util.List;
 
 public interface IProductService {
-    List<Product> retrieveAllProducts();
+    List<Product> retrieveAllProductsFront();
+    List<Product> retrieveAllProductsBack();
 
     Product addProduct(Product p);
 

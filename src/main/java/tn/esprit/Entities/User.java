@@ -49,4 +49,9 @@ public class User implements Serializable {
     @JsonIgnore
     private Set<Product> ProductsUser;
 
+    @OneToMany(mappedBy="userGift")
+    @JsonIgnore
+    private Set<Gift> GiftsUser;
+
+
 }

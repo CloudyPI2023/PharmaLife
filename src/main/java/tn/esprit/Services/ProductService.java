@@ -15,7 +15,11 @@ public class ProductService implements IProductService{
     @Autowired
     ProductRepository productRepository;
     @Override
-    public List<Product> retrieveAllProducts() {
+    public List<Product> retrieveAllProductsBack() {
+        return productRepository.findAll();
+    }
+    @Override
+    public List<Product> retrieveAllProductsFront() {
         List<Product> allProducts=productRepository.findAll();
         List<Product> finalProducts=new ArrayList<>();
         for (Product oneProduct:allProducts) {
@@ -26,6 +30,8 @@ public class ProductService implements IProductService{
         }
         return finalProducts;
     }
+
+
 
     @Override
     public Product addProduct(Product p) {

@@ -2,6 +2,8 @@ package tn.esprit.Services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import tn.esprit.Entities.Product;
@@ -26,6 +28,8 @@ public class ReclamationService implements IReclamationService {
     UserRepository userRepository;
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    SendEmailReclamationService sendEmailReclamationService;
 
 
     //BACK
@@ -51,6 +55,11 @@ public class ReclamationService implements IReclamationService {
                 throw new DuplicateKeyException("reclamation already exists with the same user");
             }
             reclamationRepository.save(r);
+           sendEmailReclamationService.sendEmail(currentUser.getEmail(),"Reclamation for product"+rec_product.getNameProduct(),
+                   "Dear "+currentUser.getFirstName()+currentUser.getLastName()+"\n"+"Thank you for bringing to our attention the issue you are having with "+rec_product.getNameProduct()+"product \n" +
+                           " We apologize for any inconvenience this may have caused you.\n"+
+                           "We have received your reclamation and we are currently investigating the matter. Our team is working diligently to resolve the issue as quickly as possible.\n"+
+                           "PharmaLife cloudypi");
             return r;
         } else {
             throw new NoSuchElementException("User or product not found.");

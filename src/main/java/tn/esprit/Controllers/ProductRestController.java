@@ -16,10 +16,15 @@ public class ProductRestController {
     @Autowired
     ProductService productService;
 
-    @GetMapping("/all-products")
-    public List<Product> getAllProducts(){
+    @GetMapping("/all-productsFront")
+    public List<Product> getAllProductsFront(){
 
-        return productService.retrieveAllProducts();
+        return productService.retrieveAllProductsFront();
+    }
+    @GetMapping("/all-productsBack")
+    public List<Product> getAllProductsBack(){
+
+        return productService.retrieveAllProductsBack() ;
     }
 
     @PostMapping("/add-product")
