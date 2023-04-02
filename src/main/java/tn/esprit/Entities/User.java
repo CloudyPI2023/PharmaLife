@@ -40,8 +40,10 @@ public class User implements Serializable {
     private Set<Reservation> ReservationsUser;
 
     @OneToMany(mappedBy="userDonation")
-
     private Set<Donation> DonationsUser;
+
+    @OneToMany(mappedBy="userAssociation")
+    private Set<Association> AssociationsUser;
 
     @OneToMany(mappedBy="userArticle")
     private Set<Article> ArticleUser;
