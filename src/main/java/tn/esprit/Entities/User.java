@@ -114,6 +114,7 @@ public class User implements Serializable, UserDetails {
     private Role role;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable=false)
     private Gender gender;
 
 
