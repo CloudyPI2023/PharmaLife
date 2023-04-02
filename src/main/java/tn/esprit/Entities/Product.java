@@ -39,9 +39,7 @@ public class Product implements Serializable {
     @ManyToOne
     private Category categoryProduct;
 
-    @ManyToOne
-    @JsonIgnore
-    private Gift giftProduct;
+
 
     @OneToMany(mappedBy="product")
     @JsonIgnore

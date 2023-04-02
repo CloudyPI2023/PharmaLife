@@ -28,16 +28,20 @@ public class GiftService implements IGiftService{
     }
 
     @Override
-    public Gift addGift(Gift g) {
+    public Gift addGift(Gift g,List<Integer> listid) {
         Optional<User> userOptional = userRepository.findById(g.getIdUser());
-        Optional<Product> productOptional = productRepository.findById(g.getIdProduct());
-        System.out.println("id produittt"+g.getIdProduct());
+        Set<Product> prodset=null;
+        System.out.println("lissteee"+listid);
 
-        if(userOptional.isPresent()&& productOptional.isPresent()){
+        if(userOptional.isPresent()){
             User usergift=userOptional.get();
-            Product productgift=productOptional.get();
-
-           // g.setProductsGift( productgift);
+            for(Integer id:listid) {
+                Product pr=productRepository.findById(id).get();
+                System.out.println(pr);
+                prodset.add(pr);
+                System.out.println("set win"+prodset);
+            }
+            g.setProductsGift(prodset);
             g.setUserGift(usergift);
             giftRepository.save(g);
             return g;

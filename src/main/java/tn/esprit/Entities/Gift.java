@@ -2,6 +2,7 @@ package tn.esprit.Entities;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,8 +32,9 @@ public class Gift implements Serializable {
     private Integer idUser;
     private Integer idProduct;
 
-    @OneToMany(mappedBy="giftProduct",cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE)
     private Set<Product> ProductsGift;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     //@JsonIgnore

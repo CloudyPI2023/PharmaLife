@@ -7,7 +7,7 @@ import java.util.List;
 public interface IGiftService {
     List<Gift> retrieveAllGifts();
 
-    Gift addGift(Gift g);
+    Gift addGift(Gift g,List<Integer> listid);
 
     Gift updateGift (Gift g);
 

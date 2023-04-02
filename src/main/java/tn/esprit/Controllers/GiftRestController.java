@@ -23,9 +23,9 @@ public class GiftRestController {
         return giftService.retrieveAllGifts();
     }
 
-    @PostMapping("/add-gift")
-    public Gift addGift(@RequestBody Gift g){
-        return giftService.addGift(g);
+    @PostMapping("/add-gift/{id}")
+    public Gift addGift(@RequestBody Gift g,@PathVariable("id") List<Integer> listid){
+        return giftService.addGift(g,listid);
     }
 
     @GetMapping("/retrieve-gift/{idGift}")
