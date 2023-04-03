@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/associations")
+@CrossOrigin("*")
 public class AssociationRestController {
     IAssociationService iAssociationService;
 
