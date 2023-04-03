@@ -30,8 +30,7 @@ public class User implements Serializable {
     private String Adress;
     private String City;
     private String Password;
-    private Boolean IsVerified;
-    private String Token;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
