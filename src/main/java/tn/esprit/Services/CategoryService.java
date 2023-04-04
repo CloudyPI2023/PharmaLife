@@ -5,14 +5,36 @@ import org.springframework.stereotype.Service;
 import tn.esprit.Entities.Category;
 import tn.esprit.Repositories.CategoryRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @AllArgsConstructor
 public class CategoryService implements ICategoryService {
     CategoryRepository categoryRepository;
+    //back
     @Override
     public List<Category> retrieveAllCategories() {
-        return categoryRepository.findAll();
+        List<Category> categoryList=categoryRepository.findAll();
+        List<Category> lisst=new ArrayList<>();
+        for (Category c: categoryList) {
+            if(c.isArchived()){
+                lisst.add(c);
+            }
+
+        }
+        return lisst;
+    }
+    @Override
+    public List<Category> retrieveAllCategoriesArchived() {
+        List<Category> categoryList=categoryRepository.findAll();
+        List<Category> lisst=new ArrayList<>();
+        for (Category c: categoryList) {
+            if(!c.isArchived()){
+                lisst.add(c);
+            }
+
+        }
+        return lisst;
     }
 
     @Override
@@ -36,5 +58,11 @@ public class CategoryService implements ICategoryService {
     public void deleteCategory(Integer idCategory) {
         categoryRepository.deleteById(idCategory);
 
+    }
+    @Override
+    public Category setArchivedCategory(Category c){
+        c.setArchived(false);
+        categoryRepository.save(c);
+        return c;
     }
 }

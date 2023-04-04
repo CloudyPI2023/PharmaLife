@@ -14,4 +14,6 @@ public interface ICategoryService {
     Category retrieveCategory (Integer idCategory);
 
     void deleteCategory( Integer idACategory);
+     Category setArchivedCategory(Category c);
+     List<Category> retrieveAllCategoriesArchived();
 }

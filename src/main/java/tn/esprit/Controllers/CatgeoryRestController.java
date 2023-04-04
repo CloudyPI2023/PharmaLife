@@ -20,6 +20,10 @@ public class CatgeoryRestController {
     public List<Category> getAllCategories(){
         return categoryService.retrieveAllCategories();
     }
+    @GetMapping("/all-categoriesArchived")
+    public List<Category> retrieveAllCategoriesArchived(){
+        return categoryService.retrieveAllCategoriesArchived();
+    }
 
     @PostMapping("/add-category")
     public Category addCategory(@RequestBody Category c){
@@ -39,5 +43,11 @@ public class CatgeoryRestController {
     public void deleteCategory(@PathVariable("idCategory") Integer idCategory){
         categoryService.deleteCategory(idCategory);
     }
+
+    @PutMapping("/archive-category")
+    public Category setArchivedCategory(@RequestBody Category c){
+        return categoryService.setArchivedCategory(c);
+    }
+
 
 }

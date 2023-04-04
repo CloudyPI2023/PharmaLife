@@ -24,6 +24,7 @@ public class Category implements Serializable {
     private Integer idCategory;
     private String NameCategory;
     private String DescriptionCategory;
+    private boolean archived;
 
 
     @OneToMany(mappedBy="categoryProduct",cascade = CascadeType.REMOVE)
