@@ -48,6 +48,10 @@ public class CatgeoryRestController {
     public Category setArchivedCategory(@RequestBody Category c){
         return categoryService.setArchivedCategory(c);
     }
+    @PutMapping("/cancel-archive-category")
+    public Category setCancelArchivedCategory(@RequestBody Category c){
+        return categoryService.setCancelArchivedCategory(c);
+    }
 
 
 }

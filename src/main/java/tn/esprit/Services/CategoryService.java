@@ -39,6 +39,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Category addCategory(Category c) {
+        c.setArchived(true);
          categoryRepository.save(c);
         return c;
     }
@@ -62,6 +63,12 @@ public class CategoryService implements ICategoryService {
     @Override
     public Category setArchivedCategory(Category c){
         c.setArchived(false);
+        categoryRepository.save(c);
+        return c;
+    }
+    @Override
+    public Category setCancelArchivedCategory(Category c){
+        c.setArchived(true);
         categoryRepository.save(c);
         return c;
     }

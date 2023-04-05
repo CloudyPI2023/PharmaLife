@@ -44,6 +44,7 @@ public class ReclamationService implements IReclamationService {
     public Reclamation addReclamation(Reclamation r) {
         Optional<User> userOptional = userRepository.findById(r.getIdUser());
         Optional<Product> productOptional = productRepository.findById(r.getIdProduct());
+        List<Reclamation> reclamationList=reclamationRepository.findAll();
 
         if (userOptional.isPresent() && productOptional.isPresent()) {
                 User currentUser = userOptional.get();
@@ -51,12 +52,17 @@ public class ReclamationService implements IReclamationService {
                 r.setUserProduct(currentUser);
                 r.setProduct(rec_product);
                 r.setDateReclamation(LocalDate.now());
-            if(currentUser.getIdUser()==r.getIdUser()){
-                throw new DuplicateKeyException("reclamation already exists with the same user");
+            for (Reclamation re: reclamationList
+                 ) {
+                if(re.getUserProduct().getIdUser()==currentUser.getIdUser()){
+                    throw new DuplicateKeyException("reclamation already exists with the same user");
+                }
+
             }
+
             reclamationRepository.save(r);
-           sendEmailReclamationService.sendEmail(currentUser.getEmail(),"Reclamation for product"+rec_product.getNameProduct(),
-                   "Dear "+currentUser.getFirstName()+currentUser.getLastName()+"\n"+"Thank you for bringing to our attention the issue you are having with "+rec_product.getNameProduct()+"product \n" +
+           sendEmailReclamationService.sendEmail(currentUser.getEmail(),"RECLAMATION FOR PRODUCT "+rec_product.getNameProduct(),
+                   "Dear "+currentUser.getFirstName()+" "+currentUser.getLastName()+"\n"+"Thank you for bringing to our attention the issue you are having with << "+rec_product.getNameProduct()+" >> product \n" +
                            " We apologize for any inconvenience this may have caused you.\n"+
                            "We have received your reclamation and we are currently investigating the matter. Our team is working diligently to resolve the issue as quickly as possible.\n"+
                            "PharmaLife cloudypi");
