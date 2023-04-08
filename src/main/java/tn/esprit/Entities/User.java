@@ -108,7 +108,6 @@ public class User implements Serializable, UserDetails {
     private Boolean enabled = false;
 
 
-
     @Enumerated(EnumType.STRING)
     @Column(nullable=false)
     private Role role;

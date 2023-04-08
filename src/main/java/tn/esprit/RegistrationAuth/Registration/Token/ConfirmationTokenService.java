@@ -1,4 +1,4 @@
-package tn.esprit.Registration.Token;
+package tn.esprit.RegistrationAuth.Registration.Token;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

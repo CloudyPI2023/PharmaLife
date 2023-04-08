@@ -13,6 +13,8 @@ import tn.esprit.Entities.User;
 import tn.esprit.Repositories.UserRepository;
 import tn.esprit.Services.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -24,7 +26,7 @@ public class UserRestController {
 
     IUserService userService;
 
-
+     //@RolesAllowed("Admin")
      @PostMapping("/add-User")
      public User addUser(@RequestBody User u) {
        User user = userService.addUser(u);

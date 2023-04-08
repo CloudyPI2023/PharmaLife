@@ -1,4 +1,4 @@
-package tn.esprit.Registration.Token;
+package tn.esprit.RegistrationAuth.Registration.Token;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

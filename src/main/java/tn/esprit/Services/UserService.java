@@ -12,8 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tn.esprit.Entities.Role;
 import tn.esprit.Entities.User;
-import tn.esprit.Registration.Token.ConfirmationToken;
-import tn.esprit.Registration.Token.ConfirmationTokenService;
+import tn.esprit.RegistrationAuth.Registration.Token.ConfirmationToken;
+import tn.esprit.RegistrationAuth.Registration.Token.ConfirmationTokenService;
 import tn.esprit.Repositories.UserRepository;
 
 

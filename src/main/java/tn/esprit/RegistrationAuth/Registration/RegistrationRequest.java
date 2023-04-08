@@ -1,4 +1,4 @@
-package tn.esprit.Registration;
+package tn.esprit.RegistrationAuth.Registration;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

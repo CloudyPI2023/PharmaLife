@@ -1,4 +1,4 @@
-package tn.esprit.Registration;
+package tn.esprit.RegistrationAuth;
 
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package tn.esprit.Registration;
+package tn.esprit.RegistrationAuth;
 
 public class MessageResponse {
     private String message;

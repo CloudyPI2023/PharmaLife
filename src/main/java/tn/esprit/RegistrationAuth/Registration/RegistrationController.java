@@ -1,19 +1,22 @@
-package tn.esprit.Registration;
+package tn.esprit.RegistrationAuth.Registration;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.RegistrationAuth.MessageResponse;
 import tn.esprit.Repositories.UserRepository;
-import tn.esprit.Registration.MessageResponse;
 
 @RestController
 @RequestMapping(path="/registration")
 @AllArgsConstructor
+@CrossOrigin("*")
 public class RegistrationController {
 
     private RegistrationService registrationService;
     private final UserRepository userRepository;
+
+
+
     @PostMapping
     public ResponseEntity<?> register(@RequestBody RegistrationRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
@@ -32,5 +35,7 @@ public class RegistrationController {
     public String confirm(@RequestParam("token") String token) {
         return registrationService.confirmToken(token);
     }
+
+
 
 }

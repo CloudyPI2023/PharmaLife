@@ -1,11 +1,12 @@
-package tn.esprit.Registration;
+package tn.esprit.RegistrationAuth.Registration;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.Email.EmailSender;
 import tn.esprit.Entities.User;
-import tn.esprit.Registration.Token.ConfirmationToken;
-import tn.esprit.Registration.Token.ConfirmationTokenService;
+import tn.esprit.RegistrationAuth.EmailValidator;
+import tn.esprit.RegistrationAuth.Registration.Token.ConfirmationToken;
+import tn.esprit.RegistrationAuth.Registration.Token.ConfirmationTokenService;
 import tn.esprit.Services.UserService;
 
 import javax.transaction.Transactional;
