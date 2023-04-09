@@ -108,7 +108,7 @@ public class RegistrationService {
 
         );
         passwordTokenRepository.save(resetToken);
-        String front = "http://localhost:4201/reset?token=" + token + "&email=" + email;
+        String front = "http://localhost:4201/resetPassword?token=" + token + "&email=" + email;
         System.out.println(token);
         String link = "http://localhost:8082/registration/forgetPassword/" + email;
         emailSender.send(email, buildEmailReset("User", link, front));
@@ -272,8 +272,7 @@ public class RegistrationService {
                 "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name
                 + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Thank you for calling us. "
                 + "Please click on the below link to reset your password: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\">"
-                + "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Activate Now</a> </p>"
-                + "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + front + "\">go to front Now</a> </p>"
+                + "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + front + "\">Change Now !</a> </p>"
                 + "</blockquote>\n Link will expire in 15 minutes. <p>See you soon</p>" +
                 "        \n" +
                 "      </td>\n" +

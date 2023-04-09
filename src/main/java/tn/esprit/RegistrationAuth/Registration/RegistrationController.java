@@ -45,7 +45,7 @@ public class RegistrationController {
         temp.put("token", registrationService.forgetpassword(email));
         return temp;
     }
-    @GetMapping("/reset/{token}/{email}/{password}")
+    @GetMapping("/resetPassword/{token}/{email}/{password}")
     public Map<String, String> reset(@PathVariable("token") String token,@PathVariable("email") String email,@PathVariable("password") String password) {
         Map<String, String> temp = new HashMap<String, String>();
         temp.put("token", registrationService.resetPassword(token,email,password));
