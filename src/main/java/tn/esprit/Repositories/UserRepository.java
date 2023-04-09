@@ -31,11 +31,18 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     int enableUser(String email);
 
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE User a " + "SET a.password = ?1 WHERE a.email = ?2")
+    void resetPassword(String password,String email);
+
 
     @Query(value="select u from User u WHERE u.role like :x")
     public List<User> getRole(@Param("x")Role role);
 
     @Query("SELECT c.role, COUNT(c.role) FROM User AS c GROUP BY c.role ORDER BY c.role DESC")
     List<Object[]> countTotalUsersByRole();
+
+
 
 }

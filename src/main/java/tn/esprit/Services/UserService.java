@@ -128,20 +128,38 @@ public class UserService implements IUserService, UserDetailsService {
         return grantedAuthorities;
 
   }
-    public String signUpUser(User u){
+    public String signUpUser(User appUser){
         boolean userExists = userRepository
-                .findByEmail(u.getEmail())
+                .findByEmail(appUser.getEmail())
                 .isPresent();
 
         if(userExists){
-            throw new IllegalStateException("Email already taken");
+            //
+            //throw new IllegalStateException("email already taken");
+            User u = userRepository.findByEmail(appUser.getEmail()).orElse(null);
+            if(u.isEnabled()==false){
+                userRepository.save(u);
+                String token = UUID.randomUUID().toString();
+
+                ConfirmationToken confirmationToken = new ConfirmationToken(
+                        token,
+                        LocalDateTime.now(),
+                        LocalDateTime.now().plusMinutes(15),
+                        u
+
+                );
+                confirmationTokenService.saveConfirmationToken(confirmationToken);
+                return " Your email is already taken";
+            }else{
+                return "email taken";
+            }
         }
         String encodedPassword = bCryptPasswordEncoder
-                .encode(u.getPassword());
+                .encode(appUser.getPassword());
 
-        u.setPassword(encodedPassword);
+        appUser.setPassword(encodedPassword);
 
-        userRepository.save(u);
+        userRepository.save(appUser);
 
         String  token = UUID.randomUUID().toString();
         // TODO : send confirmation token
@@ -149,7 +167,7 @@ public class UserService implements IUserService, UserDetailsService {
                 token,
                 LocalDateTime.now(),
                 LocalDateTime.now().plusMinutes(15),
-                u
+                appUser
         );
 
 
