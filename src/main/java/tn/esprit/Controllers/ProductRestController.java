@@ -21,10 +21,15 @@ public class ProductRestController {
 
         return productService.retrieveAllProductsFront();
     }
-    @GetMapping("/all-productsBack")
-    public List<Product> getAllProductsBack(){
+    @GetMapping("/all-productsExpired")
+    public List<Product> retrieveAllProductsExpired(){
 
-        return productService.retrieveAllProductsBack() ;
+        return productService.retrieveAllProductsExpired() ;
+    }
+    @GetMapping("/all-productsNoyExpired")
+    public List<Product> retrieveAllProductsNotExpired(){
+
+        return productService.retrieveAllProductsNotExpired() ;
     }
 
     @PostMapping("/add-product")

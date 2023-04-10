@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface IProductService {
     List<Product> retrieveAllProductsFront();
-    List<Product> retrieveAllProductsBack();
+    List<Product> retrieveAllProductsExpired();
+    List<Product> retrieveAllProductsNotExpired();
 
     Product addProduct(Product p);
 

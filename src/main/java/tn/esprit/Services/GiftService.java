@@ -30,7 +30,7 @@ public class GiftService implements IGiftService{
     @Override
     public Gift addGift(Gift g,List<Integer> listid) {
         Optional<User> userOptional = userRepository.findById(g.getIdUser());
-        Set<Product> prodset=null;
+        List<Product> prodList= new ArrayList<>();
         System.out.println("lissteee"+listid);
 
         if(userOptional.isPresent()){
@@ -38,10 +38,10 @@ public class GiftService implements IGiftService{
             for(Integer id:listid) {
                 Product pr=productRepository.findById(id).get();
                 System.out.println(pr);
-                prodset.add(pr);
-                System.out.println("set win"+prodset);
+                prodList.add(pr);
+                System.out.println("set win"+prodList);
             }
-            g.setProductsGift(prodset);
+            g.setProductsGift(prodList);
             g.setUserGift(usergift);
             giftRepository.save(g);
             return g;

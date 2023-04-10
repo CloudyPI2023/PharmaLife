@@ -15,8 +15,28 @@ public class ProductService implements IProductService{
     @Autowired
     ProductRepository productRepository;
     @Override
-    public List<Product> retrieveAllProductsBack() {
-        return productRepository.findAll();
+    public List<Product> retrieveAllProductsExpired() {
+        List<Product> allprod=productRepository.findAll();
+        List<Product> prodExpired=new ArrayList<>();
+        for (Product p:allprod
+             ) {
+            if(p.getExpirationDateProduct().compareTo(LocalDate.now())<0) {
+                prodExpired.add(p);
+            }
+        }
+        return prodExpired;
+    }
+    @Override
+    public List<Product> retrieveAllProductsNotExpired() {
+        List<Product> allprod=productRepository.findAll();
+        List<Product> prodNotExpired=new ArrayList<>();
+        for (Product p:allprod
+        ) {
+            if(p.getExpirationDateProduct().compareTo(LocalDate.now())>0) {
+                prodNotExpired.add(p);
+            }
+        }
+        return prodNotExpired;
     }
     @Override
     public List<Product> retrieveAllProductsFront() {

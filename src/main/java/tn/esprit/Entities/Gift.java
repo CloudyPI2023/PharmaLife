@@ -11,6 +11,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -33,7 +34,7 @@ public class Gift implements Serializable {
     private Integer idProduct;
 
     @OneToMany(cascade = CascadeType.REMOVE)
-    private Set<Product> ProductsGift;
+    private List<Product> ProductsGift;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
