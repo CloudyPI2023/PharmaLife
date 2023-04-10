@@ -62,7 +62,7 @@ public class ReclamationService implements IReclamationService {
         List<Reclamation> listeRec= reclamationRepository.findAll();
         List<Reclamation> myRec=new ArrayList<>();
         for (Reclamation r:listeRec) {
-            if (r.getUserProduct().getIdUser()==idUser){
+            if (r.getUserProduct().getIdUser()==idUser && !r.getArchived()){
                 myRec.add(r);
             }
         }
@@ -82,6 +82,7 @@ public class ReclamationService implements IReclamationService {
                 r.setUserProduct(currentUser);
                 r.setProduct(rec_product);
                 r.setDateReclamation(LocalDate.now());
+                r.setArchived(true);
             for (Reclamation re: reclamationList
                  ) {
                 if(re.getUserProduct().getIdUser()==currentUser.getIdUser()){
@@ -108,8 +109,11 @@ public class ReclamationService implements IReclamationService {
     }
 
     @Override
-    public void deleteReclamation(Integer idReclamation) {
-        reclamationRepository.deleteById(idReclamation);
+    public Reclamation deleteReclamationFrontArchivedBack(Integer idReclamation ){
+        Reclamation r=reclamationRepository.findById(idReclamation).get();
+        r.setArchived(false);
+        reclamationRepository.save(r);
+        return r;
 
     }
 

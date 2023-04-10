@@ -1,10 +1,7 @@
 package tn.esprit.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,7 +19,10 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idCategory")
     private Integer idCategory;
+    @NonNull
+    @Column(unique = true)
     private String NameCategory;
+    @NonNull
     private String DescriptionCategory;
     private boolean archived;
 

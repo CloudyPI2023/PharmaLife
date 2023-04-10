@@ -15,7 +15,7 @@ public interface IReclamationService {
 
     Reclamation retrieveReclamation (Integer idReclamation);
 
-    void deleteReclamation( Integer idReclamation);
+    Reclamation deleteReclamationFrontArchivedBack(Integer idReclamation);
 
      Reclamation setArchivedReclamation(Reclamation r);
 

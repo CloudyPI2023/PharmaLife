@@ -38,9 +38,9 @@ public class ReclamationRestController {
     public Reclamation retrieveReclamation(@PathVariable("idReclamation") Integer idReclamation){
         return reclamationService.retrieveReclamation(idReclamation);
     }
-    @DeleteMapping("/delete-reclamation/{idReclamation}")
-    public void deleteReclamation(@PathVariable("idReclamation") Integer idReclamation){
-       reclamationService.deleteReclamation(idReclamation);
+    @PostMapping("/delete-reclamationFront/{idReclamation}")
+    public Reclamation deleteReclamationFrontArchivedBack(@PathVariable("idReclamation")Integer idReclamation){
+       return reclamationService.deleteReclamationFrontArchivedBack(idReclamation);
     }
     @PutMapping("/archive-reclamation")
     public Reclamation setArchivedReclamation(@RequestBody Reclamation r){
