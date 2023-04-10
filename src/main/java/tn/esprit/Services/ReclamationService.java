@@ -2,8 +2,6 @@ package tn.esprit.Services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import tn.esprit.Entities.Product;
@@ -13,8 +11,8 @@ import tn.esprit.Repositories.ProductRepository;
 import tn.esprit.Repositories.ReclamationRepository;
 import tn.esprit.Repositories.UserRepository;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -34,9 +32,41 @@ public class ReclamationService implements IReclamationService {
 
     //BACK
     @Override
-    public List<Reclamation> retrieveAllReclamations() {
+    public List<Reclamation> retrieveAllReclamationsNotArchived() {
 
-        return reclamationRepository.findAll();
+        List<Reclamation> listeRec= reclamationRepository.findAll();
+        List<Reclamation> notArchived=new ArrayList<>();
+        for (Reclamation r:listeRec) {
+            if (!r.getArchived()){
+              notArchived.add(r);
+            }
+        }
+        return notArchived;
+    }
+    //back
+    @Override
+    public List<Reclamation> retrieveAllReclamationsArchived() {
+
+        List<Reclamation> listeRec= reclamationRepository.findAll();
+        List<Reclamation> archived=new ArrayList<>();
+        for (Reclamation r:listeRec) {
+            if (r.getArchived()){
+                archived.add(r);
+            }
+        }
+        return archived;
+    }
+    @Override
+    public List<Reclamation> retrieveMyReclamations(Integer idUser) {
+
+        List<Reclamation> listeRec= reclamationRepository.findAll();
+        List<Reclamation> myRec=new ArrayList<>();
+        for (Reclamation r:listeRec) {
+            if (r.getUserProduct().getIdUser()==idUser){
+                myRec.add(r);
+            }
+        }
+        return myRec;
     }
 
     @Override
@@ -83,9 +113,12 @@ public class ReclamationService implements IReclamationService {
 
     }
 
-    //FRONT
+
+
     @Override
-    public User getReclamationByIdUser(Integer idUser) {
-        return null;
+    public Reclamation setArchivedReclamation(Reclamation r){
+        r.setArchived(false);
+       reclamationRepository.save(r);
+       return r;
     }
 }

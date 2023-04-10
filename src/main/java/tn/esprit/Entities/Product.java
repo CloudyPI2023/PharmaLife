@@ -27,7 +27,7 @@ public class Product implements Serializable {
     private String DescriptionProduct;
     private Float PriceProduct;
     private Integer QuantityProduct;
-    private Integer AvailabilityProduct;
+   // private Integer AvailabilityProduct;
 
 
     private LocalDate ExpirationDateProduct;

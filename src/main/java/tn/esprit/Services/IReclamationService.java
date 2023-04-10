@@ -7,7 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface IReclamationService {
-    List<Reclamation> retrieveAllReclamations();
+    List<Reclamation> retrieveAllReclamationsArchived();
 
     Reclamation addReclamation(Reclamation r);
 
@@ -16,5 +16,11 @@ public interface IReclamationService {
     Reclamation retrieveReclamation (Integer idReclamation);
 
     void deleteReclamation( Integer idReclamation);
-    User getReclamationByIdUser(Integer idUser);
+
+     Reclamation setArchivedReclamation(Reclamation r);
+
+    //BACK
+    List<Reclamation> retrieveAllReclamationsNotArchived();
+
+     List<Reclamation> retrieveMyReclamations(Integer idUser);
 }

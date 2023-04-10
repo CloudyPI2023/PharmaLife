@@ -14,10 +14,20 @@ import java.util.List;
 public class ReclamationRestController {
     @Autowired
     ReclamationService reclamationService;
-    @GetMapping("/all-reclamations")
-    public List<Reclamation> getAllReclamtions(){
-        return reclamationService.retrieveAllReclamations();
+    //back
+    @GetMapping("/all-reclamationsNotArchived")
+    public List<Reclamation> retrieveAllReclamationsNotArchived(){
+        return reclamationService.retrieveAllReclamationsNotArchived();
     }
+    @GetMapping("/all-reclamationsArchived")
+    public List<Reclamation> retrieveAllReclamationsArchived(){
+        return reclamationService.retrieveAllReclamationsArchived();
+    }
+    @GetMapping("/my-reclamations/{idUser}")
+    public List<Reclamation> retrieveMyReclamations(@PathVariable("idUser")Integer idUser){
+        return reclamationService.retrieveMyReclamations(idUser);
+    }
+
 
     @PostMapping("/add-reclamation")
     public Reclamation addReclamation(@RequestBody Reclamation r){
@@ -32,5 +42,10 @@ public class ReclamationRestController {
     public void deleteReclamation(@PathVariable("idReclamation") Integer idReclamation){
        reclamationService.deleteReclamation(idReclamation);
     }
+    @PutMapping("/archive-reclamation")
+    public Reclamation setArchivedReclamation(@RequestBody Reclamation r){
+        return reclamationService.setArchivedReclamation(r);
+    }
+
 
 }

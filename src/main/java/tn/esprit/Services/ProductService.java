@@ -23,7 +23,7 @@ public class ProductService implements IProductService{
         List<Product> allProducts=productRepository.findAll();
         List<Product> finalProducts=new ArrayList<>();
         for (Product oneProduct:allProducts) {
-            if(oneProduct.getAvailabilityProduct()!=0 && oneProduct.getExpirationDateProduct().compareTo(LocalDate.now())>0){
+            if(oneProduct.getQuantityProduct()!=0 && oneProduct.getExpirationDateProduct().compareTo(LocalDate.now())>0){
                 finalProducts.add(oneProduct);
                 productRepository.save(oneProduct);
             }
