@@ -8,6 +8,7 @@ import tn.esprit.Services.IGiftService;
 import tn.esprit.Services.IProductService;
 import tn.esprit.Services.ProductService;
 
+import java.util.HashMap;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -26,7 +27,7 @@ public class ProductRestController {
 
         return productService.retrieveAllProductsExpired() ;
     }
-    @GetMapping("/all-productsNoyExpired")
+    @GetMapping("/all-productsNotExpired")
     public List<Product> retrieveAllProductsNotExpired(){
 
         return productService.retrieveAllProductsNotExpired() ;
@@ -49,6 +50,11 @@ public class ProductRestController {
     @DeleteMapping("/delete-product/{idProduct}")
     public void deleteProduct(@PathVariable("idProduct") Integer idProduct){
         productService.deleteProduct(idProduct);
+    }
+
+    @GetMapping("/statisticsProductCategory")
+    HashMap<String, Integer> CategoriesByProducts(){
+        return productService.CategoriesByProducts();
     }
 
 }

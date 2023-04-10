@@ -1,7 +1,9 @@
 package tn.esprit.Services;
 
+import tn.esprit.Entities.Category;
 import tn.esprit.Entities.Product;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface IProductService {
@@ -16,4 +18,5 @@ public interface IProductService {
     Product retrieveProduct (Integer idProduct);
 
     void deleteProduct( Integer idProduct);
+    HashMap<String, Integer> CategoriesByProducts();
 }

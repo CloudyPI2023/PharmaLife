@@ -36,17 +36,21 @@ public class GiftService implements IGiftService{
         if(userOptional.isPresent()){
             User usergift=userOptional.get();
             for(Integer id:listid) {
-                Product pr=productRepository.findById(id).get();
-                System.out.println(pr);
-                prodList.add(pr);
-                System.out.println("set win"+prodList);
+                try {
+                    Product pr = productRepository.findById(id).get();
+                    System.out.println(pr);
+                    prodList.add(pr);
+                    System.out.println("set win" + prodList);
+                }catch (NoSuchElementException e){
+                    System.out.println("no product found with such id");
+                }
             }
             g.setProductsGift(prodList);
             g.setUserGift(usergift);
             giftRepository.save(g);
             return g;
         }else{
-            throw new NoSuchElementException("User or product not found.");
+            throw new NoSuchElementException("User not found.");
         }
 
     }

@@ -3,11 +3,13 @@ package tn.esprit.Services;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.Entities.Category;
 import tn.esprit.Entities.Product;
 import tn.esprit.Repositories.ProductRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 @Service
 @AllArgsConstructor
@@ -77,5 +79,20 @@ public class ProductService implements IProductService{
     public void deleteProduct(Integer idProduct) {
         productRepository.deleteById(idProduct);
 
+    }
+    @Override
+    public HashMap<String, Integer> CategoriesByProducts() {
+        HashMap<String, Integer> map=new HashMap<>();
+        List<Product> listProducts=productRepository.findAll();
+        for (Product p:listProducts) {
+            String categoryName=p.getCategoryProduct().getNameCategory();
+            if(map.containsKey(categoryName)){
+                map.put(categoryName,map.get(categoryName)+1);
+            }
+            else {
+                map.put(categoryName,1);
+            }
+        }
+        return map;
     }
 }
