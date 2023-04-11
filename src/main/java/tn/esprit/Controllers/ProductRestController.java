@@ -56,5 +56,9 @@ public class ProductRestController {
     HashMap<String, Integer> CategoriesByProducts(){
         return productService.CategoriesByProducts();
     }
+    @GetMapping("/statisticsProductExpiration")
+    HashMap<String, Integer> ProductByExpirationDate(){
+        return productService.ProductByExpirationDate();
+    }
 
 }

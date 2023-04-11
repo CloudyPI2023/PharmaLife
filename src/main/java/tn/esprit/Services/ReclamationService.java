@@ -56,6 +56,12 @@ public class ReclamationService implements IReclamationService {
         }
         return archived;
     }
+
+    @Override
+    public List<Reclamation> retrieveAllReclamations() {
+        return reclamationRepository.findAll();
+    }
+
     @Override
     public List<Reclamation> retrieveMyReclamations(Integer idUser) {
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.Entities.Category;
 import tn.esprit.Entities.Gift;
+import tn.esprit.Entities.Product;
 import tn.esprit.Services.GiftService;
 import tn.esprit.Services.ICategoryService;
 import tn.esprit.Services.IGiftService;
@@ -24,8 +25,12 @@ public class GiftRestController {
     }
 
     @PostMapping("/add-gift")
-    public Gift addGift(@RequestBody Gift g,@RequestBody List<Integer> listid){
-        return giftService.addGift(g,listid);
+    public Gift addGift(@RequestBody Gift g){
+        return giftService.addGift(g);
+    }
+    @PostMapping("/{giftId}/products")
+    public Gift addProductToGift(@PathVariable Integer giftId, @RequestBody Product product) {
+        return giftService.addProductToGift(giftId, product);
     }
 
     @GetMapping("/retrieve-gift/{idGift}")

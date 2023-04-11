@@ -3,6 +3,7 @@ package tn.esprit.Services;
 import tn.esprit.Entities.Category;
 import tn.esprit.Entities.Product;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,4 +20,5 @@ public interface IProductService {
 
     void deleteProduct( Integer idProduct);
     HashMap<String, Integer> CategoriesByProducts();
+    HashMap<String, Integer> ProductByExpirationDate();
 }

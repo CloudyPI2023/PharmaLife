@@ -14,6 +14,10 @@ import java.util.List;
 public class ReclamationRestController {
     @Autowired
     ReclamationService reclamationService;
+    @GetMapping("/all-reclamations")
+    public List<Reclamation> retrieveAllReclamations(){
+        return reclamationService.retrieveAllReclamations();
+    }
     //back
     @GetMapping("/all-reclamationsNotArchived")
     public List<Reclamation> retrieveAllReclamationsNotArchived(){

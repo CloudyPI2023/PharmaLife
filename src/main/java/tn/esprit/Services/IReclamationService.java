@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface IReclamationService {
     List<Reclamation> retrieveAllReclamationsArchived();
+    List<Reclamation> retrieveAllReclamations();
 
     Reclamation addReclamation(Reclamation r);
 

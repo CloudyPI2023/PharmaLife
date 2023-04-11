@@ -10,6 +10,7 @@ import tn.esprit.Repositories.GiftRepository;
 import tn.esprit.Repositories.ProductRepository;
 import tn.esprit.Repositories.UserRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -28,25 +29,14 @@ public class GiftService implements IGiftService{
     }
 
     @Override
-    public Gift addGift(Gift g,List<Integer> listid) {
+    public Gift addGift(Gift g) {
         Optional<User> userOptional = userRepository.findById(g.getIdUser());
         List<Product> prodList= new ArrayList<>();
-        System.out.println("lissteee"+listid);
 
         if(userOptional.isPresent()){
             User usergift=userOptional.get();
-            for(Integer id:listid) {
-                try {
-                    Product pr = productRepository.findById(id).get();
-                    System.out.println(pr);
-                    prodList.add(pr);
-                    System.out.println("set win" + prodList);
-                }catch (NoSuchElementException e){
-                    System.out.println("no product found with such id");
-                }
-            }
-            g.setProductsGift(prodList);
-            g.setUserGift(usergift);
+            g.setProductsGift(g.getProductsGift());
+
             giftRepository.save(g);
             return g;
         }else{
@@ -70,5 +60,16 @@ public class GiftService implements IGiftService{
     public void deleteGift(Integer idGift) {
         giftRepository.deleteById(idGift);
 
+    }
+@Override
+    public Gift addProductToGift(Integer giftId, Product product) {
+
+        Gift gift = giftRepository.findById(giftId).orElseThrow(() -> new EntityNotFoundException("Gift not found"));
+        Optional<User> userOptional = userRepository.findById(gift.getIdUser());
+        if(userOptional.isPresent()){
+            gift.setUserGift(userOptional.get());
+        }
+        gift.getProductsGift().add(product);
+        return giftRepository.save(gift);
     }
 }
