@@ -27,10 +27,13 @@ public class EventRestController {
     }
 
     // http://localhost:8082/edit-event
-    @PutMapping("/edit-event")
-    public Event editEvent(@RequestBody Event p) {
+
+    @PutMapping("/edit-event/{id}")
+    public Event editEvent(@PathVariable("id") Long eventId, @RequestBody Event p) {
+        // use eventId to retrieve and update the event
         return eventService.editEvent(p);
     }
+
 
     // http://localhost:8082/delet-event/id
     @DeleteMapping("/delete-event/{idEvent}")

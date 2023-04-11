@@ -4,6 +4,7 @@ package tn.esprit.Controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import tn.esprit.Entities.Event;
 import tn.esprit.Entities.Reservation;
 import tn.esprit.Services.IReservationService;
 import java.util.List;
@@ -28,10 +29,13 @@ public class ReservationRestController {
     }
 
     // http://localhost:8082/edit-reservation
-    @PutMapping("/edit-reservation")
-    public Reservation editReservation(@RequestBody Reservation p) {
+
+    @PutMapping("/edit-reservation/{id}")
+    public Reservation editReservation(@PathVariable("id") Long reservationId, @RequestBody Reservation p) {
+        // use eventId to retrieve and update the event
         return reservationService.editReservation(p);
     }
+
 
     // http://localhost:8082/delet-reservation/id
     @DeleteMapping("/delete-reservation/{idReservation}")
