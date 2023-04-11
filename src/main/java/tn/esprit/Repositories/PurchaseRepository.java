@@ -1,4 +1,4 @@
 package tn.esprit.Repositories;
 
-public class PurchaseRepository {
+public interface PurchaseRepository {
 }

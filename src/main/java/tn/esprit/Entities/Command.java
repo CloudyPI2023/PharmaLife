@@ -14,22 +14,22 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table( name = "Order")
-public class Order implements Serializable {
+@Table( name = "Command")
+public class Command implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idOrder")
-    private Integer idOrder;
-    private String StatusOrder;
-    private LocalDate DateOrder;
-    private String ShippingAddressOrder;
+    @Column(name="idCommand")
+    private Integer idCommand;
+    private String StatusCommand;
+    private LocalDate DateCommand;
+    private String ShippingAddressCommand;
 
     //NoSQL
     private Integer idUser;
 
-    @OneToOne(mappedBy="orderPurchase")
-    private Purchase purchaseOrder;
+    @OneToOne(mappedBy="commandPurchase")
+    private Purchase purchaseCommand;
 
     @ManyToOne
     DeliveryPerson deliveryPerson;

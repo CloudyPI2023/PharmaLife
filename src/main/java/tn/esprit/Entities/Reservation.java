@@ -1,9 +1,6 @@
 package tn.esprit.Entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table( name = "Reservation")
+@Builder
 public class Reservation implements Serializable {
 
     @Id

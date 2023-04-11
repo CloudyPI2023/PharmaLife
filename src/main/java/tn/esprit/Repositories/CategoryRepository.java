@@ -1,4 +1,4 @@
 package tn.esprit.Repositories;
 
-public class CategoryRepository {
+public interface CategoryRepository {
 }

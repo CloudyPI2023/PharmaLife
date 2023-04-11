@@ -1,10 +1,7 @@
 package tn.esprit.Entities;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,6 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table( name = "Event")
+@Builder
 public class Event implements Serializable {
 
     @Id
