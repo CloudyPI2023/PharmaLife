@@ -1,4 +1,8 @@
 package tn.esprit.Repositories;
 
-public class ArticleRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import tn.esprit.Entities.Article;
+
+public interface ArticleRepository  extends JpaRepository<Article, Long> {
+
 }

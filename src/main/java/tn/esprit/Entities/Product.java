@@ -1,10 +1,7 @@
 package tn.esprit.Entities;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table( name = "Product")
 public class Product implements Serializable {
 
@@ -25,7 +23,7 @@ public class Product implements Serializable {
     private Integer idProduct;
     private String ReferenceProduct;
     private String NameProduct;
-    private Strig ImageProduct;
+    private String ImageProduct;
     private String DescriptionProduct;
     private Float PriceProduct;
     private Integer QuantityProduct;
