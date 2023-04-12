@@ -1,15 +1,10 @@
 package tn.esprit.Entities;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
-import java.net.Inet4Address;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -18,6 +13,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
+
 @Table( name = "Purchase")
 public class Purchase implements Serializable {
     @Id
@@ -32,7 +29,7 @@ public class Purchase implements Serializable {
     private PurchaseType purchaseType;
 
     @OneToOne
-    private Order orderPurchase;
+    private Command CommandPurchase;
 
     @ManyToOne
     User userPurchase;

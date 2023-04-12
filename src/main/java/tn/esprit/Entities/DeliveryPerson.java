@@ -27,6 +27,6 @@ public class DeliveryPerson implements Serializable {
     private Integer idUser;
 
     @OneToMany(mappedBy="deliveryPerson")
-    private Set<Order> OrdersD;
+    private Set<Command> CommandsD;
 
 }
