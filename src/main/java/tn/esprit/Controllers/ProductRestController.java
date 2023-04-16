@@ -17,6 +17,11 @@ public class ProductRestController {
     @Autowired
     ProductService productService;
 
+    @GetMapping("all-products")
+    public List<Product>retrieveAllProducts(){
+        return productService.retrieveAllProducts();
+    }
+
     @GetMapping("/all-productsFront")
     public List<Product> getAllProductsFront(){
 

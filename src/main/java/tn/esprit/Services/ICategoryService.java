@@ -17,4 +17,5 @@ public interface ICategoryService {
      Category setArchivedCategory(Category c);
      List<Category> retrieveAllCategoriesArchived();
      Category setCancelArchivedCategory(Category c);
+    Category ArCategory(Category c);
 }

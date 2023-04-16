@@ -14,15 +14,8 @@ public class CategoryService implements ICategoryService {
     //back
     @Override
     public List<Category> retrieveAllCategories() {
-        List<Category> categoryList=categoryRepository.findAll();
-        List<Category> lisst=new ArrayList<>();
-        for (Category c: categoryList) {
-            if(c.isArchived()){
-                lisst.add(c);
-            }
+        return categoryRepository.findAll();
 
-        }
-        return lisst;
     }
     @Override
     public List<Category> retrieveAllCategoriesArchived() {
@@ -71,5 +64,15 @@ public class CategoryService implements ICategoryService {
         c.setArchived(true);
         categoryRepository.save(c);
         return c;
+    }
+    @Override
+    public Category ArCategory(Category c){
+        if(c.isArchived()){
+            c.setArchived(false);
+        }
+        else c.setArchived(true);
+        categoryRepository.save(c);
+        return c;
+
     }
 }

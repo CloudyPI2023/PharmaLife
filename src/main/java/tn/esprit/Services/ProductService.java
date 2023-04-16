@@ -17,12 +17,33 @@ public class ProductService implements IProductService{
     @Autowired
     ProductRepository productRepository;
     @Override
+    public List<Product> retrieveAllProducts(){
+        List<Product> productList= productRepository.findAll();
+        List<Product> newlist=new ArrayList<>();
+        for (Product p:productList
+             ) {
+            if(p.getExpirationDateProduct().compareTo(LocalDate.now())<0 || (p.getCategoryProduct().isArchived())) {
+                p.setExpired(1);
+                newlist.add(p);
+            }
+            else{
+                p.setExpired(0);
+                newlist.add(p);
+            }
+        }
+        return newlist;
+
+
+
+    }
+    @Override
     public List<Product> retrieveAllProductsExpired() {
         List<Product> allprod=productRepository.findAll();
         List<Product> prodExpired=new ArrayList<>();
         for (Product p:allprod
              ) {
             if(p.getExpirationDateProduct().compareTo(LocalDate.now())<0) {
+                p.setExpired(1);
                 prodExpired.add(p);
             }
         }
@@ -35,6 +56,7 @@ public class ProductService implements IProductService{
         for (Product p:allprod
         ) {
             if(p.getExpirationDateProduct().compareTo(LocalDate.now())>0) {
+                p.setExpired(0);
                 prodNotExpired.add(p);
             }
         }

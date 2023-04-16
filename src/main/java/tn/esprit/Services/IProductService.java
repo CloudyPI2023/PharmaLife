@@ -11,6 +11,7 @@ public interface IProductService {
     List<Product> retrieveAllProductsFront();
     List<Product> retrieveAllProductsExpired();
     List<Product> retrieveAllProductsNotExpired();
+    List<Product> retrieveAllProducts();
 
     Product addProduct(Product p);
 
