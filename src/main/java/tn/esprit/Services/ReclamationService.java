@@ -91,8 +91,8 @@ public class ReclamationService implements IReclamationService {
                 r.setArchived(true);
             for (Reclamation re: reclamationList
                  ) {
-                if(re.getUserProduct().getIdUser()==currentUser.getIdUser()){
-                    throw new DuplicateKeyException("reclamation already exists with the same user");
+                if(re.getUserProduct().getIdUser()==currentUser.getIdUser()&&(re.getProduct().getIdProduct()==rec_product.getIdProduct())){
+                    throw new DuplicateKeyException("reclamation already exists with the same user and product");
                 }
 
             }
