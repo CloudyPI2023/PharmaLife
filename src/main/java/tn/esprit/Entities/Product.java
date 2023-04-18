@@ -41,7 +41,7 @@ public class Product implements Serializable {
     @ManyToOne
     private Category categoryProduct;
 
-    @ManyToMany(mappedBy = "ProductsGift",cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "ProductsGift")
     @JsonIgnore
     List<Gift> gifts;
 

@@ -14,8 +14,7 @@ import java.util.Set;
 public interface GiftRepository extends JpaRepository<Gift,Integer> {
 
 
-    @Query("SELECT g FROM Gift g JOIN g.ProductsGift p WHERE p.idProduct =:idProduct")
-    List<Product> giftByProduct(@Param("idProduct") Integer idProduct);
+
     @Query("SELECT p FROM Product p JOIN p.gifts g WHERE g.idGift=:idGift")
     List<Product> productsByGift(@Param("idGift") Integer idGift);
 

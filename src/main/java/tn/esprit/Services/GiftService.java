@@ -58,6 +58,12 @@ public class GiftService implements IGiftService{
 
     @Override
     public void deleteGift(Integer idGift) {
+        List<Product> productList=giftRepository.productsByGift(idGift);
+        for (Product p:productList
+             ) {
+            p.setQuantityProduct(p.getQuantityProduct()+1);
+            productRepository.save(p);
+        }
         giftRepository.deleteById(idGift);
 
     }
@@ -70,12 +76,13 @@ public class GiftService implements IGiftService{
             gift.setUserGift(userOptional.get());
         }
         gift.getProductsGift().add(product);
+        product.setQuantityProduct(product.getQuantityProduct()-1);
+        productRepository.save(product);
         return giftRepository.save(gift);
     }
 
     @Override
     public List<Product> getProductsByGift(Integer idGift){
-        //return giftRepository.findByProductsGift(idGift);
         return giftRepository.productsByGift(idGift);
     }
 }
