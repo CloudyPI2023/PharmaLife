@@ -33,8 +33,7 @@ public class Gift implements Serializable {
     private Integer idUser;
     private Integer idProduct;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
-    //@JoinColumn(name = "book_id",referencedColumnName="bookId")
+    @ManyToMany(cascade = CascadeType.REMOVE)
     private List<Product> ProductsGift;
 
 

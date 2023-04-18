@@ -72,4 +72,10 @@ public class GiftService implements IGiftService{
         gift.getProductsGift().add(product);
         return giftRepository.save(gift);
     }
+
+    @Override
+    public List<Product> getProductsByGift(Integer idGift){
+        //return giftRepository.findByProductsGift(idGift);
+        return giftRepository.productsByGift(idGift);
+    }
 }

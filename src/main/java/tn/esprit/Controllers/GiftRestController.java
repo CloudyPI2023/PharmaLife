@@ -9,6 +9,7 @@ import tn.esprit.Services.GiftService;
 import tn.esprit.Services.ICategoryService;
 import tn.esprit.Services.IGiftService;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -45,6 +46,12 @@ public class GiftRestController {
     @DeleteMapping("/delete-gift/{idGift}")
     public void deleteGift(@PathVariable("idGift") Integer idGift){
        giftService.deleteGift(idGift);
+    }
+
+    @GetMapping("/productsForGift/{idGift}")
+    public List<Product> getProductsByGift(@PathVariable("idGift") Integer idGift){
+        return giftService.getProductsByGift(idGift);
+
     }
 
 }

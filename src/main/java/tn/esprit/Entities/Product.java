@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -40,6 +41,9 @@ public class Product implements Serializable {
     @ManyToOne
     private Category categoryProduct;
 
+    @ManyToMany(mappedBy = "ProductsGift",cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    List<Gift> gifts;
 
 
     @OneToMany(mappedBy="product")
