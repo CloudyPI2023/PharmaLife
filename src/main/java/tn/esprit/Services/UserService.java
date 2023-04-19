@@ -4,12 +4,14 @@ package tn.esprit.Services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.Entities.Role;
 import tn.esprit.Entities.User;
 import tn.esprit.RegistrationAuth.Registration.Token.ConfirmationToken;
@@ -17,6 +19,10 @@ import tn.esprit.RegistrationAuth.Registration.Token.ConfirmationTokenService;
 import tn.esprit.Repositories.UserRepository;
 
 
+import javax.transaction.Transactional;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -31,7 +37,7 @@ public class UserService implements IUserService, UserDetailsService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
-     @Autowired
+    @Autowired
     private final UserRepository userRepository;
 
 
@@ -95,49 +101,53 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
 
-  /*  @Override
+    /*  @Override
+      public UserDetails loadUserByUsername(String email)
+              throws UsernameNotFoundException {
+          return userRepository.findByEmail(email)
+                  .orElseThrow(() ->
+                          new UsernameNotFoundException(
+                                  String.format(USER_NOT_FOUND_MSG, email)));
+      }*/
+    @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException(
-                                String.format(USER_NOT_FOUND_MSG, email)));
-    }*/
-  @Override
-  public UserDetails loadUserByUsername(String email)
-          throws UsernameNotFoundException {
-      User user = userRepository.findByEmail(email).orElse(null);;
-      if(user == null){
-          throw new UsernameNotFoundException("User not found in the database");
+        User user = userRepository.findByEmail(email).orElse(null);
+        ;
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found in the database");
 
-      }if(!user.isEnabled()) {
-          throw new UsernameNotFoundException("You need To Confirm your email");
-      }else{
-          log.info("User found in the database: {}", email);
-      }
-      List<SimpleGrantedAuthority> authorities = getUserAuthority(user.getRole().name());
-      System.out.println(user.getUsername());
+        }
+        if (!user.isEnabled()) {
+            throw new UsernameNotFoundException("You need To Confirm your email");
+        } else {
+            log.info("User found in the database: {}", email);
+        }
+        List<SimpleGrantedAuthority> authorities = getUserAuthority(user.getRole().name());
+        System.out.println(user.getUsername());
 
-      return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(), authorities);    }
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+    }
 
-     private List<SimpleGrantedAuthority> getUserAuthority(String userRoles) {
+    private List<SimpleGrantedAuthority> getUserAuthority(String userRoles) {
         Set<SimpleGrantedAuthority> roles = new HashSet<SimpleGrantedAuthority>();
 
         roles.add(new SimpleGrantedAuthority(userRoles));
         List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>(roles);
         return grantedAuthorities;
 
-  }
-    public String signUpUser(User appUser){
+    }
+
+    public String signUpUser(User appUser) {
         boolean userExists = userRepository
                 .findByEmail(appUser.getEmail())
                 .isPresent();
 
-        if(userExists){
+        if (userExists) {
             //
             //throw new IllegalStateException("email already taken");
             User u = userRepository.findByEmail(appUser.getEmail()).orElse(null);
-            if(u.isEnabled()==false){
+            if (u.isEnabled() == false) {
                 userRepository.save(u);
                 String token = UUID.randomUUID().toString();
 
@@ -150,7 +160,7 @@ public class UserService implements IUserService, UserDetailsService {
                 );
                 confirmationTokenService.saveConfirmationToken(confirmationToken);
                 return " Your email is already taken";
-            }else{
+            } else {
                 return "email taken";
             }
         }
@@ -161,7 +171,7 @@ public class UserService implements IUserService, UserDetailsService {
 
         userRepository.save(appUser);
 
-        String  token = UUID.randomUUID().toString();
+        String token = UUID.randomUUID().toString();
         // TODO : send confirmation token
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
@@ -183,4 +193,17 @@ public class UserService implements IUserService, UserDetailsService {
     public int enableUser(String email) {
         return userRepository.enableUser(email);
     }
+
+
+    ///advanced functions
+    @Scheduled(cron = "0 */30 * * * *") //chaque 30 min
+    public void deleteInactiveUsers() {
+        LocalDateTime oneHourAgo = LocalDateTime.now().minusMinutes(30);
+        List<User> inactiveUsers = userRepository.findByEnabledFalseAndCreatedAtBefore(oneHourAgo);
+        for (User user : inactiveUsers) {
+            userRepository.delete(user);
+            System.out.println("Deleted user " + user.getUsername() + " " + user.getEmail());
+        }
+    }
+
 }

@@ -1,5 +1,7 @@
 package tn.esprit.Controllers;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -8,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.Entities.Role;
 import tn.esprit.Entities.User;
 import tn.esprit.Repositories.UserRepository;
@@ -28,10 +31,15 @@ public class UserRestController {
 
      //@RolesAllowed("Admin")
      @PostMapping("/add-User")
-     public User addUser(@RequestBody User u) {
-       User user = userService.addUser(u);
+     public User addUser(@RequestBody User u, @RequestParam("image") MultipartFile image){
+         User user = userService.addUser(u);
+         user.setImageUser(image.getOriginalFilename());
+
        return user;
      }
+
+
+
 
 
   @GetMapping("/all-Users")

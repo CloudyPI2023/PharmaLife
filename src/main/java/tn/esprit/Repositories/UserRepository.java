@@ -11,6 +11,8 @@ import tn.esprit.Entities.Role;
 import tn.esprit.Entities.User;
 
 import javax.swing.text.html.Option;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,5 +46,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<Object[]> countTotalUsersByRole();
 
 
+
+     List<User> findByEnabledFalseAndCreatedAtBefore(LocalDateTime date);
 
 }

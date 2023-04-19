@@ -1,9 +1,6 @@
 package tn.esprit.RegistrationAuth.Registration;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import tn.esprit.Entities.Gender;
 import tn.esprit.Entities.Role;
 
@@ -25,6 +22,7 @@ public class RegistrationRequest {
     private final Role role;
     private final Gender gender;
     private final LocalDate birthDate;
+    private final String imageUser;
 
 
 }

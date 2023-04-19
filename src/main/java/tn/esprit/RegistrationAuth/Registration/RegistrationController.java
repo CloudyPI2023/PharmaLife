@@ -3,6 +3,7 @@ package tn.esprit.RegistrationAuth.Registration;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.RegistrationAuth.MessageResponse;
 import tn.esprit.Repositories.UserRepository;
 
@@ -27,7 +28,6 @@ public class RegistrationController {
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
-
         registrationService.register(request);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }

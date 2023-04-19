@@ -27,24 +27,31 @@ public class DeliveryPerson implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idDeliveryP")
     private Integer idDeliveryP;
-
+    @Column(nullable=false)
     private String nomPrenomDeliveryP;
-
+    @Column(nullable=false)
     private Integer CINDeliveryP;
-
+    @Column(nullable=false)
     private Integer phoneNumberDeliveryP;
+    @Column(nullable=false)
 
     private String addressDeliveryP;
+    @Column(nullable=false)
 
     private String emailDeliveryP;
+    @Column(nullable=false)
 
     @Temporal(TemporalType.DATE)
     private Date hireDateDeliveryP;
+    @Column(nullable=false)
 
     @Enumerated(EnumType.STRING)
     private VehiculeType vehiculeType;
+    @Column(nullable=false)
 
     private String deliveryArea;
+    @Column(nullable=false)
+
 
     private Boolean availabilityDeliveryP;
 
