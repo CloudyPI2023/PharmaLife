@@ -40,6 +40,10 @@ public class UserService implements IUserService, UserDetailsService {
     @Autowired
     private final UserRepository userRepository;
 
+    public static final int MAX_FAILED_ATTEMPTS = 3;
+
+    private static final long LOCK_TIME_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+
 
     @Override
     public User addUser(User u) {
@@ -62,6 +66,12 @@ public class UserService implements IUserService, UserDetailsService {
     @Override
     public User findById(Integer id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+
+    @Override
+    public User findByToken(String t) {
+        return userRepository.findByConfirmationToken(t).orElse(null);
     }
 
 
@@ -113,12 +123,12 @@ public class UserService implements IUserService, UserDetailsService {
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email).orElse(null);
-        ;
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found in the database");
 
-        }
-        if (!user.isEnabled()) {
+        if (user == null) {
+            log.info("User not found in the database");
+            throw new UsernameNotFoundException("User not found in the database");
+        } else if (!user.isEnabled()) {
+            log.info("You need To Confirm your email: {}", email);
             throw new UsernameNotFoundException("You need To Confirm your email");
         } else {
             log.info("User found in the database: {}", email);
@@ -206,4 +216,50 @@ public class UserService implements IUserService, UserDetailsService {
         }
     }
 
+    @Scheduled(cron = "0 */6 * * * *") //chaque 6 min
+    public void unlockExpiredUsers() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expirationTime = now.minusMinutes(5);
+        List<User> expiredUsers = userRepository.findExpiredLockUsers(expirationTime);
+        for (User user : expiredUsers) {
+            user.setLocked(false);
+            user.setLockTime(null);
+            user.setLoginAttempts(0);
+        }
+    }
+
+
+     /// limit login attempts
+   /*  public void increaseFailedAttempts(User user) {
+         int newFailAttempts = user.getFailedAttempt() + 1;
+         userRepository.updateFailedAttempts(newFailAttempts, user.getEmail());
+     }
+
+    public void resetFailedAttempts(String email) {
+        userRepository.updateFailedAttempts(0, email);
+    }
+
+    public void lock(User user) {
+        user.setLocked(false);
+        user.setLockTime(new Date());
+
+        userRepository.save(user);
+    }
+
+    public boolean unlockWhenTimeExpired(User user) {
+        long lockTimeInMillis = user.getLockTime().getTime();
+        long currentTimeInMillis = System.currentTimeMillis();
+
+        if (lockTimeInMillis + LOCK_TIME_DURATION < currentTimeInMillis) {
+            user.setLocked(true);
+            user.setLockTime(null);
+            user.setFailedAttempt(0);
+
+            userRepository.save(user);
+
+            return true;
+        }
+
+        return false;
+    }*/
 }

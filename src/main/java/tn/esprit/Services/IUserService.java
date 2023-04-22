@@ -33,5 +33,6 @@ public interface IUserService {
 
     int enableUser(String email);
 
+    User findByToken(String t) ;
 
     }

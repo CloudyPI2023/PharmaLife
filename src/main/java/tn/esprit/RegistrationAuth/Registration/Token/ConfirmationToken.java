@@ -3,6 +3,9 @@ package tn.esprit.RegistrationAuth.Registration.Token;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import tn.esprit.Entities.User;
 
 import javax.persistence.*;
@@ -12,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
+
 public class ConfirmationToken {
 
     @SequenceGenerator(
@@ -37,7 +41,7 @@ public class ConfirmationToken {
 
     private LocalDateTime confirmedAt;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(
             nullable = false,
             name="user_id"

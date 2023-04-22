@@ -35,9 +35,9 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
 
-        if(request.getServletPath().equals("/login")){
-            filterChain.doFilter(request, response);	}
-        else{
+        if(request.getServletPath().equals("/registration/auth")){
+            filterChain.doFilter(request, response);
+        }else{
             String authorizationHeader = request.getHeader(AUTHORIZATION);
             if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
                 try {

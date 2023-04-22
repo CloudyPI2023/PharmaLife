@@ -69,7 +69,7 @@ public class User implements Serializable, UserDetails {
 
 
     @NotNull(message = "Phone number cannot be empty")
-    @Pattern(regexp = "\\d{8}", message = "Phone number must be 8 digits")
+   // @Pattern(regexp = "\\d{8}", message = "Phone number must be 8 digits")
     @Column(nullable=false)
     private String phoneNumber;
 
@@ -119,6 +119,12 @@ public class User implements Serializable, UserDetails {
     @Column(nullable=false)
     private Gender gender;
 
+
+    @Column(nullable=false)
+    private Integer loginAttempts = 0;
+
+    @Column
+    private LocalDateTime lockTime;
 
     //Associations
 
@@ -188,4 +194,9 @@ public User(String firstName, String lastName, String email, String phoneNumber,
     public boolean isEnabled() {
         return enabled;
     }
+
+
+
+
+
 }
