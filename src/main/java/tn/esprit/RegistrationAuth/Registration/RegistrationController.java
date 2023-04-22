@@ -33,9 +33,6 @@ public class RegistrationController {
     private final UserRepository userRepository;
     IUserService userService;
 
-    ////
-    private AuthenticationManager authenticationManager;
-    private PasswordEncoder passwordEncoder;
     private final TwilioConfiguration twilioConfiguration;
 
     @PostMapping
