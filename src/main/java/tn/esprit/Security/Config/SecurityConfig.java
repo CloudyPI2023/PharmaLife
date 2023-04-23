@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -26,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.authorizeRequests().antMatchers("/login/**").permitAll();
-        http.authorizeRequests().antMatchers("/auth").permitAll();
+       // http.authorizeRequests().antMatchers("/auth").permitAll();
         http.authorizeRequests().antMatchers("/registration/**").permitAll();
         http.authorizeRequests().antMatchers(GET ,"/User/**").hasAnyAuthority("Admin");
         http.authorizeRequests().antMatchers(GET ,"/DeliveryPerson/**").hasAnyAuthority("Admin");
@@ -51,5 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
        return super.authenticationManagerBean();
 
      }
+
+
 
 }

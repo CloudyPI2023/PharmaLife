@@ -13,9 +13,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class LoginForm {
 
-    @NotNull(message = "Email cannot be empty")
-    @Email(message = "Please enter a valid email address")
-    private String email;
+    @NotNull(message = "Username cannot be empty")
+    private String username;
 
     @NotNull(message = "Password cannot be empty")
     @Length(min = 7, message = "Password should be at least 7 characters long")
