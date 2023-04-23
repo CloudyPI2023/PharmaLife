@@ -1,6 +1,7 @@
 package tn.esprit.Services;
 
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.esprit.Entities.Category;
 import tn.esprit.Repositories.CategoryRepository;
@@ -62,6 +63,20 @@ public class CategoryService implements ICategoryService {
         categoryRepository.deleteById(idCategory);
 
     }
+
+
+    @Scheduled(cron = "0 */2 * * * *")
+    public void deleteCategoryScheduler() {
+        List<Category> categoryList=categoryRepository.findAll();
+        for (Category c:categoryList
+             ) {
+            if (!c.isArchived()) {
+                categoryRepository.deleteById(c.getIdCategory());
+            }
+        }
+
+    }
+
     @Override
     public Category setArchivedCategory(Category c){
         c.setArchived(false);

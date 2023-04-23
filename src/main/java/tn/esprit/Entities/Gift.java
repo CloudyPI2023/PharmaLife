@@ -29,6 +29,8 @@ public class Gift implements Serializable {
     private LocalDate BeginsAtGift;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "M-d-yyyy")
     private LocalDate EndsAtGift;
+    private String description;
+
     //NoSQL
     private Integer idUser;
     private Integer idProduct;
