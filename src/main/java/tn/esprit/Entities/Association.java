@@ -6,8 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Set;
 
 
@@ -30,9 +33,11 @@ public class Association implements Serializable {
     private String DescriptionAssocation;
     private String PhoneNumberAssocation;
     private String CountryAssocation;
-
-
+    //att jdid
+    private LocalDate DateAssociation;
+    private int nbAnneeAssociation;
     @OneToMany(mappedBy="association")
+    @JsonIgnore
     private Set<Request> RequestsAssociation;
 
     @ManyToOne
