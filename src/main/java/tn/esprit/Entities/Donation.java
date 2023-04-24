@@ -38,8 +38,9 @@ public class Donation implements Serializable {
     private Integer idRequest;
 
     @ManyToOne
-    @JsonIgnore
+    // @JsonIgnore
     User userDonation;
+
 
 
 }
