@@ -12,7 +12,8 @@ public interface AssociationRepository extends CrudRepository<Association,Intege
     @Query("SELECT u FROM Association u WHERE u.EmailAssocation=?1")
     Association findByEmail(String email);
 
-
+    @Query("select c from Request c where c.association.idAssociation>=?1")
+    List<Request> getAssociationByRequestsAssociation(Integer idAssociation);
 
     @Query("SELECT DATEDIFF(CURRENT_DATE, a.DateAssociation) / 365 FROM Association a WHERE a.idAssociation = :id_association")
     Integer getAssociationByDateAssociation_Year(@Param("id_association") Integer id_association);
