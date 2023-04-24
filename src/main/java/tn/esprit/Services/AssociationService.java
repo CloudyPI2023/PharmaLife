@@ -81,6 +81,57 @@ public class AssociationService implements IAssociationService {
         return associationRepository.findById(idAssociation).get();
     }
 
+    @Override
+    public HashMap<String, Integer> nombreAnneeParAssociation() {
+        List<Association> associations = new ArrayList<>();
+        HashMap<String, Integer> result = new HashMap<>();
+        // int nombreAnnee =0;
+        for (Association association : associations) {
+            // int nombreAnnee = (int) ChronoUnit.YEARS.between(association.getDateAssociation(), LocalDateTime.now());
+            String x = "gggg";
+            int nombreAnnee= 5;
+            //nbAnnee = associationRepository.skieurByCouleurPiste(c);
+            result.put(x, nombreAnnee);
+        }
+        return result;
+    }
+
+
+
+    @Override
+    public List<Association> getAssociationsPlusDeDeuxAns() {
+        List<Association> associations = new ArrayList<>();
+        associations = (List<Association>) associationRepository.findAll();
+        List<Association> result = new ArrayList<>();
+
+        for (Association a : associations) {
+            int nombreAnnee = associationRepository.getAssociationByDateAssociation_Year(a.getIdAssociation());
+            if(nombreAnnee >= 3){
+                a.setNbAnneeAssociation(nombreAnnee);
+                result.add(a);
+            }
+        }
+        //result = (List<Association>) associationRepository.findAll();
+        return result ;
+    }
+
+    @Override
+    public List<Association> retrieveAllAssociations() {
+        List<Association> associations = new ArrayList<>();
+        associations = (List<Association>) associationRepository.findAll();
+        List<Association> result = new ArrayList<>();
+
+        for (Association a : associations) {
+            int nombreAnnee = associationRepository.getAssociationByDateAssociation_Year(a.getIdAssociation());
+
+            a.setNbAnneeAssociation(nombreAnnee);
+            result.add(a);
+
+        }
+        //result = (List<Association>) associationRepository.findAll();
+        return result ;
+    }
+
 
 
 }
