@@ -131,7 +131,26 @@ public class AssociationService implements IAssociationService {
         //result = (List<Association>) associationRepository.findAll();
         return result ;
     }
+    @Override
+    public Association addAssociation(Association a) {
+        // int nombreAnnee = associationRepository.getAssociationByDateAssociation_Year(a.getIdAssociation());
+        // int nombreAnnee = 4;
+        //a.setNbAnneeAssociation(nombreAnnee);
+        LocalDate dateActuelle = LocalDate.now();
+        int nombreAnnees = (int) ChronoUnit.YEARS.between(a.getDateAssociation(), dateActuelle);
+        a.setNbAnneeAssociation(nombreAnnees);
+        return associationRepository.save(a);
+    }
 
+
+
+    @Override
+    public void calculerNombreAnnees() {
+        LocalDate dateActuelle = LocalDate.now();
+        Association a = new Association();
+        int nombreAnnees = (int) ChronoUnit.YEARS.between(a.getDateAssociation(), dateActuelle);
+        a.setNbAnneeAssociation(nombreAnnees);
+    }
 
 
 }
