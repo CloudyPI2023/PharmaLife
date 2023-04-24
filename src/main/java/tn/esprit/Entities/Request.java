@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ public class Request implements Serializable {
     @Column(name="idRequest")
     private Integer idRequest;
     private String NameRequest;
+
     private String DescriptionRequest;
     @Enumerated(EnumType.STRING)
     private DonationRequestType RequestType;
@@ -33,8 +35,12 @@ public class Request implements Serializable {
     private RequestDonationStatus statusRequest;
 
     @ManyToOne
-    @JsonIgnore
+    //@JsonIgnore
     Association association;
+
+    //NoSQL
+    private Integer idDonation;
+
 
 
 }
