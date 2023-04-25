@@ -126,6 +126,12 @@ public class User implements Serializable, UserDetails {
     @Column
     private LocalDateTime lockTime;
 
+
+    private Boolean activationStatus;
+
+    @Column
+    private LocalDateTime lastLoginTime;
+
     //Associations
 
     @OneToMany(mappedBy="userReservation")

@@ -207,7 +207,7 @@ public class UserService implements IUserService, UserDetailsService {
 
     ///advanced functions
     @Scheduled(cron = "0 */30 * * * *") //chaque 30 min
-    public void deleteInactiveUsers() {
+    public void deleteInactiveAccountsUsers() {
         LocalDateTime oneHourAgo = LocalDateTime.now().minusMinutes(30);
         List<User> inactiveUsers = userRepository.findByEnabledFalseAndCreatedAtBefore(oneHourAgo);
         for (User user : inactiveUsers) {
@@ -215,6 +215,20 @@ public class UserService implements IUserService, UserDetailsService {
             System.out.println("Deleted user " + user.getUsername() + " " + user.getEmail());
         }
     }
+
+
+    @Scheduled(cron = "0 */30 * * * *") //chaque 30 min
+    public void deleteInactiveUsers() {
+        LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+       // LocalDateTime oneMonthAgo = LocalDateTime.now().minusMinutes(1);
+        List<User> inactiveUsers = userRepository.findInactiveUsers(oneMonthAgo);
+        for (User user : inactiveUsers) {
+            userRepository.setActivationStatusToFALSE(user.getEmail());
+            System.out.println("Inactive user " + user.getUsername() + " " + user.getEmail());
+
+        }
+    }
+
 
     @Scheduled(cron = "0 */6 * * * *") //chaque 6 min
     public void unlockExpiredUsers() {
@@ -229,37 +243,21 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
 
-     /// limit login attempts
-   /*  public void increaseFailedAttempts(User user) {
-         int newFailAttempts = user.getFailedAttempt() + 1;
-         userRepository.updateFailedAttempts(newFailAttempts, user.getEmail());
-     }
-
-    public void resetFailedAttempts(String email) {
-        userRepository.updateFailedAttempts(0, email);
-    }
-
-    public void lock(User user) {
-        user.setLocked(false);
-        user.setLockTime(new Date());
-
-        userRepository.save(user);
-    }
-
-    public boolean unlockWhenTimeExpired(User user) {
-        long lockTimeInMillis = user.getLockTime().getTime();
-        long currentTimeInMillis = System.currentTimeMillis();
-
-        if (lockTimeInMillis + LOCK_TIME_DURATION < currentTimeInMillis) {
-            user.setLocked(true);
-            user.setLockTime(null);
-            user.setFailedAttempt(0);
-
-            userRepository.save(user);
-
-            return true;
+    public Map<String, Double> getRoleStatistics() {
+        List<User> users = userRepository.findAll();
+        Map<String, Integer> roleCounts = new HashMap<>();
+        for (User user : users) {
+            String role = user.getRole().toString();
+            roleCounts.put(role, roleCounts.getOrDefault(role, 0) + 1);
         }
-
-        return false;
-    }*/
+        int total = users.size();
+        Map<String, Double> rolePercentages = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : roleCounts.entrySet()) {
+            String role = entry.getKey();
+            int count = entry.getValue();
+            double percentage = count * 100.0 / total;
+            rolePercentages.put(role, percentage);
+        }
+        return rolePercentages;
+    }
 }

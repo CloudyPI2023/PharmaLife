@@ -5,6 +5,7 @@ import tn.esprit.Entities.Role;
 import tn.esprit.Entities.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IUserService {
 
@@ -35,4 +36,5 @@ public interface IUserService {
 
     User findByToken(String t) ;
 
+    Map<String, Double> getRoleStatistics();
     }

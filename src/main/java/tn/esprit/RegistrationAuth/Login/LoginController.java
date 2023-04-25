@@ -69,8 +69,10 @@ public class LoginController {
 
                 // authentication successful
                 if(user.getLoginAttempts()<3) {
-                    userRepository.resetLoginAttempts(0,user.getEmail());
+                    userRepository.resetLoginAttempts(0,true,LocalDateTime.now(),user.getEmail());
+
                 }
+
 
                 // call successfulAuthentication method to generate tokens
                 UserDetails userDetails = new org.springframework.security.core.userdetails.User(
@@ -83,15 +85,19 @@ public class LoginController {
                         .withIssuer(request.getRequestURI().toString())
                         .withClaim("lastName", user.getLastName())
                         .withClaim("firstName",user.getFirstName())
+                        .withClaim("phoneNumber",user.getPhoneNumber())
+                        .withClaim("birthDate",user.getBirthDate().toString())
+                        .withClaim("address",user.getAddress())
+                        .withClaim("city",user.getCity())
                         .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                         .sign(algorithm);
-                //String refreshToken = jwtTokenService.generateRefreshToken(userDetails);
 
                 // return tokens
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", access_token);
-               // tokens.put("refresh_token", refreshToken);
                 tokens.put("user", user.getEmail());
+                tokens.put("idUser", user.getIdUser().toString());
+                tokens.put("role",user.getRole().toString());
                 return ResponseEntity.ok(tokens);
 
                 //return ResponseEntity.ok("Login successful");

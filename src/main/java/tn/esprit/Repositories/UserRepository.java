@@ -25,6 +25,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u FROM User u JOIN  ConfirmationToken c ON u.idUser=c.user.idUser Where c.token = :token")
     Optional<User> findByConfirmationToken(@Param("token") String token);
 
+
+
+    @Query(value = "SELECT role, COUNT(*) * 100.0 / (SELECT COUNT(*) FROM user) AS percentage FROM user GROUP BY role", nativeQuery = true)
+    List<Object[]> countByRole();
+
     @Transactional
     @Modifying
     @Query("UPDATE User a " +
@@ -46,12 +51,19 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 
 
+
      List<User> findByEnabledFalseAndCreatedAtBefore(LocalDateTime date);
 
+    @Query("SELECT u FROM User u WHERE u.lastLoginTime < :cutoffDate AND u.activationStatus = true")
+    List<User> findInactiveUsers(@Param("cutoffDate") LocalDateTime cutoffDate);
 
-   /* @Query("UPDATE User u SET u.failedAttempt = ?1 WHERE u.email = ?2")
+    @Transactional
     @Modifying
-    public void updateFailedAttempts(int failAttempts, String email);*/
+    @Query("UPDATE User a " +
+            "SET a.activationStatus = FALSE WHERE a.email = ?1")
+    int setActivationStatusToFALSE(String email);
+
+
    @Modifying
    @Transactional
    @Query("UPDATE User u SET u.loginAttempts = ?1 WHERE u.email = ?2")
@@ -60,14 +72,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE User u SET u.loginAttempts =?1 WHERE u.email = ?2")
-    void resetLoginAttempts(int a,String email);
+    @Query("UPDATE User u SET u.loginAttempts =?1,u.activationStatus=?2 , u.lastLoginTime=?3 WHERE u.email = ?4")
+    void resetLoginAttempts(int a,boolean t,LocalDateTime d,String email);
 
 
-   /* @Transactional
-    @Modifying
-    @Query("UPDATE User u SET u.locked = false, u.lockTime = :lockTime WHERE u.email = :email")
-    void lockUser(@Param("email") String email, @Param("lockTime") LocalDateTime lockTime);*/
+
    @Transactional
    @Modifying
    @Query("UPDATE User u SET u.locked = TRUE , u.lockTime= ?1 WHERE u.email = ?2")

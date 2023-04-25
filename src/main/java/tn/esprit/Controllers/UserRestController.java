@@ -18,7 +18,9 @@ import tn.esprit.Services.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Tag(name = "User management")
@@ -95,5 +97,12 @@ public class UserRestController {
     public List<Object[]> countTotalUsersByRole(){
           return userService.countTotalUsersByRole();
     }
+
+    @GetMapping("/role-statistics")
+    public ResponseEntity<Map<String, Double>> getRoleStatistics() {
+        Map<String, Double> roleStatistics = userService.getRoleStatistics();
+        return ResponseEntity.ok().body(roleStatistics);
+    }
+
 
 }
