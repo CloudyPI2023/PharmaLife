@@ -39,7 +39,7 @@ public class CategoryService implements ICategoryService {
             if(ca.getNameCategory().equals(c.getNameCategory()))
                 throw new IllegalArgumentException("duplicated values");
             else{
-                c.setArchived(true);
+                c.setArchived(false);
                 categoryRepository.save(c);
 
             }
@@ -65,7 +65,7 @@ public class CategoryService implements ICategoryService {
     }
 
 
-    @Scheduled(cron = "0 */2 * * * *")
+    @Scheduled(cron = "*/2 * * * * *")
     public void deleteCategoryScheduler() {
         List<Category> categoryList=categoryRepository.findAll();
         for (Category c:categoryList

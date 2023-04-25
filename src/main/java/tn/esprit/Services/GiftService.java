@@ -83,6 +83,13 @@ public class GiftService implements IGiftService{
 
     @Override
     public List<Product> getProductsByGift(Integer idGift){
-        return giftRepository.productsByGift(idGift);
+        List<Product> prodgift=giftRepository.productsByGift(idGift);
+        for (Product p:prodgift
+             ) {
+            if(p.getExpirationDateProduct().compareTo(LocalDate.now())<0) {
+                prodgift.remove(p);
+            }
+        }
+        return prodgift;
     }
 }

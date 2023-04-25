@@ -17,4 +17,5 @@ public interface IGiftService {
     void deleteGift( Integer idGift);
      Gift addProductToGift(Integer giftId, Product product);
     List<Product> getProductsByGift(Integer idGift);
+    // List<Product> getProductsByGiftScheduled(Integer idGift);
 }
