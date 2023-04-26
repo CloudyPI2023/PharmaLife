@@ -20,6 +20,6 @@ public interface IProductService {
     Product retrieveProduct (Integer idProduct);
 
     void deleteProduct( Integer idProduct);
-    HashMap<String, Integer> CategoriesByProducts();
+    HashMap<String, Double> CategoriesByProducts();
     HashMap<String, Integer> ProductByExpirationDate();
 }

@@ -3,7 +3,6 @@ package tn.esprit.Services;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.esprit.Entities.Category;
 import tn.esprit.Entities.Product;
 import tn.esprit.Repositories.ProductRepository;
 
@@ -11,6 +10,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service
 @AllArgsConstructor
 public class ProductService implements IProductService{
@@ -103,19 +104,24 @@ public class ProductService implements IProductService{
 
     }
     @Override
-    public HashMap<String, Integer> CategoriesByProducts() {
-        HashMap<String, Integer> map=new HashMap<>();
+    public HashMap<String, Double> CategoriesByProducts() {
+
+        HashMap<String, Float> map=new HashMap<>();
         List<Product> listProducts=productRepository.findAll();
+        Integer nbp=listProducts.size();
         for (Product p:listProducts) {
             String categoryName=p.getCategoryProduct().getNameCategory();
-            if(map.containsKey(categoryName)){
-                map.put(categoryName,map.get(categoryName)+1);
-            }
-            else {
-                map.put(categoryName,1);
-            }
+                map.put(categoryName,map.getOrDefault(categoryName,0F)+1);
+
         }
-        return map;
+        HashMap<String, Double> mapPourcentages=new HashMap<>();
+        for(Map.Entry<String,Float> entry:map.entrySet()){
+            String category=entry.getKey();
+            Float count=entry.getValue();
+            double per=count*100.0/nbp;
+            mapPourcentages.put(category,per);
+        }
+        return mapPourcentages;
     }
 
     @Override

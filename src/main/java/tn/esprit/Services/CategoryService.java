@@ -65,7 +65,7 @@ public class CategoryService implements ICategoryService {
     }
 
 
-    @Scheduled(cron = "*/2 * * * * *")
+   // @Scheduled(cron = "*/2 * * * * *")
     public void deleteCategoryScheduler() {
         List<Category> categoryList=categoryRepository.findAll();
         for (Category c:categoryList
