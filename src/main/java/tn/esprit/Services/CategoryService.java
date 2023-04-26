@@ -33,19 +33,24 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Category addCategory(Category c) {
-        List<Category> categoryList=categoryRepository.findAll();
-        for (Category ca:categoryList
-             ) {
-            if(ca.getNameCategory().equals(c.getNameCategory()))
-                throw new IllegalArgumentException("duplicated values");
-            else{
+
                 c.setArchived(false);
                 categoryRepository.save(c);
 
-            }
-        }
+
+
         return c;
     }
+    @Override
+    public boolean existsByName(String name) {
+        Category c= categoryRepository.findByNameCategory(name);
+        if(c==null){
+            return false;
+        }
+        else
+        return true;
+    }
+
 
     @Override
     public Category updateCategory(Category c) {

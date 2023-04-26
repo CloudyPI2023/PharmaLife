@@ -1,6 +1,7 @@
 package tn.esprit.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.Entities.Category;
 import tn.esprit.Services.CategoryService;
@@ -28,6 +29,11 @@ public class CatgeoryRestController {
     @PostMapping("/add-category")
     public Category addCategory(@RequestBody Category c){
         return categoryService.addCategory(c);
+    }
+    @GetMapping("/exists/{name}")
+    public Boolean categoryExists(@PathVariable("name") String name) {
+        return categoryService.existsByName(name);
+
     }
 
     @GetMapping("/retrieve-category/{idCategory}")

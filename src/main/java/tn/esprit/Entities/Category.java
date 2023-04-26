@@ -20,7 +20,7 @@ public class Category implements Serializable {
     @Column(name="idCategory")
     private Integer idCategory;
     @NonNull
-    @Column(unique = true)
+    //@Column(unique = true)
     private String NameCategory;
     @NonNull
     private String DescriptionCategory;

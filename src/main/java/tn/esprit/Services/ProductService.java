@@ -125,26 +125,24 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public HashMap<String, Integer> ProductByExpirationDate() {
-        HashMap<String, Integer> map=new HashMap<>();
-        List<Product> beforeProducts=productRepository.findByExpirationDateProductBefore(LocalDate.now());
-        List<Product> afterProducts=productRepository.findByExpirationDateProductAfter(LocalDate.now());
-        for (Product p:beforeProducts) {
-
-                String NameProduct = p.getNameProduct();
-                Integer size = beforeProducts.size();
-
-                    map.put(NameProduct, size);
-
-        }
-        for (Product p:afterProducts) {
-
-            String NameProduct = p.getNameProduct();
-            Integer size = afterProducts.size();
-
-                map.put(NameProduct, size);
+    public HashMap<String, Float> ProductByExpirationDate() {
+        HashMap<String, Float> map = new HashMap<>();
+        List<Product> productList = productRepository.findAll();
+        Integer sizelist=productList.size();
+        Float expiredCount = 0F;
+        Float notExpiredCount = 0F;
+        for (Product p : productList) {
+            if (p.getExpirationDateProduct().isBefore(LocalDate.now())) {
+                expiredCount++;
+            } else if (p.getExpirationDateProduct().isAfter(LocalDate.now())) {
+                {
+                    notExpiredCount++;
+                }
             }
 
+        }
+        map.put("Expired", (expiredCount/sizelist)*100);
+        map.put("Available", (notExpiredCount/sizelist)*100);
         return map;
     }
 }

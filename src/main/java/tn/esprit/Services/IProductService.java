@@ -21,5 +21,5 @@ public interface IProductService {
 
     void deleteProduct( Integer idProduct);
     HashMap<String, Double> CategoriesByProducts();
-    HashMap<String, Integer> ProductByExpirationDate();
+    HashMap<String, Float> ProductByExpirationDate();
 }
