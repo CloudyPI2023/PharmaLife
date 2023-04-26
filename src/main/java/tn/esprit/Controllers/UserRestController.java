@@ -73,6 +73,7 @@ public class UserRestController {
 
 
     @PutMapping("/update-User")
+
     @ResponseBody
     public void updateUser(@RequestBody User user) {
         userService.updateUser(user);
@@ -104,5 +105,15 @@ public class UserRestController {
         return ResponseEntity.ok().body(roleStatistics);
     }
 
+    @GetMapping("/gender-statistics")
+    public ResponseEntity<Map<String, Double>> getGenderStatistics() {
+        Map<String, Double> genderStatistics = userService.getGenderStatistics();
+        return ResponseEntity.ok().body(genderStatistics);
+    }
 
+    @GetMapping("/activationStatus-statistics")
+    public ResponseEntity<Map<String, Double>> getActivationStatusStatistics() {
+        Map<String, Double> actStatistics = userService.getActivationStatusStatistics();
+        return ResponseEntity.ok().body(actStatistics);
+    }
 }

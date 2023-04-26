@@ -127,7 +127,7 @@ public class User implements Serializable, UserDetails {
     private LocalDateTime lockTime;
 
 
-    private Boolean activationStatus;
+    private Boolean activationStatus= false;
 
     @Column
     private LocalDateTime lastLoginTime;

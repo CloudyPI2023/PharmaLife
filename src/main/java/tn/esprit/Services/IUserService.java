@@ -37,4 +37,8 @@ public interface IUserService {
     User findByToken(String t) ;
 
     Map<String, Double> getRoleStatistics();
-    }
+
+    Map<String, Double> getGenderStatistics();
+
+    Map<String, Double> getActivationStatusStatistics();
+}

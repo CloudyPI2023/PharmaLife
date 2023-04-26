@@ -260,4 +260,47 @@ public class UserService implements IUserService, UserDetailsService {
         }
         return rolePercentages;
     }
+
+    @Override
+    public Map<String, Double> getGenderStatistics() {
+        List<User> users = userRepository.findAll();
+        Map<String, Integer> genderCounts = new HashMap<>();
+        for (User user : users) {
+            String gender = user.getGender().toString();
+            genderCounts.put(gender, genderCounts.getOrDefault(gender, 0) + 1);
+        }
+        int total1 = users.size();
+        Map<String, Double> genderPercentages = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : genderCounts.entrySet()) {
+            String gender = entry.getKey();
+            int count = entry.getValue();
+            double percentage = count * 100.0 / total1;
+            genderPercentages.put(gender, percentage);
+        }
+        return genderPercentages;
+    }
+
+    @Override
+    public Map<String, Double> getActivationStatusStatistics() {
+        List<User> users = userRepository.findAll();
+        Map<String, Integer> activationCounts = new HashMap<>();
+        for (User user : users) {
+            String actS = user.getActivationStatus().toString();
+            activationCounts.put(actS, activationCounts.getOrDefault(actS, 0) + 1);
+        }
+        int total1 = users.size();
+        Map<String, Double> actSPercentages = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : activationCounts.entrySet()) {
+            String status = entry.getKey();
+            if (status.equals("true")) {
+                status = "Active";
+            } else if (status.equals("false")) {
+                status = "Inactive";
+            }
+            int count = entry.getValue();
+            double percentage = count * 100.0 / total1;
+            actSPercentages.put(status, percentage);
+        }
+        return actSPercentages;
+    }
 }
