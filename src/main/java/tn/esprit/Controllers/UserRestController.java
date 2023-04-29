@@ -2,6 +2,7 @@ package tn.esprit.Controllers;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -9,18 +10,25 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.Entities.Role;
 import tn.esprit.Entities.User;
+import tn.esprit.Image.ImageUpload;
 import tn.esprit.Repositories.UserRepository;
 import tn.esprit.Services.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.annotation.security.RolesAllowed;
+import javax.xml.ws.Response;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @Tag(name = "User management")
@@ -31,14 +39,25 @@ public class UserRestController {
 
     IUserService userService;
 
-     //@RolesAllowed("Admin")
-     @PostMapping("/add-User")
-     public User addUser(@RequestBody User u, @RequestParam("image") MultipartFile image){
+     @PostMapping(value = "/add-User")
+     public User addUser(@RequestBody   User u){
          User user = userService.addUser(u);
-         user.setImageUser(image.getOriginalFilename());
-
        return user;
      }
+   /*  @PostMapping("/add-User")
+    public User addUser(@RequestBody  User u, @RequestPart("file") MultipartFile file) throws IOException {
+        // Save the file to a temporary location
+        File tempFile = File.createTempFile("temp", null);
+        file.transferTo(tempFile);
+
+        // Set the imageUser attribute of the user object
+        u.setImageUser(tempFile.getAbsolutePath());
+
+
+        User user = userService.addUser(u);
+
+        return user;
+    }*/
 
 
 
@@ -115,5 +134,14 @@ public class UserRestController {
     public ResponseEntity<Map<String, Double>> getActivationStatusStatistics() {
         Map<String, Double> actStatistics = userService.getActivationStatusStatistics();
         return ResponseEntity.ok().body(actStatistics);
+    }
+
+
+
+    @GetMapping("/roles")
+    public List<String> getRoles() {
+        return Arrays.stream(Role.values())
+                .map(Role::toString)
+                .collect(Collectors.toList());
     }
 }

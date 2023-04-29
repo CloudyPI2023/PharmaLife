@@ -44,12 +44,12 @@ public class RegistrationController {
         }
         registrationService.register(request);
         // Snd sms when registration
-        /* Twilio.init(twilioConfiguration.getAccountSid(), twilioConfiguration.getAuthToken());
-        Message message = Message.creator(
+         Twilio.init(twilioConfiguration.getAccountSid(), twilioConfiguration.getAuthToken());
+       /* Message message = Message.creator(
                         new PhoneNumber(request.getPhoneNumber()),
                         new PhoneNumber(twilioConfiguration.getTrialNumber()),
-                        "Thank You For Registering On Our Platform \uD83D\uDE03 ! Please Check You Email To Verify Your Account ")
-                .create(); */
+                        "Thank You For Registering On Our Platform PharmaLife \uD83D\uDE03 ! Please Check You Email To Verify Your Account ")
+                .create();*/
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 
     }

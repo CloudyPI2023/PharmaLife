@@ -83,6 +83,7 @@ public class LoginController {
                         .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000000))
                         .withIssuer(request.getRequestURI().toString())
+                        .withClaim("idUser", user.getIdUser())
                         .withClaim("lastName", user.getLastName())
                         .withClaim("firstName",user.getFirstName())
                         .withClaim("phoneNumber",user.getPhoneNumber())
@@ -95,9 +96,6 @@ public class LoginController {
                 // return tokens
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", access_token);
-                tokens.put("user", user.getEmail());
-                tokens.put("idUser", user.getIdUser().toString());
-                tokens.put("role",user.getRole().toString());
                 return ResponseEntity.ok(tokens);
 
                 //return ResponseEntity.ok("Login successful");

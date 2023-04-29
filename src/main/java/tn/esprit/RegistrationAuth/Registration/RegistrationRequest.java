@@ -7,6 +7,7 @@ import tn.esprit.Entities.Role;
 import java.time.LocalDate;
 
 @Getter
+@Setter
 @ToString
 @AllArgsConstructor
 @EqualsAndHashCode
@@ -16,7 +17,7 @@ public class RegistrationRequest {
     private final String lastName;
     private final String email;
     private final String password;
-    private final String phoneNumber;
+    private  String phoneNumber;
     private final String address;
     private final String city;
     private final Role role;
