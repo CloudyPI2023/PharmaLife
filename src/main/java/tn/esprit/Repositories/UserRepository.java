@@ -94,4 +94,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findExpiredLockUsers(@Param("expirationTime") LocalDateTime expirationTime);
 
 
+
 }

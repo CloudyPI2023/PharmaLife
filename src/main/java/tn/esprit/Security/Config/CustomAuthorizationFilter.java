@@ -61,7 +61,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     filterChain.doFilter(request, response);
                 }
                 catch (Exception e) {
-                    log.error("error loging in: {}",e.getMessage());
+                   log.error("error loging in: {}",e.getMessage());
                     response.setHeader("error", e.getMessage());
                     response.setStatus(FORBIDDEN.value());
                     //response.sendError(FORBIDDEN.value());

@@ -78,11 +78,8 @@ public class User implements Serializable, UserDetails {
     // @Formula("YEAR(CURDATE()) - YEAR(BIRTHDATE)")
     private Integer age;
 
-    // @Temporal(TemporalType.DATE)
     @Column(nullable=false)
-
     private LocalDate birthDate;
-    @Column(nullable=false)
 
     private String imageUser;
 
@@ -150,7 +147,7 @@ public class User implements Serializable, UserDetails {
 
 ///constructeur
 public User(String firstName, String lastName, String email, String phoneNumber, LocalDate birthDate, String address,
-            String city, String password, Role role, Gender gender,String imageUser) {
+            String city, String password, Role role, Gender gender) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
@@ -161,7 +158,6 @@ public User(String firstName, String lastName, String email, String phoneNumber,
     this.password = password;
     this.role = role;
     this.gender = gender;
-    this.imageUser=imageUser;
 }
 
     //

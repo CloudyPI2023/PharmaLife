@@ -27,7 +27,7 @@ public interface ConfirmationTokenRepository
                           LocalDateTime confirmedAt);
 
 
-
+     ConfirmationToken findByUser(User u);
 
 
 }

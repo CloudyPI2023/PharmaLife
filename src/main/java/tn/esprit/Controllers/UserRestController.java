@@ -9,7 +9,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,35 +42,16 @@ public class UserRestController {
     IUserService userService;
 
      @PostMapping(value = "/add-User")
-     public User addUser(@RequestBody   User u){
+     public User addUser(@RequestBody User u){
          User user = userService.addUser(u);
        return user;
      }
-   /*  @PostMapping("/add-User")
-    public User addUser(@RequestBody  User u, @RequestPart("file") MultipartFile file) throws IOException {
-        // Save the file to a temporary location
-        File tempFile = File.createTempFile("temp", null);
-        file.transferTo(tempFile);
 
-        // Set the imageUser attribute of the user object
-        u.setImageUser(tempFile.getAbsolutePath());
-
-
-        User user = userService.addUser(u);
-
-        return user;
-    }*/
-
-
-
-
-
-  @GetMapping("/all-Users")
+  @GetMapping(value = "/all-Users", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<User>> getUsers(){
         return ResponseEntity.ok().body(userService.getUsers());
     }
-
 
   @GetMapping("/retrieve-UserByEmail/{emailUser}")
     @ResponseBody
@@ -76,13 +59,11 @@ public class UserRestController {
         return userService.findByEmail(emailUser);
     }
 
-
   @GetMapping("/retrieve-User/{idUser}")
   @ResponseBody
   public User findById(@PathVariable("idUser") Integer idUser){
     return userService.findById(idUser);
   }
-
 
   @DeleteMapping("/delete-User/{idUser}")
   @ResponseBody
@@ -92,7 +73,7 @@ public class UserRestController {
 
 
     @PutMapping("/update-User")
-
+    //@PreAuthorize("hasRole('Patient')")
     @ResponseBody
     public void updateUser(@RequestBody User user) {
         userService.updateUser(user);

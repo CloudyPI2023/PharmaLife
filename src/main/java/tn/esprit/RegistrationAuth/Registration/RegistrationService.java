@@ -50,8 +50,7 @@ public class RegistrationService {
                         request.getCity(),
                         request.getPassword(),
                         request.getRole(),
-                        request.getGender(),
-                        request.getImageUser()
+                        request.getGender()
                 )
         );
 

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.Entities.Role;
 import tn.esprit.Entities.User;
 import tn.esprit.RegistrationAuth.Registration.Token.ConfirmationToken;
+import tn.esprit.RegistrationAuth.Registration.Token.ConfirmationTokenRepository;
 import tn.esprit.RegistrationAuth.Registration.Token.ConfirmationTokenService;
 import tn.esprit.Repositories.UserRepository;
 
@@ -39,6 +40,7 @@ public class UserService implements IUserService, UserDetailsService {
     private final ConfirmationTokenService confirmationTokenService;
     @Autowired
     private final UserRepository userRepository;
+    private final ConfirmationTokenRepository confirmationTokenRepository;
 
     public static final int MAX_FAILED_ATTEMPTS = 3;
 
@@ -84,13 +86,21 @@ public class UserService implements IUserService, UserDetailsService {
     @Override
     public void deleteUserById(Integer id) {
         User u = userRepository.findByIdUser(id).orElse(null);
-        userRepository.delete(u);
+
+        if (u != null) {
+            ConfirmationToken token = confirmationTokenRepository.findByUser(u);
+            if (token != null) {
+                confirmationTokenRepository.delete(token);
+            }
+            userRepository.delete(u);
+        }
 
     }
 
 
     @Override
     public void updateUser(User user) {
+        user.setEnabled(true);
         userRepository.save(user);
 
     }

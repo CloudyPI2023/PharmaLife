@@ -98,7 +98,6 @@ public class LoginController {
                 tokens.put("access_token", access_token);
                 return ResponseEntity.ok(tokens);
 
-                //return ResponseEntity.ok("Login successful");
             } else {
                 // user account is locked
                 if (user.getLockTime() != null && user.getLockTime().plusMinutes(5).isBefore(LocalDateTime.now())) {

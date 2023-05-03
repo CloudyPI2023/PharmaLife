@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class RegistrationRequest {
-
     private final String firstName;
     private final String lastName;
     private final String email;
@@ -23,7 +22,6 @@ public class RegistrationRequest {
     private final Role role;
     private final Gender gender;
     private final LocalDate birthDate;
-    private final String imageUser;
 
 
 }
