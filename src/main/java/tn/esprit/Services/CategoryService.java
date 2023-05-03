@@ -30,6 +30,18 @@ public class CategoryService implements ICategoryService {
         }
         return lisst;
     }
+    @Override
+    public List<Category> retrieveAllCategoriesNotArchived() {
+        List<Category> categoryList=categoryRepository.findAll();
+        List<Category> lisst=new ArrayList<>();
+        for (Category c: categoryList) {
+            if(c.isArchived()){
+                lisst.add(c);
+            }
+
+        }
+        return lisst;
+    }
 
     @Override
     public Category addCategory(Category c) {
@@ -104,4 +116,5 @@ public class CategoryService implements ICategoryService {
         return c;
 
     }
+
 }

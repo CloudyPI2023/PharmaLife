@@ -68,7 +68,7 @@ public class ReclamationService implements IReclamationService {
         List<Reclamation> listeRec= reclamationRepository.findAll();
         List<Reclamation> myRec=new ArrayList<>();
         for (Reclamation r:listeRec) {
-            if (r.getUserProduct().getIdUser()==idUser && !r.getArchived()){
+            if (r.getUserProduct().getIdUser()==idUser){
                 myRec.add(r);
             }
         }

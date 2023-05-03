@@ -53,5 +53,9 @@ public class GiftRestController {
         return giftService.getProductsByGift(idGift);
 
     }
+    @GetMapping("/myGifts/{idUser}")
+    public List<Gift> myGifts(@PathVariable("idUser") Integer idUser){
+        return giftService.myGifts(idUser);
+    }
 
 }

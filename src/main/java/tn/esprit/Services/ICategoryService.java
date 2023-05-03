@@ -19,4 +19,5 @@ public interface ICategoryService {
      Category setCancelArchivedCategory(Category c);
     Category ArCategory(Category c);
     boolean existsByName(String name);
+    List<Category> retrieveAllCategoriesNotArchived();
 }

@@ -2,6 +2,7 @@ package tn.esprit.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.Entities.Category;
 import tn.esprit.Entities.Gift;
 import tn.esprit.Entities.Product;
 import tn.esprit.Services.IGiftService;
@@ -41,6 +42,16 @@ public class ProductRestController {
     @PostMapping("/add-product")
     public Product addProduct(@RequestBody Product p){
         return productService.addProduct(p);
+    }
+
+    @GetMapping("/top3Products")
+    public List<Product> findTop3ByOrderByCreationDateAsc(){
+        return productService.retrieveProductsByCreationDateDSC();
+    }
+
+    @GetMapping("/productsByNameCategory")
+    public List<Product> findProductsByCategoryProduct(@RequestBody Category c){
+        return productService.findProductsByCategoryProduct(c);
     }
 
     @GetMapping("/retrieve-product/{idProduct}")

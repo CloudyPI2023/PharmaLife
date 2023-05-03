@@ -3,6 +3,7 @@ package tn.esprit.Services;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.Entities.Category;
 import tn.esprit.Entities.Product;
 import tn.esprit.Repositories.ProductRepository;
 
@@ -33,9 +34,11 @@ public class ProductService implements IProductService{
             }
         }
         return newlist;
+    }
 
-
-
+    @Override
+    public List<Product> retrieveProductsByCreationDateDSC(){
+            return productRepository.findTop3ByOrderByCreationDateDesc();
     }
     @Override
     public List<Product> retrieveAllProductsExpired() {
@@ -56,7 +59,7 @@ public class ProductService implements IProductService{
         List<Product> prodNotExpired=new ArrayList<>();
         for (Product p:allprod
         ) {
-            if(p.getExpirationDateProduct().compareTo(LocalDate.now())>0) {
+            if((p.getExpirationDateProduct().compareTo(LocalDate.now())>0) &&(!p.getCategoryProduct().isArchived())){
                 p.setExpired(0);
                 prodNotExpired.add(p);
             }
@@ -76,6 +79,11 @@ public class ProductService implements IProductService{
         return finalProducts;
     }
 
+    @Override
+    public List<Product> findProductsByCategoryProduct(Category c){
+        return productRepository.findProductsByCategoryProduct(c);
+
+    }
 
 
     @Override
@@ -83,6 +91,7 @@ public class ProductService implements IProductService{
             if(p.getExpirationDateProduct().compareTo(LocalDate.now())<0){
                 throw new RuntimeException("product expired, cannot be added");
         }
+            p.setCreationDate(LocalDate.now());
         productRepository.save(p);
         return p;
     }

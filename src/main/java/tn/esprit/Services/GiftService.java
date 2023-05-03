@@ -11,6 +11,7 @@ import tn.esprit.Repositories.ProductRepository;
 import tn.esprit.Repositories.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.OrderBy;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -26,6 +27,18 @@ public class GiftService implements IGiftService{
     @Override
     public List<Gift> retrieveAllGifts() {
         return giftRepository.findAll();
+    }
+    @Override
+    public List<Gift> myGifts(Integer idUser){
+        List<Gift> giftList =giftRepository.findAll();
+        List<Gift> mygifts=new ArrayList<>();
+        for (Gift g:giftList
+             ) {
+            if(g.getUserGift().getIdUser()==idUser){
+                mygifts.add(g);
+            }
+        }
+        return mygifts;
     }
 
     @Override
@@ -67,7 +80,7 @@ public class GiftService implements IGiftService{
         giftRepository.deleteById(idGift);
 
     }
-@Override
+    @Override
     public Gift addProductToGift(Integer giftId, Product product) {
 
         Gift gift = giftRepository.findById(giftId).orElseThrow(() -> new EntityNotFoundException("Gift not found"));
@@ -75,6 +88,7 @@ public class GiftService implements IGiftService{
         if(userOptional.isPresent()){
             gift.setUserGift(userOptional.get());
         }
+        gift.setDescription("Gift description");
         gift.getProductsGift().add(product);
         product.setQuantityProduct(product.getQuantityProduct()-1);
         productRepository.save(product);

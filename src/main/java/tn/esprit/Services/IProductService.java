@@ -22,4 +22,7 @@ public interface IProductService {
     void deleteProduct( Integer idProduct);
     HashMap<String, Double> CategoriesByProducts();
     HashMap<String, Float> ProductByExpirationDate();
+    List<Product> retrieveProductsByCreationDateDSC();
+
+    List<Product> findProductsByCategoryProduct(Category c);
 }

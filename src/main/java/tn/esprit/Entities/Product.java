@@ -30,6 +30,7 @@ public class Product implements Serializable {
     private Integer QuantityProduct;
     private Integer expired;
    // private Integer AvailabilityProduct;
+    private LocalDate creationDate;
 
 
     private LocalDate expirationDateProduct;
@@ -41,7 +42,7 @@ public class Product implements Serializable {
     @ManyToOne
     private Category categoryProduct;
 
-    @ManyToMany(mappedBy = "ProductsGift")
+    @ManyToMany(mappedBy = "ProductsGift" , cascade = CascadeType.ALL)
     @JsonIgnore
     List<Gift> gifts;
 

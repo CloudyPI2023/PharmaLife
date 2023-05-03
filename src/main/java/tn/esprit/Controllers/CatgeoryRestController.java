@@ -25,6 +25,10 @@ public class CatgeoryRestController {
     public List<Category> retrieveAllCategoriesArchived(){
         return categoryService.retrieveAllCategoriesArchived();
     }
+    @GetMapping("/all-categoriesNotArchived")
+    public List<Category> retrieveAllCategoriesNotArchived(){
+        return categoryService.retrieveAllCategoriesNotArchived();
+    }
 
     @PostMapping("/add-category")
     public Category addCategory(@RequestBody Category c){
