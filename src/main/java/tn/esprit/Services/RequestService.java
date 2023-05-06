@@ -111,31 +111,9 @@ public class RequestService implements IRequestService {
         return requestRepository.getRequestRefused();
     }
 
-    /*@Override
-    public Request assignRequestToDonation(Request r, Integer idDonation) {
-        //Request r = requestRepository.findById(idRequest).get();
-        //Donation d = donationRepository.findById(idDnation).get();
-       // r.setIdDonation(idDnation);
-        //s.getPistes().add(p);
-        //return requestRepository.save(r);
-
-        if (r != null) {
-            r.setIdDonation(idDonation);
-            requestRepository.save(r);
-        }
-
-        return r;
-    }*/
-
 
     @Override
     public Request updateRequestDonation(Request r) {
-        /*r.setIdRequest(r.getIdRequest());
-        r.setNameRequest(r.getNameRequest());
-        r.setDateRequest(r.getDateRequest());
-        r.setRequestType(r.getRequestType());
-        r.setDescriptionRequest(r.getDescriptionRequest());
-        r.setAssociation(r.getAssociation());*/
         return requestRepository.save(r);
         //return requestRepository.save(r);
     }
