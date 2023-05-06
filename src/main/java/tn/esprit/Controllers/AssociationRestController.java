@@ -22,7 +22,7 @@ public class AssociationRestController {
 
     IAssociationService iAssociationService;
     IUserService iUserService;
-    // ces trois fonctionnalités sont réalisées par 'AssociationMember'
+
 
     @PostMapping("/addAssociation")
     public Association addAssociation(@RequestBody Association a){
@@ -56,18 +56,14 @@ public class AssociationRestController {
     }
 
 
-    //Tous les users de l'app peuvent voir la lite des associations et faire une recherche dynamique
+
     @GetMapping("/retrieveAllAssociations")
     public List<Association> retrieveAllAssociations(){
         List<Association> listAssociations = iAssociationService.retrieveAllAssociations();
         return listAssociations;
     }
 
-    /*@GetMapping("/sendMail")
-    public void sendMail() {
-        iAssociationService.email("ziadimouna2@gmail.com","Title", "Massage");
 
-    }*/
     @GetMapping("/retrieveAssociation/{id_association}")
     public Association retrieveAssociation(@PathVariable("id_association")Integer IdAssociation){
         return iAssociationService.retrieveAssociation(IdAssociation);
@@ -78,10 +74,6 @@ public class AssociationRestController {
         return iAssociationService.nombreAnneeParAssociation();
     }
 
-    /*@GetMapping("/nombreAnnee/{id_association}")
-    public Integer nombreAnnee(@PathVariable("id_association")Integer IdAssociation){
-        return iAssociationService.nbAnnes(IdAssociation);
-    }*/
 
     @GetMapping("/retrieveAssociationsPlusTroixAns")
     public List<Association> retrieveAssociationsPlusDeuxAns(){
