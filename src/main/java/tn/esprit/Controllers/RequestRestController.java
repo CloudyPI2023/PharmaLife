@@ -18,7 +18,7 @@ import java.util.Map;
 public class RequestRestController {
     IRequestService iRequestService;
     IDonationService idonationService;
-    //ces fonctionnamlitées sont réalisées par 'AssociationMember'
+
 
 
     @DeleteMapping("cancelRequest/{id_request}")
@@ -31,10 +31,6 @@ public class RequestRestController {
     {
         return iRequestService.retrieveMyRequests(idAssociation);
     }
-
-
-
-    //ces fonctionnalitées sont réalisées par 'Admin'
 
 
     @GetMapping("/retrieveAllRequests")
@@ -94,19 +90,12 @@ public class RequestRestController {
         return iRequestService.RequestByType();
     }
 
-   /* @PutMapping("/assignRequestToDonation/{id_donation}")
-    public Request assignRequestToDonation(@RequestBody Request r, @PathVariable("id_donation")Integer IdDonation){
-        Request request = iRequestService.assignRequestToDonation(r,IdDonation);
-        return request;
-    }*/
 
     @PostMapping("/addRequest")
     public Request addRequest(@RequestBody Request r){
         Request request = iRequestService.addRequest(r);
         return request;
     }
-
-    //take donation front
     @PostMapping("/assignRequestToDonation/{id_donation}/{id_association}")
     public Request assignRequestToDonation(@RequestBody Request r, @PathVariable("id_donation")Integer IdDonation
             , @PathVariable("id_association")Integer IdAssociation){
@@ -117,8 +106,6 @@ public class RequestRestController {
         Request request = iRequestService.assignRequestToDonation(r,IdDonation,IdAssociation);
         return request;
     }
-
-    //add request association mtaa front
     @PostMapping("/assignRequestToDonationInf3/{id_association}")
     public Request assignRequestToDonationInf3(@RequestBody Request r, @PathVariable("id_association")Integer IdAssociation){
         // Request request = iRequestService.addRequest(r);
@@ -132,8 +119,6 @@ public class RequestRestController {
         List<Request> listRequests = iRequestService.findAllRequestsWhereIdDonationIsNull();
         return listRequests;
     }
-
-    //add donation to request by id
 
     @PutMapping("/assignRequestToDonationByAdmin/{id_donation}")
     public Request assignRequestToDonationByAdmin(@RequestBody Request r, @PathVariable("id_donation")Integer IdDonation){
