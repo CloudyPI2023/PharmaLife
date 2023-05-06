@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.Entities.Donation;
 import tn.esprit.Services.IDonationService;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DonationRestController {
     IDonationService iDonationService;
-
+    //ces fonctionnalités sont réalisés par 'Donator'
     @PostMapping("/addDonation")
     public Donation addDonation(@RequestBody Donation d){
         Donation donation = iDonationService.addDonation(d);
@@ -40,7 +40,7 @@ public class DonationRestController {
 
     }
 
-
+    //ces fonctionnalités sont réalisées par 'Admin'
     @GetMapping("/retrieveAllDonations")
     public List<Donation> retrieveAllDonations(){
         List<Donation> listDonations = iDonationService.retrieveAllDonations();
@@ -53,8 +53,46 @@ public class DonationRestController {
     }
 
     @GetMapping("/statisticsDonationStatus")
-    HashMap<String, Integer> DonationsByStatus(){
+    Map<String, Double> DonationsByStatus(){
         return iDonationService.DonationByStatus();
     }
+
+    @GetMapping("/statisticsDonationType")
+    Map<String, Double> DonationsByType(){
+        return iDonationService.DonationByType();
+    }
+
+
+
+    @GetMapping("/statisticsDonationDate1")
+    public Map<String, Map<String, Integer>> getDonationStatisticsByDate1() {
+        return iDonationService.getDonationStatisticsByDate1();
+    }
+
+
+    @GetMapping("/getDonationsByAssociation/{idAssociation}")
+    public List<Donation> getDonationsByAssociation (@PathVariable("idAssociation") Integer idAssociation)
+    {
+        return iDonationService.retrieveAllDonations();
+
+    }
+
+    @GetMapping("/getDonationsByRequest/{idRequest}")
+    public List<Donation> getDonationsByRequest (@PathVariable("idRequest") Integer idRequest)
+    {
+        return iDonationService.getDisabledDonations();
+
+    }
+
+
+    @GetMapping("/getDisabledDonations")
+    public List<Donation> getDisabledDonations ()
+    {
+        return iDonationService.getDisabledDonations();
+
+    }
+
+
+
 
 }
