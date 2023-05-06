@@ -38,6 +38,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy="userReservation")
     private Set<Reservation> ReservationsUser;
 
+    @JsonIgnore
     @OneToMany(mappedBy="userDonation")
     private Set<Donation> DonationsUser;
 

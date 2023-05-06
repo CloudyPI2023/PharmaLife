@@ -44,5 +44,7 @@ public class Association implements Serializable {
     @JsonIgnore
     User userAssociation;
 
+    //private boolean archived = false;
+
 
 }

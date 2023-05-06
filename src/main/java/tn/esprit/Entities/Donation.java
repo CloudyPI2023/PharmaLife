@@ -41,6 +41,8 @@ public class Donation implements Serializable {
     // @JsonIgnore
     User userDonation;
 
+    //private boolean archived = false;
+
 
 
 }
