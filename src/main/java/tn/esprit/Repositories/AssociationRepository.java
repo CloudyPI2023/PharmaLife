@@ -19,11 +19,6 @@ public interface AssociationRepository extends CrudRepository<Association,Intege
     List<Request> getAssociationByRequestsAssociation(Integer idAssociation);
 
 
-
-   /* @Query ("SELECT TIMESTAMPDIFF(year , a.DateAssociation, CURRENT_TIMESTAMP) FROM Association a where a.idAssociation=:id_association")
-    Integer getAssociationByDateAssociation_Year(@Param("id_association") Integer id_association);*/
-
-
     @Query("SELECT DATEDIFF(CURRENT_DATE, a.DateAssociation) / 365 FROM Association a WHERE a.idAssociation = :id_association")
     Integer getAssociationByDateAssociation_Year(@Param("id_association") Integer id_association);
 
