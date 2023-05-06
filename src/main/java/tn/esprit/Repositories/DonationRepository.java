@@ -20,8 +20,4 @@ public interface DonationRepository extends CrudRepository<Donation, Integer> {
     @Query("select d from Donation d where d.idRequest IS NULL")
     List<Donation> getDisabledDonations();
 
-    /*@Query("SELECT CONCAT(YEAR(d.dateDonation), '-', MONTH(d.dateDonation)) as month, COUNT(d) as count " +
-            "FROM Donation d " +
-            "GROUP BY YEAR(d.dateDonation), MONTH(d.dateDonation)")
-    List<Map<String, Double>> countDonationsByMonth();*/
 }
