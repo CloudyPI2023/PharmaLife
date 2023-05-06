@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import tn.esprit.Entities.Association;
 
+import tn.esprit.Entities.Donation;
 import tn.esprit.Entities.Request;
 import tn.esprit.Entities.RequestDonationStatus;
 import tn.esprit.Repositories.AssociationRepository;
@@ -17,7 +17,9 @@ import tn.esprit.Repositories.DonationRepository;
 import tn.esprit.Repositories.RequestRepository;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -39,6 +41,7 @@ public class RequestService implements IRequestService {
         return requestRepository.save(r);
     }
 
+
     @Override
     public void cancelRequest(Integer idRequest) {
         requestRepository.deleteById(idRequest);
@@ -53,11 +56,6 @@ public class RequestService implements IRequestService {
     @Override
     public Request updateRequest(Request r) {
 
-        Association a = r.getAssociation();
-        // Integer idAss = r.getAssociation().getIdAssociation();
-        log.info("Association deja mawjouda  " + a);
-        // log.info("id Asso deja mawjouda  " + idAss);
-        r.setAssociation(a);
         LocalDate dateActuelle = LocalDate.now();
         r.setDateRequest(dateActuelle);
         return requestRepository.save(r);
@@ -70,7 +68,7 @@ public class RequestService implements IRequestService {
 
     @Override
     public String sendMailToAssociation(String email) {
-
+        // Try block to check for exceptions
         try {
 
             // Creating a simple mail message
@@ -113,18 +111,123 @@ public class RequestService implements IRequestService {
         return requestRepository.getRequestRefused();
     }
 
+    /*@Override
+    public Request assignRequestToDonation(Request r, Integer idDonation) {
+        //Request r = requestRepository.findById(idRequest).get();
+        //Donation d = donationRepository.findById(idDnation).get();
+       // r.setIdDonation(idDnation);
+        //s.getPistes().add(p);
+        //return requestRepository.save(r);
+
+        if (r != null) {
+            r.setIdDonation(idDonation);
+            requestRepository.save(r);
+        }
+
+        return r;
+    }*/
+
 
     @Override
-    public Request assignRequestToDonation(Request r, Integer idDonation) {
+    public Request updateRequestDonation(Request r) {
+        /*r.setIdRequest(r.getIdRequest());
+        r.setNameRequest(r.getNameRequest());
+        r.setDateRequest(r.getDateRequest());
+        r.setRequestType(r.getRequestType());
+        r.setDescriptionRequest(r.getDescriptionRequest());
+        r.setAssociation(r.getAssociation());*/
+        return requestRepository.save(r);
+        //return requestRepository.save(r);
+    }
+
+    @Override
+    public Map<String, Double> RequestByStatus() {
+        List<Request> requests = (List<Request>) requestRepository.findAll();
+        Map<String, Integer> statusCounts = new HashMap<>();
+        for (Request r : requests) {
+            String status = r.getStatusRequest().toString();
+            statusCounts.put(status, statusCounts.getOrDefault(status, 0) + 1);
+        }
+        int total = requests.size();
+        Map<String, Double> statusPercentages = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : statusCounts.entrySet()) {
+            String status = entry.getKey();
+            int count = entry.getValue();
+            double percentage = count * 100.0 / total;
+            statusPercentages.put(status, percentage);
+        }
+        return statusPercentages;
+    }
+
+    @Override
+    public Map<String, Double> RequestByType() {
+        List<Request> requests = (List<Request>) requestRepository.findAll();
+        Map<String, Integer> typeCounts = new HashMap<>();
+        for (Request d : requests) {
+            String type = d.getRequestType().toString();
+            typeCounts.put(type, typeCounts.getOrDefault(type, 0) + 1);
+        }
+        int total = requests.size();
+        Map<String, Double> typePercentages = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : typeCounts.entrySet()) {
+            String type = entry.getKey();
+            int count = entry.getValue();
+            double percentage = count * 100.0 / total;
+            typePercentages.put(type, percentage);
+        }
+        return typePercentages;
+    }
+
+    @Override
+    public Request assignRequestToDonation(Request r, Integer idDonation, Integer idAssociation) {
+        LocalDate dateActuelle = LocalDate.now();
+        r.setStatusRequest(RequestDonationStatus.accepted);
+        r.setDateRequest(dateActuelle);
+        r.setIdDonation(idDonation);
+        Donation d = donationRepository.findById(idDonation).get();
+        r.setRequestType(d.getDonationType());
+        r.setDescriptionRequest("Request added by client");
+        r.setNameRequest("Request Front");
+        Association a = associationRepository.findById(idAssociation).get();
+        r.setAssociation(a);
+        return requestRepository.save(r);
+    }
+
+    @Override
+    public Request assignRequestToDonationInf3(Request r, Integer idAssociation) {
+        LocalDate dateActuelle = LocalDate.now();
+        r.setStatusRequest(RequestDonationStatus.inProgress);
+        r.setDateRequest(dateActuelle);
+
+        Association a = associationRepository.findById(idAssociation).get();
+        r.setAssociation(a);
+        return requestRepository.save(r);
+    }
+
+
+    @Override
+    public List<Request> findAllRequestsWhereIdDonationIsNull() {
+
+        return requestRepository.findAllRequestsWhereIdDonationIsNull();
+    }
+
+    @Override
+    public Request assignRequestToDonationByAdmin(Request r, Integer idDonation) {
+        //Request r = requestRepository.findById(idRequest).get();
+        r.setStatusRequest(RequestDonationStatus.accepted);
         r.setIdDonation(idDonation);
         return requestRepository.save(r);
     }
 
     @Override
-    public Request updateRequestDonation(Request r) {
+    public Request assignDonationToRequestByAdmin(Donation d, Integer idRequest) {
 
+        Request r = requestRepository.findById(idRequest).get();
+        d.setIdRequest(idRequest);
+        donationRepository.save(d);
+        r.setStatusRequest(RequestDonationStatus.accepted);
+        r.setIdDonation(d.getIdDonation());
         return requestRepository.save(r);
-        //return requestRepository.save(r);
     }
 
 

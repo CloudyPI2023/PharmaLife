@@ -2,44 +2,49 @@ package tn.esprit.Services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+
 import org.springframework.stereotype.Service;
 import tn.esprit.Entities.Association;
+
+import tn.esprit.Entities.Donation;
+import tn.esprit.Entities.User;
 import tn.esprit.Repositories.AssociationRepository;
+
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import tn.esprit.Repositories.UserRepository;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
 public class AssociationService implements IAssociationService {
 
     @Autowired
+    UserRepository userRepository;
     AssociationRepository associationRepository;
     ///email
     @Autowired
     private JavaMailSender javaMailSender;
 
-    @Override
-    public String addAssociationByMail(Association a) {
+
+
+
+   /* @Override
+    public String addAssociation(Association a) {
         Association u = associationRepository.findByEmail(a.getEmailAssocation());
         if(u == null) {
 
             associationRepository.save(a);
-
             this.sendSimpleMail(a.getEmailAssocation());
             return "Asso added successfully";
         }
         else {
             return "Email does not exist";
         }
-    }
-
-
+    }*/
 
     @Override
     public Association updateAssociation(Association a) {
@@ -51,6 +56,14 @@ public class AssociationService implements IAssociationService {
         associationRepository.deleteById(idAssociation);
     }
 
+   /* @Override
+    public List<Association> retrieveAllAssociations() {
+        return (List<Association>) associationRepository.findAll();
+    }*/
+
+
+
+    //@Value("${spring.mail.username}") private String sender;
     @Override
     public String sendSimpleMail(String email) {
         // Try block to check for exceptions
@@ -60,7 +73,7 @@ public class AssociationService implements IAssociationService {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
 
             // Setting up necessary details
-            mailMessage.setFrom("cloudypi2023@gmail.com");
+            mailMessage.setFrom("pharmalife.cloudy@gmail.com");
             mailMessage.setTo(email);
             mailMessage.setText("Congratulation!!\u0020\nYour Association on PharmaLIfe was successfully added on " + LocalDate.now());
             mailMessage.setSubject("CONFIRMATION");
@@ -81,6 +94,43 @@ public class AssociationService implements IAssociationService {
         return associationRepository.findById(idAssociation).get();
     }
 
+   /* @Override
+    public List<Request> retrieveAllRequests(Integer idAssociation) {
+       return (List<Request>) associationRepository.getAssociationByRequestsAssociation(idAssociation);
+    }*/
+
+
+    // @Override
+  /*  public HashMap<Association,Integer> nombreAnneeParAssociation() {
+        HashMap<Association,Integer> nombreAnneeParAssociation = new HashMap<>();
+
+        int nbAnnee =0;
+        List<Association> associations = new ArrayList<>();
+        for (Association c: associations) {
+
+            nbAnnee = associationRepository.getNbomAnne();
+            nombreAnneeParAssociation.put(c, nbAnnee);
+
+        }
+        return nombreAnneeParAssociation;
+    }*/
+
+    /* @Override
+     public HashMap<Association,Integer> nombreAnneeParAssociation() {
+         HashMap<Association,Integer> nombreAnneeParAssociation = new HashMap<>();
+
+         //Couleur couleurs[]= Couleur.values()
+         List<Association> associations = new ArrayList<>();
+         int nbAnnee =0;
+         for (Association c: associations) {
+
+             nbAnnee = associationRepository.skieurByCouleurPiste(c);
+             nombreAnneeParAssociation.put(c.getAssociationName(), nbAnnee);
+
+         }
+         return nombreAnneeParAssociation;
+     }
+ */
     @Override
     public HashMap<String, Integer> nombreAnneeParAssociation() {
         List<Association> associations = new ArrayList<>();
@@ -95,7 +145,17 @@ public class AssociationService implements IAssociationService {
         }
         return result;
     }
+    /*@Override
+    public Integer nbAnnes(Integer idAssociation) {
 
+       Association a = associationRepository.findById(idAssociation).get();
+
+       //int nombreAnnee = 10;
+      // int nombreAnnee = (int) ChronoUnit.YEARS.between(a.getDateAssociation(), LocalDateTime.now());
+       int nombreAnnee = associationRepository.getAssociationByDateAssociation_Year(a.getIdAssociation());
+
+        return nombreAnnee;
+    }*/
 
 
     @Override
@@ -142,6 +202,16 @@ public class AssociationService implements IAssociationService {
         return associationRepository.save(a);
     }
 
+    @Override
+    public String addAssociationByMail(Association a) {
+        LocalDate dateActuelle = LocalDate.now();
+        int nombreAnnees = (int) ChronoUnit.YEARS.between(a.getDateAssociation(), dateActuelle);
+        a.setNbAnneeAssociation(nombreAnnees);
+        associationRepository.save(a);
+        this.sendSimpleMail(a.getEmailAssocation());
+        return "add ass";
+    }
+
 
 
     @Override
@@ -151,6 +221,14 @@ public class AssociationService implements IAssociationService {
         int nombreAnnees = (int) ChronoUnit.YEARS.between(a.getDateAssociation(), dateActuelle);
         a.setNbAnneeAssociation(nombreAnnees);
     }
+
+    @Override
+    public List<Association> retrieveMyAssociations(Integer idUser) {
+        User user = userRepository.findById(idUser).orElse(null) ;
+        return associationRepository.getAssociationsByUser(user.getIdUser());
+    }
+
+
 
 
 }
