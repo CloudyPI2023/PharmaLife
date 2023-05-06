@@ -53,12 +53,20 @@ public class ProductRestController {
     public List<Product> findProductsByCategoryProduct(@RequestBody Category c){
         return productService.findProductsByCategoryProduct(c);
     }
+    @GetMapping("/productByName/{name}")
+    public List<Product>  existsByName(@RequestBody Category c){
+        return productService.findProductsByCategoryProduct(c);
+    }
 
     @GetMapping("/retrieve-product/{idProduct}")
     public Product retrieveProduct(@PathVariable("idProduct") Integer idProduct){
         return productService.retrieveProduct(idProduct);
     }
 
+    @GetMapping("/exists/{name}")
+    public Boolean getByName(@PathVariable("name") String name){
+        return productService.existsByName(name);
+    }
     @PutMapping("/update-product")
     public Product updateProduct(@RequestBody Product p){
         return productService.updateProduct(p);

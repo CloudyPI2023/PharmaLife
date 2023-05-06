@@ -10,7 +10,7 @@ import tn.esprit.Services.IProductService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/Category")
 public class CatgeoryRestController {
@@ -66,6 +66,12 @@ public class CatgeoryRestController {
     @PutMapping("/set-archive-category")
     public Category ArCategory(@RequestBody  Category c){
         return categoryService.ArCategory(c);
+    }
+
+
+    @GetMapping("/getByName/{name}")
+    public Category getByName(@PathVariable("name") String name){
+        return categoryService.getByName(name);
     }
 
 

@@ -32,6 +32,11 @@ public class ReclamationRestController {
         return reclamationService.retrieveMyReclamations(idUser);
     }
 
+    @GetMapping("/getrec/{userId}/{productId}")
+    List<Reclamation> getReclamationsByUserAndProduct(@PathVariable("userId")int userId,@PathVariable("productId")int productId){
+        return reclamationService.getReclamationsByUserAndProduct(userId,productId);
+    }
+
 
     @PostMapping("/add-reclamation")
     public Reclamation addReclamation(@RequestBody Reclamation r){

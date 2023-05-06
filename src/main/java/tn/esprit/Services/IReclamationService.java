@@ -9,7 +9,7 @@ import java.util.List;
 public interface IReclamationService {
     List<Reclamation> retrieveAllReclamationsArchived();
     List<Reclamation> retrieveAllReclamations();
-
+    List<Reclamation> getReclamationsByUserAndProduct(int userId, int productId);
     Reclamation addReclamation(Reclamation r);
 
    // Reclamation updateReclamation (Reclamation r);

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -40,6 +41,7 @@ public class Product implements Serializable {
     private User userProduct;
 
     @ManyToOne
+    @JsonIgnore
     private Category categoryProduct;
 
     @ManyToMany(mappedBy = "ProductsGift" , cascade = CascadeType.ALL)

@@ -20,4 +20,5 @@ public interface ICategoryService {
     Category ArCategory(Category c);
     boolean existsByName(String name);
     List<Category> retrieveAllCategoriesNotArchived();
+    Category getByName(String name);
 }

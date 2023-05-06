@@ -1,6 +1,7 @@
 package tn.esprit.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,6 +14,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table( name = "Category")
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class Category implements Serializable {
 
     @Id
@@ -27,7 +30,7 @@ public class Category implements Serializable {
     private boolean archived;
 
 
-    @OneToMany(mappedBy="categoryProduct",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy="categoryProduct",cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Product> ProductsCategory;
 }

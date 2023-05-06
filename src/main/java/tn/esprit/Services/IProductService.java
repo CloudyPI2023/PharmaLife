@@ -25,4 +25,5 @@ public interface IProductService {
     List<Product> retrieveProductsByCreationDateDSC();
 
     List<Product> findProductsByCategoryProduct(Category c);
+    boolean existsByName(String name);
 }

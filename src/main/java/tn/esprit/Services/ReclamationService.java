@@ -89,13 +89,13 @@ public class ReclamationService implements IReclamationService {
                 r.setProduct(rec_product);
                 r.setDateReclamation(LocalDate.now());
                 r.setArchived(true);
-            for (Reclamation re: reclamationList
+           /* for (Reclamation re: reclamationList
                  ) {
                 if(re.getUserProduct().getIdUser()==currentUser.getIdUser()&&(re.getProduct().getIdProduct()==rec_product.getIdProduct())){
                     throw new DuplicateKeyException("reclamation already exists with the same user and product");
                 }
 
-            }
+            }*/
 
             reclamationRepository.save(r);
            sendEmailReclamationService.sendEmail(currentUser.getEmail(),"RECLAMATION FOR PRODUCT "+rec_product.getNameProduct(),
@@ -109,6 +109,10 @@ public class ReclamationService implements IReclamationService {
         }
     }
 
+    @Override
+    public List<Reclamation> getReclamationsByUserAndProduct(int userId, int productId) {
+        return reclamationRepository.getReclamationsByUserAndProduct(userId, productId);
+    }
     @Override
     public Reclamation retrieveReclamation(Integer idReclamation) {
         return reclamationRepository.findById(idReclamation).get();

@@ -12,7 +12,7 @@ import tn.esprit.Services.IGiftService;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/Gift")
 
@@ -32,6 +32,10 @@ public class GiftRestController {
     @PostMapping("/{giftId}/products")
     public Gift addProductToGift(@PathVariable Integer giftId, @RequestBody Product product) {
         return giftService.addProductToGift(giftId, product);
+    }
+    @PostMapping("/{giftId}/product-delete")
+    public Gift deleteProductFromGift(@PathVariable Integer giftId, @RequestBody Product product) {
+        return giftService.deleteProductFromGift(giftId, product);
     }
 
     @GetMapping("/retrieve-gift/{idGift}")
@@ -56,6 +60,11 @@ public class GiftRestController {
     @GetMapping("/myGifts/{idUser}")
     public List<Gift> myGifts(@PathVariable("idUser") Integer idUser){
         return giftService.myGifts(idUser);
+    }
+
+    @GetMapping("/checkDuplication/{giftId}/{productId}")
+    Boolean getProductsByGiftAndCheckDuplicate(@PathVariable("giftId") Integer giftId,@PathVariable("productId") Integer productId){
+        return giftService.getProductsByGiftAndCheckDuplicate(giftId,productId);
     }
 
 }

@@ -5,19 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.Entities.Category;
 import tn.esprit.Entities.Product;
+import tn.esprit.Repositories.CategoryRepository;
 import tn.esprit.Repositories.ProductRepository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
 public class ProductService implements IProductService{
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
     @Override
     public List<Product> retrieveAllProducts(){
         List<Product> productList= productRepository.findAll();
@@ -59,12 +59,21 @@ public class ProductService implements IProductService{
         List<Product> prodNotExpired=new ArrayList<>();
         for (Product p:allprod
         ) {
-            if((p.getExpirationDateProduct().compareTo(LocalDate.now())>0) &&(!p.getCategoryProduct().isArchived())){
+            if((p.getExpirationDateProduct().compareTo(LocalDate.now())>0) &&(!p.getCategoryProduct().isArchived())&&(p.getQuantityProduct()!=0)){
                 p.setExpired(0);
                 prodNotExpired.add(p);
             }
         }
         return prodNotExpired;
+    }
+    @Override
+    public boolean existsByName(String name) {
+        Product p=productRepository.findByNameProduct(name);
+        if(p==null){
+            return false;
+        }
+        else
+            return true;
     }
     @Override
     public List<Product> retrieveAllProductsFront() {
@@ -88,11 +97,20 @@ public class ProductService implements IProductService{
 
     @Override
     public Product addProduct(Product p) {
+        Random rand = new Random();
+        int alea = rand.nextInt(900) + 100; // generates a random number between 100 and 999
+        p.setReferenceProduct("#REF"+alea);
+        p.setExpired(0);
+
             if(p.getExpirationDateProduct().compareTo(LocalDate.now())<0){
                 throw new RuntimeException("product expired, cannot be added");
         }
+            p.setImageProduct(p.getNameProduct()+".jpg");
             p.setCreationDate(LocalDate.now());
+
         productRepository.save(p);
+       // categoryRepository.save(p.getCategoryProduct());
+
         return p;
     }
 

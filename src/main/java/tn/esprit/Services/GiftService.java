@@ -49,7 +49,7 @@ public class GiftService implements IGiftService{
         if(userOptional.isPresent()){
             User usergift=userOptional.get();
             g.setProductsGift(g.getProductsGift());
-
+            g.setDescription("Gift for people who are in need");
             giftRepository.save(g);
             return g;
         }else{
@@ -85,16 +85,42 @@ public class GiftService implements IGiftService{
 
         Gift gift = giftRepository.findById(giftId).orElseThrow(() -> new EntityNotFoundException("Gift not found"));
         Optional<User> userOptional = userRepository.findById(gift.getIdUser());
+        List<Product>  prodlist=giftRepository.productsByGift(giftId);
+
         if(userOptional.isPresent()){
             gift.setUserGift(userOptional.get());
         }
         gift.setDescription("Gift description");
         gift.getProductsGift().add(product);
-        product.setQuantityProduct(product.getQuantityProduct()-1);
-        productRepository.save(product);
+        for (Product pr:prodlist
+             ) {
+
+                product.setQuantityProduct(product.getQuantityProduct()-1);
+                productRepository.save(product);
+
+
+        }
+
         return giftRepository.save(gift);
     }
+    @Override
+    public Gift deleteProductFromGift(Integer giftId, Product product) {
 
+        Gift gift = giftRepository.findById(giftId).orElseThrow(() -> new EntityNotFoundException("Gift not found"));
+        Optional<User> userOptional = userRepository.findById(gift.getIdUser());
+        List<Product>  prodlist=giftRepository.productsByGift(giftId);
+
+        if(userOptional.isPresent()){
+            gift.setUserGift(userOptional.get());
+        }
+
+        gift.getProductsGift().removeIf(pr -> pr.getIdProduct() == product.getIdProduct());
+        product.setQuantityProduct(product.getQuantityProduct()+1);
+        productRepository.save(product);
+
+
+        return giftRepository.save(gift);
+    }
     @Override
     public List<Product> getProductsByGift(Integer idGift){
         List<Product> prodgift=giftRepository.productsByGift(idGift);
@@ -106,4 +132,17 @@ public class GiftService implements IGiftService{
         }
         return prodgift;
     }
+    @Override
+    public Boolean getProductsByGiftAndCheckDuplicate(Integer giftId, Integer productId) {
+        Gift gift = giftRepository.findById(giftId).orElseThrow(() -> new EntityNotFoundException("Gift not found"));
+        List<Product> productList = gift.getProductsGift();
+        for (Product product : productList) {
+            if (product.getIdProduct()==productId) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
 }

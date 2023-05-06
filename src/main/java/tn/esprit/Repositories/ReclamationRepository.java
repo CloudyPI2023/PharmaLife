@@ -15,6 +15,9 @@ public interface ReclamationRepository extends JpaRepository<Reclamation,Integer
     @Query("SELECT r FROM Reclamation r WHERE r.userProduct.idUser =:user")
     User getReclamationByIdUser(@Param("user") int user);
 
+    @Query("SELECT r FROM Reclamation r WHERE r.idUser =:userId AND r.idProduct =:productId")
+    List<Reclamation> getReclamationsByUserAndProduct(@Param("userId") int userId, @Param("productId") int productId);
+
 
 
 

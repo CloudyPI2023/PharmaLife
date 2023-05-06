@@ -35,7 +35,7 @@ public class CategoryService implements ICategoryService {
         List<Category> categoryList=categoryRepository.findAll();
         List<Category> lisst=new ArrayList<>();
         for (Category c: categoryList) {
-            if(c.isArchived()){
+            if(!c.isArchived()){
                 lisst.add(c);
             }
 
@@ -61,6 +61,11 @@ public class CategoryService implements ICategoryService {
         }
         else
         return true;
+    }
+    @Override
+    public Category getByName(String name) {
+       return categoryRepository.findByNameCategory(name);
+
     }
 
 
