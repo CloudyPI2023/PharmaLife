@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class DonationRestController {
     IDonationService iDonationService;
-    //ces fonctionnalités sont réalisés par 'Donator'
+
     @PostMapping("/addDonation")
     public Donation addDonation(@RequestBody Donation d){
         Donation donation = iDonationService.addDonation(d);
@@ -40,7 +40,7 @@ public class DonationRestController {
 
     }
 
-    //ces fonctionnalités sont réalisées par 'Admin'
+
     @GetMapping("/retrieveAllDonations")
     public List<Donation> retrieveAllDonations(){
         List<Donation> listDonations = iDonationService.retrieveAllDonations();
