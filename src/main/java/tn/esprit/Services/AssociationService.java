@@ -25,26 +25,9 @@ public class AssociationService implements IAssociationService {
     @Autowired
     UserRepository userRepository;
     AssociationRepository associationRepository;
-    ///email
     @Autowired
     private JavaMailSender javaMailSender;
 
-
-
-
-   /* @Override
-    public String addAssociation(Association a) {
-        Association u = associationRepository.findByEmail(a.getEmailAssocation());
-        if(u == null) {
-
-            associationRepository.save(a);
-            this.sendSimpleMail(a.getEmailAssocation());
-            return "Asso added successfully";
-        }
-        else {
-            return "Email does not exist";
-        }
-    }*/
 
     @Override
     public Association updateAssociation(Association a) {
@@ -56,14 +39,7 @@ public class AssociationService implements IAssociationService {
         associationRepository.deleteById(idAssociation);
     }
 
-   /* @Override
-    public List<Association> retrieveAllAssociations() {
-        return (List<Association>) associationRepository.findAll();
-    }*/
 
-
-
-    //@Value("${spring.mail.username}") private String sender;
     @Override
     public String sendSimpleMail(String email) {
         // Try block to check for exceptions
@@ -94,43 +70,6 @@ public class AssociationService implements IAssociationService {
         return associationRepository.findById(idAssociation).get();
     }
 
-   /* @Override
-    public List<Request> retrieveAllRequests(Integer idAssociation) {
-       return (List<Request>) associationRepository.getAssociationByRequestsAssociation(idAssociation);
-    }*/
-
-
-    // @Override
-  /*  public HashMap<Association,Integer> nombreAnneeParAssociation() {
-        HashMap<Association,Integer> nombreAnneeParAssociation = new HashMap<>();
-
-        int nbAnnee =0;
-        List<Association> associations = new ArrayList<>();
-        for (Association c: associations) {
-
-            nbAnnee = associationRepository.getNbomAnne();
-            nombreAnneeParAssociation.put(c, nbAnnee);
-
-        }
-        return nombreAnneeParAssociation;
-    }*/
-
-    /* @Override
-     public HashMap<Association,Integer> nombreAnneeParAssociation() {
-         HashMap<Association,Integer> nombreAnneeParAssociation = new HashMap<>();
-
-         //Couleur couleurs[]= Couleur.values()
-         List<Association> associations = new ArrayList<>();
-         int nbAnnee =0;
-         for (Association c: associations) {
-
-             nbAnnee = associationRepository.skieurByCouleurPiste(c);
-             nombreAnneeParAssociation.put(c.getAssociationName(), nbAnnee);
-
-         }
-         return nombreAnneeParAssociation;
-     }
- */
     @Override
     public HashMap<String, Integer> nombreAnneeParAssociation() {
         List<Association> associations = new ArrayList<>();
@@ -145,18 +84,6 @@ public class AssociationService implements IAssociationService {
         }
         return result;
     }
-    /*@Override
-    public Integer nbAnnes(Integer idAssociation) {
-
-       Association a = associationRepository.findById(idAssociation).get();
-
-       //int nombreAnnee = 10;
-      // int nombreAnnee = (int) ChronoUnit.YEARS.between(a.getDateAssociation(), LocalDateTime.now());
-       int nombreAnnee = associationRepository.getAssociationByDateAssociation_Year(a.getIdAssociation());
-
-        return nombreAnnee;
-    }*/
-
 
     @Override
     public List<Association> getAssociationsPlusDeDeuxAns() {
@@ -171,7 +98,6 @@ public class AssociationService implements IAssociationService {
                 result.add(a);
             }
         }
-        //result = (List<Association>) associationRepository.findAll();
         return result ;
     }
 
@@ -188,14 +114,10 @@ public class AssociationService implements IAssociationService {
             result.add(a);
 
         }
-        //result = (List<Association>) associationRepository.findAll();
         return result ;
     }
     @Override
     public Association addAssociation(Association a) {
-        // int nombreAnnee = associationRepository.getAssociationByDateAssociation_Year(a.getIdAssociation());
-        // int nombreAnnee = 4;
-        //a.setNbAnneeAssociation(nombreAnnee);
         LocalDate dateActuelle = LocalDate.now();
         int nombreAnnees = (int) ChronoUnit.YEARS.between(a.getDateAssociation(), dateActuelle);
         a.setNbAnneeAssociation(nombreAnnees);
