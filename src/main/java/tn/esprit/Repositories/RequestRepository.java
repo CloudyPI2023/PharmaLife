@@ -22,5 +22,9 @@ public interface RequestRepository extends CrudRepository<Request,Integer> {
     @Query("select r from Request r where r.statusRequest = 'accepted'")
     List<Request> getRequestAccepted ();
 
+    @Query("SELECT r FROM Request r WHERE r.idDonation IS NULL")
+    List<Request> findAllRequestsWhereIdDonationIsNull();
+
+
 
 }
