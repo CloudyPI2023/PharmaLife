@@ -18,10 +18,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 
 @Getter
@@ -81,7 +78,7 @@ public class User implements Serializable, UserDetails {
     @Column(nullable=false)
     private LocalDate birthDate;
 
-    private String imageUser;
+   // private String imageUser;
 
 
     @NotNull(message = "Address cannot be empty")
@@ -139,9 +136,10 @@ public class User implements Serializable, UserDetails {
 
     @OneToMany(mappedBy="userArticle")
     private Set<Article> ArticleUser;
-
+    @JsonIgnore
     @OneToMany(mappedBy="userProduct")
     private Set<Product> ProductsUser;
+
 
 
 

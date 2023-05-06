@@ -14,7 +14,6 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 import java.util.Arrays;
@@ -34,11 +33,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.authorizeRequests().antMatchers("/login/**","/registration/**").permitAll();
-        http.authorizeRequests().antMatchers(GET,"/User/**").hasAnyAuthority("Admin","Patient");
-        http.authorizeRequests().antMatchers(PUT,"/User/update-User").hasAnyAuthority("Patient");
+        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/User/**").permitAll();
+    //    http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/User/**").hasAnyAuthority("Admin","Patient");
+       // http.authorizeRequests().antMatchers(PUT,"/User/update-User").hasAnyAuthority("Patient");
 
 
-        http.authorizeRequests().antMatchers(GET ,"/DeliveryPerson/**").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(HttpMethod.GET ,"/DeliveryPerson/**").hasAnyAuthority("Admin");
 
 
         //http.authorizeRequests().anyRequest().permitAll();

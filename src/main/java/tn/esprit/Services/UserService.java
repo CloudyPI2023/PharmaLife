@@ -24,6 +24,7 @@ import javax.transaction.Transactional;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -313,6 +314,35 @@ public class UserService implements IUserService, UserDetailsService {
         }
         return actSPercentages;
     }
+
+
+
+    @Override
+    public Map<String, Map<String, Integer>> getUserCreatedAtStat() {
+        List<User> users = userRepository.findAll();
+        Map<String, Map<String, Integer>> statistics = new HashMap<>();
+        for (User user : users) {
+            LocalDateTime createdAt = user.getCreatedAt();
+            int year = createdAt.getYear();
+            int month = createdAt.getMonthValue();
+            String yearStr = Integer.toString(year);
+            String monthStr = String.format("%02d", month);
+            if (!statistics.containsKey(yearStr)) {
+                // Initialize year statistics with all 12 months
+                Map<String, Integer> yearStatistics = new HashMap<>();
+                for (int i = 1; i <= 12; i++) {
+                    String monthName = new DateFormatSymbols().getMonths()[i-1];
+                    yearStatistics.put(monthName, 0);
+                }
+                statistics.put(yearStr, yearStatistics);
+            }
+            Map<String, Integer> yearStatistics = statistics.get(yearStr);
+            int count = yearStatistics.get(new DateFormatSymbols().getMonths()[month-1]);
+            yearStatistics.put(new DateFormatSymbols().getMonths()[month-1], count + 1);
+        }
+        return statistics;
+    }
+
 
 
 

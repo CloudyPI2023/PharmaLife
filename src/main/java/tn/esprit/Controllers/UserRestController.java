@@ -1,35 +1,17 @@
 package tn.esprit.Controllers;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.Entities.Role;
 import tn.esprit.Entities.User;
-import tn.esprit.Image.ImageUpload;
-import tn.esprit.Repositories.UserRepository;
 import tn.esprit.Services.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import javax.annotation.security.RolesAllowed;
-import javax.xml.ws.Response;
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -117,12 +99,16 @@ public class UserRestController {
         return ResponseEntity.ok().body(actStatistics);
     }
 
-
-
     @GetMapping("/roles")
     public List<String> getRoles() {
         return Arrays.stream(Role.values())
                 .map(Role::toString)
                 .collect(Collectors.toList());
+    }
+
+
+    @GetMapping("/statisticsCreatedAtUser")
+    public Map<String, Map<String, Integer>> getUserCreatedAtStat() {
+        return userService.getUserCreatedAtStat();
     }
 }

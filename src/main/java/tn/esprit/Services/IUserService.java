@@ -41,4 +41,5 @@ public interface IUserService {
     Map<String, Double> getGenderStatistics();
 
     Map<String, Double> getActivationStatusStatistics();
+    Map<String, Map<String, Integer>> getUserCreatedAtStat();
 }

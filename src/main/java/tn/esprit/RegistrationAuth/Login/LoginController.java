@@ -100,14 +100,14 @@ public class LoginController {
 
             } else {
                 // user account is locked
-                if (user.getLockTime() != null && user.getLockTime().plusMinutes(5).isBefore(LocalDateTime.now())) {
+                if (user.getLockTime() != null && user.getLockTime().plusHours(24).isBefore(LocalDateTime.now())) {
                     // lock time is more than 24 hours ago, unlock the account
                     userRepository.unlockUser(user.getEmail());
                     return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Your account was locked, but is now unlocked. Please try logging in again.");
                 } else {
                     // lock time is less than 24 hours ago, return a forbidden status
-                    long remainingTime = ChronoUnit.MINUTES.between(LocalDateTime.now(), user.getLockTime().plusMinutes(5));
-                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Your account is locked for " + remainingTime + " minutes. Please try again later.");
+                    long remainingTime = ChronoUnit.MINUTES.between(LocalDateTime.now(), user.getLockTime().plusHours(24));
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Your account is locked for " + remainingTime + " hours. Please try again later.");
                 }
             }
         } catch (AuthenticationException e) {
@@ -116,8 +116,8 @@ public class LoginController {
                 if (!user.isEnabled()) {
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Please verify your account before logging in.");
                 } else if (!user.isAccountNonLocked()) {
-                    long remainingTime = ChronoUnit.MINUTES.between(LocalDateTime.now(), user.getLockTime().plusMinutes(5));
-                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Your account has been locked for " + remainingTime + " minutes. Please try again later.");
+                    long remainingTime = ChronoUnit.MINUTES.between(LocalDateTime.now(), user.getLockTime().plusHours(24));
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Your account has been locked for " + remainingTime + " hours. Please try again later.");
                 } else {
                     int attempts = user.getLoginAttempts() + 1;
                     userRepository.updateLoginAttempts(attempts, loginRequest.getUsername());
