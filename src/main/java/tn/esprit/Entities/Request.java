@@ -25,11 +25,11 @@ public class Request implements Serializable {
     @Column(name="idRequest")
     private Integer idRequest;
     private String NameRequest;
-    // @Column(name = "description_request", columnDefinition = "String default esprit")
+
     private String DescriptionRequest;
     @Enumerated(EnumType.STRING)
     private DonationRequestType RequestType;
-    //tzedou jdod
+
     private LocalDate DateRequest;
     @Enumerated(EnumType.STRING)
     private RequestDonationStatus statusRequest;
@@ -41,8 +41,7 @@ public class Request implements Serializable {
     //NoSQL
     private Integer idDonation;
 
-    //private boolean archived = false;
-
+    private Boolean archived;
 
 
 

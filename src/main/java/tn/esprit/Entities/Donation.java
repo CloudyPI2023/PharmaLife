@@ -30,7 +30,6 @@ public class Donation implements Serializable {
     @Enumerated(EnumType.STRING)
     private DonationRequestType DonationType;
 
-    //tzeedJdid
     @Enumerated(EnumType.STRING)
     private RequestDonationStatus statusDonation;
 
@@ -41,7 +40,8 @@ public class Donation implements Serializable {
     // @JsonIgnore
     User userDonation;
 
-    //private boolean archived = false;
+    private Boolean archived;
+
 
 
 

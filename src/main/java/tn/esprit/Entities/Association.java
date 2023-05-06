@@ -33,7 +33,7 @@ public class Association implements Serializable {
     private String DescriptionAssocation;
     private String PhoneNumberAssocation;
     private String CountryAssocation;
-    //att jdid
+
     private LocalDate DateAssociation;
     private int nbAnneeAssociation;
     @OneToMany(mappedBy="association")
@@ -44,7 +44,7 @@ public class Association implements Serializable {
     @JsonIgnore
     User userAssociation;
 
-    //private boolean archived = false;
+    private Boolean archived;
 
 
 }
