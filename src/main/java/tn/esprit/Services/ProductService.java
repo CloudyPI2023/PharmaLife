@@ -13,22 +13,22 @@ import java.util.*;
 
 @Service
 @AllArgsConstructor
-public class ProductService implements IProductService{
+public class ProductService implements IProductService {
     @Autowired
     ProductRepository productRepository;
     @Autowired
     CategoryRepository categoryRepository;
+
     @Override
-    public List<Product> retrieveAllProducts(){
-        List<Product> productList= productRepository.findAll();
-        List<Product> newlist=new ArrayList<>();
-        for (Product p:productList
-             ) {
-            if(p.getExpirationDateProduct().compareTo(LocalDate.now())<0 || (p.getCategoryProduct().isArchived())) {
+    public List<Product> retrieveAllProducts() {
+        List<Product> productList = productRepository.findAll();
+        List<Product> newlist = new ArrayList<>();
+        for (Product p : productList
+        ) {
+            if (p.getExpirationDateProduct().compareTo(LocalDate.now()) < 0 || (p.getCategoryProduct().isArchived())) {
                 p.setExpired(1);
                 newlist.add(p);
-            }
-            else{
+            } else {
                 p.setExpired(0);
                 newlist.add(p);
             }
@@ -37,50 +37,53 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public List<Product> retrieveProductsByCreationDateDSC(){
-            return productRepository.findTop3ByOrderByCreationDateDesc();
+    public List<Product> retrieveProductsByCreationDateDSC() {
+        return productRepository.findTop3ByOrderByCreationDateDesc();
     }
+
     @Override
     public List<Product> retrieveAllProductsExpired() {
-        List<Product> allprod=productRepository.findAll();
-        List<Product> prodExpired=new ArrayList<>();
-        for (Product p:allprod
-             ) {
-            if(p.getExpirationDateProduct().compareTo(LocalDate.now())<0) {
+        List<Product> allprod = productRepository.findAll();
+        List<Product> prodExpired = new ArrayList<>();
+        for (Product p : allprod
+        ) {
+            if (p.getExpirationDateProduct().compareTo(LocalDate.now()) < 0) {
                 p.setExpired(1);
                 prodExpired.add(p);
             }
         }
         return prodExpired;
     }
+
     @Override
     public List<Product> retrieveAllProductsNotExpired() {
-        List<Product> allprod=productRepository.findAll();
-        List<Product> prodNotExpired=new ArrayList<>();
-        for (Product p:allprod
+        List<Product> allprod = productRepository.findAll();
+        List<Product> prodNotExpired = new ArrayList<>();
+        for (Product p : allprod
         ) {
-            if((p.getExpirationDateProduct().compareTo(LocalDate.now())>0) &&(!p.getCategoryProduct().isArchived())&&(p.getQuantityProduct()!=0)){
+            if ((p.getExpirationDateProduct().compareTo(LocalDate.now()) > 0) && (!p.getCategoryProduct().isArchived()) && (p.getQuantityProduct() != 0)) {
                 p.setExpired(0);
                 prodNotExpired.add(p);
             }
         }
         return prodNotExpired;
     }
+
     @Override
     public boolean existsByName(String name) {
-        Product p=productRepository.findByNameProduct(name);
-        if(p==null){
+        Product p = productRepository.findByNameProduct(name);
+        if (p == null) {
             return false;
-        }
-        else
+        } else
             return true;
     }
+
     @Override
     public List<Product> retrieveAllProductsFront() {
-        List<Product> allProducts=productRepository.findAll();
-        List<Product> finalProducts=new ArrayList<>();
-        for (Product oneProduct:allProducts) {
-            if(oneProduct.getQuantityProduct()!=0 && oneProduct.getExpirationDateProduct().compareTo(LocalDate.now())>0){
+        List<Product> allProducts = productRepository.findAll();
+        List<Product> finalProducts = new ArrayList<>();
+        for (Product oneProduct : allProducts) {
+            if (oneProduct.getQuantityProduct() != 0 && oneProduct.getExpirationDateProduct().compareTo(LocalDate.now()) > 0) {
                 finalProducts.add(oneProduct);
                 productRepository.save(oneProduct);
             }
@@ -89,7 +92,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public List<Product> findProductsByCategoryProduct(Category c){
+    public List<Product> findProductsByCategoryProduct(Category c) {
         return productRepository.findProductsByCategoryProduct(c);
 
     }
@@ -97,22 +100,29 @@ public class ProductService implements IProductService{
 
     @Override
     public Product addProduct(Product p) {
-        Random rand = new Random();
-        int alea = rand.nextInt(900) + 100; // generates a random number between 100 and 999
-        p.setReferenceProduct("#REF"+alea);
-        p.setExpired(0);
+        Optional<Category> currentCategory = categoryRepository.findById(p.getIdCategory());
+        if (currentCategory.isPresent()) {
+            Category c=currentCategory.get();
+            p.setCategoryProduct(c);
+            Random rand = new Random();
+            int alea = rand.nextInt(900) + 100; // generates a random number between 100 and 999
+            p.setReferenceProduct("#REF" + alea);
+            p.setExpired(0);
 
-            if(p.getExpirationDateProduct().compareTo(LocalDate.now())<0){
+            if (p.getExpirationDateProduct().compareTo(LocalDate.now()) < 0) {
                 throw new RuntimeException("product expired, cannot be added");
-        }
-            p.setImageProduct(p.getNameProduct()+".jpg");
+            }
+            p.setImageProduct(p.getNameProduct() + ".jpg");
             p.setCreationDate(LocalDate.now());
 
-        productRepository.save(p);
-       // categoryRepository.save(p.getCategoryProduct());
+            productRepository.save(p);
+            // categoryRepository.save(p.getCategoryProduct());
+        }
+            return p;
+        }
 
-        return p;
-    }
+
+
 
     @Override
     public Product updateProduct(Product p) {

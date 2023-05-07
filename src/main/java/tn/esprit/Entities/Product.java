@@ -32,10 +32,11 @@ public class Product implements Serializable {
     private Integer expired;
    // private Integer AvailabilityProduct;
     private LocalDate creationDate;
-
-
     private LocalDate expirationDateProduct;
 
+
+    //noSQL
+    private Integer idCategory;
     @ManyToOne(fetch = FetchType.LAZY)
     //@JsonIgnore
     private User userProduct;
