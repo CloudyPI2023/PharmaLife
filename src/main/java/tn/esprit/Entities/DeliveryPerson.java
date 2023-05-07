@@ -60,8 +60,5 @@ public class DeliveryPerson implements Serializable {
     //NoSQL
     private Integer idUser;
 
-    @OneToMany(mappedBy="deliveryPerson")
-    @JsonIgnore
-    private Set<Order> OrdersD;
 
 }

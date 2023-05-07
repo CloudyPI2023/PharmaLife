@@ -1,6 +1,7 @@
 package tn.esprit.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,11 +30,19 @@ public class Donation implements Serializable {
     @Enumerated(EnumType.STRING)
     private DonationRequestType DonationType;
 
+    @Enumerated(EnumType.STRING)
+    private RequestDonationStatus statusDonation;
+
     //NoSQL
     private Integer idRequest;
 
     @ManyToOne
+    // @JsonIgnore
     User userDonation;
+
+    private Boolean archived;
+
+
 
 
 }

@@ -23,12 +23,12 @@ public class Event implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idEvent")
     private Integer idEvent;
-    private String NameEvent;
+    private String nameEvent;
     private String DescriptionEvent;
-    private String LocationEvent;
+    private String locationEvent;
     private String ImageEvent;
-    private LocalDate BeginsAtEvent;
-    private LocalDate EndsAtEvent;
+    private LocalDate beginsAtEvent;
+    private LocalDate endsAtEvent;
 
     //NoSQL
     private Integer idAssociation;
@@ -36,4 +36,6 @@ public class Event implements Serializable {
 
     @OneToMany(mappedBy="event")
     private Set<Reservation> ReservationsEvent;
+
+
 }

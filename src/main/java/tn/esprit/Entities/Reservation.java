@@ -1,5 +1,6 @@
 package tn.esprit.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,13 +23,23 @@ public class Reservation implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idReservation")
     private Integer idReservation;
-    private LocalDate DateReservation;
+    private LocalDate dateReservation;
+
+
+    private Integer codeReservation ;
+
+        //nosql
+    private Integer idEvent;
+    private Integer idUser;
+
 
     @ManyToOne
-    User userReservation;
 
-    @ManyToOne
-    Event event;
+   User userReservation;
+
+  @ManyToOne
+  @JsonIgnore
+  Event event;
 
 
 }

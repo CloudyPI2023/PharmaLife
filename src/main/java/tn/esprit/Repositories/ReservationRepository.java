@@ -1,4 +1,8 @@
 package tn.esprit.Repositories;
 
-public interface ReservationRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import tn.esprit.Entities.Reservation;
+
+public interface ReservationRepository  extends CrudRepository<Reservation, Integer> {
 }

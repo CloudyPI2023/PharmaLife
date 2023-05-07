@@ -127,10 +127,11 @@ public class User implements Serializable, UserDetails {
     private LocalDateTime lastLoginTime;
 
     //Associations
-
+    @JsonIgnore
     @OneToMany(mappedBy="userReservation")
     private Set<Reservation> ReservationsUser;
 
+    @JsonIgnore
     @OneToMany(mappedBy="userDonation")
     private Set<Donation> DonationsUser;
 
@@ -140,7 +141,8 @@ public class User implements Serializable, UserDetails {
     @OneToMany(mappedBy="userProduct")
     private Set<Product> ProductsUser;
 
-
+    @OneToMany(mappedBy="userAssociation")
+    private Set<Association> AssociationsUser;
 
 
 ///constructeur

@@ -42,12 +42,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         ////SAHAR
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/Category/add-category").hasAnyAuthority("Admin");
-        http.authorizeRequests().antMatchers(HttpMethod.GET,"/Category/***").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/Category/***").hasAnyAuthority("Admin","Patient");
         http.authorizeRequests().antMatchers(HttpMethod.PUT,"/Category/***").hasAnyAuthority("Admin");
-        http.authorizeRequests().antMatchers(HttpMethod.GET,"/Product/***").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/Product/***").hasAnyAuthority("Admin","Patient");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/Product/***").hasAnyAuthority("Patient");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/Product/***").hasAnyAuthority("Patient");
+
        // http.authorizeRequests().antMatchers(HttpMethod.GET,"/Gift/***").hasAnyAuthority("Admin");
-        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/Gift/***").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/Gift/***").hasAnyAuthority("Admin","Patient");
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/Reclamation/***").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/Reclamation/***").hasAnyAuthority("Patient");
+
+
+       ///MOUNA
+        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/associations/***").hasAnyAuthority("Admin","Patient","Donator","AssociationMember");
+        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/donations/***").hasAnyAuthority("Admin","Patient","Donator","AssociationMember");
+        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/requests/***").hasAnyAuthority("Admin","Patient","Donator","AssociationMember");
+
+        //Badis
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/reservations/***").hasAnyAuthority("Admin","Patient");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/reservations/***").hasAnyAuthority("Patient","Admin");
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/events/***").hasAnyAuthority("Admin","Patient");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/events/***").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/events/***").hasAnyAuthority("Admin");
 
 
 
