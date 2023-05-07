@@ -1,12 +1,16 @@
 package tn.esprit.Services;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import tn.esprit.Entities.*;
 import tn.esprit.Repositories.DonationRepository;
 import tn.esprit.Repositories.UserRepository;
 import java.text.DateFormatSymbols;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.sql.Date;
 
@@ -17,6 +21,9 @@ import java.sql.Date;
 public class DonationService implements IDonationService {
     DonationRepository donationRepository;
     UserRepository userRepository;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @Override
     public Donation addDonation(Donation d) {
@@ -46,6 +53,43 @@ public class DonationService implements IDonationService {
     public List<Donation> getDisabledDonations() {
         return donationRepository.getDisabledDonations();
     }
+
+    @Override
+    public String addDonationByMail(Donation d) {
+        LocalDate dateActuelle = LocalDate.now();
+        d.setDateDonation(dateActuelle);
+        d.setStatusDonation(RequestDonationStatus.inProgress);
+        donationRepository.save(d);
+        this.sendSimpleMailForDonation(d.getUserDonation().getEmail());
+        return "add ass";
+    }
+
+    @Override
+    public String sendSimpleMailForDonation(String email) {
+        // Try block to check for exceptions
+        try {
+
+            // Creating a simple mail message
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+            // Setting up necessary details
+            mailMessage.setFrom("pharmalife.cloudy@gmail.com");
+            mailMessage.setTo(email);
+            mailMessage.setText("Congratulation!!\u0020\nYour Donation on PharmaLIfe was successfully added on " + LocalDate.now());
+            mailMessage.setSubject("CONFIRMATION");
+
+            // Sending the mail
+            javaMailSender.send(mailMessage);
+            return "Mail Sent Successfully...";
+        }
+
+        // Catch block to handle the exceptions
+        catch (Exception e) {
+            return "Error while Sending Mail";
+        }
+    }
+
+
 
 
     @Override

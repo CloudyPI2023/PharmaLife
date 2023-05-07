@@ -46,5 +46,4 @@ public interface IRequestService {
 
     Request assignDonationToRequestByAdmin(Donation d, Integer idRequest);
 
-
 }

@@ -103,6 +103,7 @@ public class RequestRestController {
         Donation d = idonationService.retrieveDonation(IdDonation);
         iRequestService.addRequest(r);
         d.setIdRequest(r.getIdRequest());
+
         Request request = iRequestService.assignRequestToDonation(r,IdDonation,IdAssociation);
         return request;
     }

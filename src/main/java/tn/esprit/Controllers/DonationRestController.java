@@ -2,8 +2,12 @@ package tn.esprit.Controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.Entities.Association;
 import tn.esprit.Entities.Donation;
+import tn.esprit.Entities.RequestDonationStatus;
+import tn.esprit.Entities.User;
 import tn.esprit.Services.IDonationService;
+import tn.esprit.Services.IUserService;
 
 import java.util.List;
 import java.util.Map;
@@ -16,11 +20,7 @@ import java.util.Map;
 public class DonationRestController {
     IDonationService iDonationService;
 
-    @PostMapping("/addDonation")
-    public Donation addDonation(@RequestBody Donation d){
-        Donation donation = iDonationService.addDonation(d);
-        return donation;
-    }
+    IUserService iUserService;
 
     @PutMapping("/updateDonation")
     public Donation updateDonation(@RequestBody Donation d){
@@ -90,6 +90,18 @@ public class DonationRestController {
     {
         return iDonationService.getDisabledDonations();
 
+    }
+    @PostMapping("/addDonation")
+    public Donation addDonation(@RequestBody Donation d){
+        Donation donation = iDonationService.addDonation(d);
+        return donation;
+    }
+
+    @PostMapping("/addDonationByMail/{id_user}")
+    public String addDonationByMail(@RequestBody Donation d, @PathVariable("id_user") Integer IdUser){
+        User u = iUserService.retrieveUser(IdUser);
+        d.setUserDonation(u);
+        return iDonationService.addDonationByMail(d);
     }
 
 

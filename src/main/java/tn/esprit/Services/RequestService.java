@@ -163,6 +163,8 @@ public class RequestService implements IRequestService {
         r.setDateRequest(dateActuelle);
         r.setIdDonation(idDonation);
         Donation d = donationRepository.findById(idDonation).get();
+        d.setStatusDonation(RequestDonationStatus.accepted);
+        donationRepository.save(d);
         r.setRequestType(d.getDonationType());
         r.setDescriptionRequest("Request added by client");
         r.setNameRequest("Request Front");
@@ -202,11 +204,16 @@ public class RequestService implements IRequestService {
 
         Request r = requestRepository.findById(idRequest).get();
         d.setIdRequest(idRequest);
+        d.setStatusDonation(RequestDonationStatus.accepted);
         donationRepository.save(d);
         r.setStatusRequest(RequestDonationStatus.accepted);
         r.setIdDonation(d.getIdDonation());
         return requestRepository.save(r);
+
     }
+
+
+
 
 
 }
