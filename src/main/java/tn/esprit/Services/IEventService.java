@@ -1,17 +1,29 @@
 package tn.esprit.Services;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import tn.esprit.Entities.Event;
+import tn.esprit.Entities.Request;
+import tn.esprit.Entities.User;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
-public interface IEventService  {
+public interface IEventService {
 
-    Event addEvent(Event p);
+    Event addEvent (Event d);
+    Event updateEvent (Event d);
+    void deleteEvent (Integer idEvent);
 
-    Event editEvent(Event p)  throws RuntimeException;
 
-    void deleteEvent(Long idEvent);
 
-    List<Event> retrieveAll();
+    List<Event> retrieveAllEvents();
+    Event retrieveEvent(Integer idEvent);
+
+
+    List<Event> retrieveEventsByLocation(String location);
+
+    List<Event> retrieveEventsByName(String name);
+
+    List<Event> retrieveEventsByTimeRange(LocalDateTime beginsAtEvent, LocalDateTime endsAtEvent);
 }

@@ -1,59 +1,73 @@
 package tn.esprit.Services;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.Entities.Event;
 import tn.esprit.Entities.Reservation;
+import tn.esprit.Entities.User;
+import tn.esprit.Repositories.EventRepository;
 import tn.esprit.Repositories.ReservationRepository;
+import tn.esprit.Repositories.UserRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
-
-@AllArgsConstructor
-@Slf4j
 @Service
-public class ReservationService implements  IReservationService {
-    private final ReservationRepository reservationRepository;
+@AllArgsConstructor
+public class ReservationService implements IReservationService {
+
+    @Autowired
+    ReservationRepository reservationRepository;
+    @Autowired
+    EventRepository eventRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Override
-    public Reservation addReservation(Reservation p) {
-        if (p.getDateReservation()== null) {
-            throw new IllegalArgumentException("Reservation must have a date !");
+    public Reservation addReservation(Reservation d) {
+
+        Random rand = new Random();
+        Optional<Event> currentEvent=eventRepository.findById(d.getIdEvent());
+        Optional<User> currentUser=userRepository.findById(d.getIdUser());
+        if(currentEvent.isPresent()&&currentUser.isPresent()){
+
+            int alea = rand.nextInt(900) + 100; // generates a random number between 100 and 999
+            d.setCodeReservation(alea);
+            d.setEvent(currentEvent.get());
+            d.setUserReservation(currentUser.get());
+            d.setDateReservation(LocalDate.now());
+
         }
-        try {
-            return reservationRepository.save(p);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to add Reservation", e);
-        }
+        return reservationRepository.save(d);
     }
 
     @Override
-    public Reservation editReservation(Reservation p)  throws RuntimeException {
-
-        if (p.getIdReservation() == null) {
-            throw new IllegalArgumentException("Reservation ID cannot be null");
-        }
-        try {
-            return reservationRepository.save(p);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to update Reservation", e);
-        }
+    public Reservation updateReservation(Reservation d) {
+        return reservationRepository.save(d);
     }
+
     @Override
-    public void deleteReservation(Long idReservation) {
-        Optional<Reservation> reservation = reservationRepository.findById(idReservation);
-
-        reservation.ifPresent(p -> {
-            reservationRepository.delete(p);
-            log.info("Reservation with id " + idReservation + " has been deleted");
-        });
-
+    public void deleteReservation(Integer idReservation) {
+        reservationRepository.deleteById(idReservation);
     }
+
+
+
     @Override
-    public List<Reservation> retrieveAll() {
-        return reservationRepository.findAll();
+    public List<Reservation> retrieveAllReservations() {
+        return (List<Reservation>) reservationRepository.findAll();
     }
+
+
+
+    @Override
+    public Reservation retrieveReservation(Integer idReservation) {
+        return reservationRepository.findById(idReservation).get();
+    }
+
 
 
 }

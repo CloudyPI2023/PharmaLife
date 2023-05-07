@@ -1,17 +1,19 @@
 package tn.esprit.Services;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import tn.esprit.Entities.Event;
 import tn.esprit.Entities.Reservation;
 
 import java.util.List;
 
-public interface IReservationService  {
-    Reservation addReservation(Reservation p);
+public interface IReservationService {
 
-    Reservation editReservation(Reservation p)  throws RuntimeException;
 
-    void deleteReservation(Long idReservation);
+    Reservation addReservation (Reservation d);
+    Reservation updateReservation (Reservation d);
+    void deleteReservation (Integer idReservation);
 
-    List<Reservation> retrieveAll();
+
+
+    List<Reservation> retrieveAllReservations();
+    Reservation retrieveReservation(Integer idReservation);
+
 }

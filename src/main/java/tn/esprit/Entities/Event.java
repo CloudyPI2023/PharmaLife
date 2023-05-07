@@ -1,7 +1,10 @@
 package tn.esprit.Entities;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,19 +17,18 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table( name = "Event")
-@Builder
 public class Event implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idEvent")
     private Integer idEvent;
-    private String NameEvent;
+    private String nameEvent;
     private String DescriptionEvent;
-    private String LocationEvent;
+    private String locationEvent;
     private String ImageEvent;
-    private LocalDate BeginsAtEvent;
-    private LocalDate EndsAtEvent;
+    private LocalDate beginsAtEvent;
+    private LocalDate endsAtEvent;
 
     //NoSQL
     private Integer idAssociation;
@@ -34,4 +36,6 @@ public class Event implements Serializable {
 
     @OneToMany(mappedBy="event")
     private Set<Reservation> ReservationsEvent;
+
+
 }

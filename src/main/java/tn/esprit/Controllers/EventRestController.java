@@ -1,43 +1,70 @@
 package tn.esprit.Controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.Entities.Event;
 import tn.esprit.Services.IEventService;
 
+
+import java.awt.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
-
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@CrossOrigin("*")
 @AllArgsConstructor
+@RequestMapping("/events")
+
 public class EventRestController {
-    private  final IEventService eventService;
+    IEventService iEventService;
 
-    // http://localhost:8082/all-events
-    @GetMapping("/all-events")
-    public List<Event> getEvents() {
-        return eventService.retrieveAll();
+    @PostMapping("/addEvent")
+    public Event addEvent(@RequestBody Event d){
+        Event event = iEventService.addEvent(d);
+        return event;
     }
 
-    // http://localhost:8082/add-event
-    @PostMapping("/add-event")
-    public Event addEvent(@RequestBody Event p) {
-        return eventService.addEvent(p);
+    @PutMapping("/updateEvent")
+    public Event updateEvent(@RequestBody Event d){
+        Event event = iEventService.updateEvent(d);
+        return event;
     }
 
-    // http://localhost:8082/edit-event
-
-    @PutMapping("/edit-event/{id}")
-    public Event editEvent(@PathVariable("id") Long eventId, @RequestBody Event p) {
-        // use eventId to retrieve and update the event
-        return eventService.editEvent(p);
+    @DeleteMapping("deleteEvent/{id_event}")
+    public void deleteEvent(@PathVariable("id_event") Integer IdEvent){
+        iEventService.deleteEvent(IdEvent);
     }
 
 
-    // http://localhost:8082/delet-event/id
-    @DeleteMapping("/delete-event/{idEvent}")
-    public void deleteEvent(@PathVariable("idEvent") Long id) {
-        eventService.deleteEvent(id);
+
+
+    @GetMapping("/retrieveAllEvents")
+    public List<Event> retrieveAllEvents(){
+        List<Event> listEvents = iEventService.retrieveAllEvents();
+        return listEvents;
     }
+
+    @GetMapping("/retrieveEvent/{id_event}")
+    public Event retrieveEvent(@PathVariable("id_event")Integer IdEvent){
+        return iEventService.retrieveEvent(IdEvent);
+    }
+    @GetMapping("/location/{location}")
+    public List<Event> getEventsByLocation(@PathVariable String location) {
+        return iEventService.retrieveEventsByLocation(location);
+    }
+
+    @GetMapping("/name/{name}")
+    public List<Event> getEventsByName(@PathVariable String name) {
+        return iEventService.retrieveEventsByName(name);
+    }
+    @GetMapping("/eventsByTimeRange")
+    public List<Event> getEventsByTimeRange(@RequestParam("beginsAtEvent") String beginsAtEvent,
+                                            @RequestParam("endsAtEvent") String endsAtEvent) {
+        LocalDateTime beginsAt = LocalDateTime.parse(beginsAtEvent);
+        LocalDateTime endsAt = LocalDateTime.parse(endsAtEvent);
+        return iEventService.retrieveEventsByTimeRange(beginsAt, endsAt);
+    }
+
 }

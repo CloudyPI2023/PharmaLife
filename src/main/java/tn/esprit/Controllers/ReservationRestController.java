@@ -1,45 +1,47 @@
-
 package tn.esprit.Controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import tn.esprit.Entities.Event;
 import tn.esprit.Entities.Reservation;
 import tn.esprit.Services.IReservationService;
+
+
 import java.util.List;
 
-
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@CrossOrigin("*")
 @AllArgsConstructor
+@RequestMapping("/reservations")
+
 public class ReservationRestController {
-    private  final IReservationService reservationService;
+    IReservationService iReservationService;
 
-    // http://localhost:8082/all-reservations
-    @GetMapping("/all-reservations")
-    public List<Reservation> getReservations() {
-        return reservationService.retrieveAll();
+    @PostMapping("/addReservation")
+    public Reservation addReservation(@RequestBody Reservation d){
+        Reservation reservation = iReservationService.addReservation(d);
+        return reservation;
     }
 
-    // http://localhost:8082/add-reservation
-    @PostMapping("/add-reservation")
-    public Reservation addReservation(@RequestBody Reservation p) {
-        return reservationService.addReservation(p);
+    @PutMapping("/updateReservation")
+    public Reservation updateReservation(@RequestBody Reservation d){
+        Reservation reservation = iReservationService.updateReservation(d);
+        return reservation;
     }
 
-    // http://localhost:8082/edit-reservation
-
-    @PutMapping("/edit-reservation/{id}")
-    public Reservation editReservation(@PathVariable("id") Long reservationId, @RequestBody Reservation p) {
-        // use eventId to retrieve and update the event
-        return reservationService.editReservation(p);
+    @DeleteMapping("deleteReservation/{id_reservation}")
+    public void deleteReservation(@PathVariable("id_reservation") Integer IdReservation){
+        iReservationService.deleteReservation(IdReservation);
     }
 
 
-    // http://localhost:8082/delet-reservation/id
-    @DeleteMapping("/delete-reservation/{idReservation}")
-    public void deleteReservation(@PathVariable("idReservation") Long id) {
-        reservationService.deleteReservation(id);
+
+
+    @GetMapping("/retrieveAllReservations")
+    public List<Reservation> retrieveAllReservations(){
+        List<Reservation> listReservations = iReservationService.retrieveAllReservations();
+        return listReservations;
     }
+
+
+
 }

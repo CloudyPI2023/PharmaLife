@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
+import java.net.Inet4Address;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -29,8 +31,8 @@ public class Purchase implements Serializable {
     @Enumerated(EnumType.STRING)
     private PurchaseType purchaseType;
 
-    @OneToOne
-    private Command commandPurchase;
+//    @OneToOne
+//    private Order orderPurchase;
 
     @ManyToOne
     User userPurchase;

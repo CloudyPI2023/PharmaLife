@@ -1,4 +1,4 @@
 package tn.esprit.Repositories;
 
-public interface CommentRepository {
+public class CommentRepository {
 }

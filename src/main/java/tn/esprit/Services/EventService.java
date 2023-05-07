@@ -1,68 +1,63 @@
 package tn.esprit.Services;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import tn.esprit.Entities.Event;
+import tn.esprit.Entities.*;
 import tn.esprit.Repositories.EventRepository;
+import tn.esprit.Repositories.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 
-@AllArgsConstructor
-@Slf4j
 @Service
-public class EventService implements  IEventService {
-    private final EventRepository eventRepository;
+@AllArgsConstructor
+public class EventService implements IEventService {
+    EventRepository eventRepository;
+    UserRepository userRepository;
+    @Override
+    public Event addEvent(Event d) {
 
-   // @Override
-    //  public Event addEvent(Event p) {
-    //  if (p.getNameEvent() == null || p.getNameEvent().isEmpty()) {
-    //     throw new IllegalArgumentException("Event must have a name !");
-    //   }
-    //   try {
-    //     return eventRepository.save(p);
-    //} catch (Exception e) {
-    //   throw new RuntimeException("Failed to add Event", e);
-    //   }
-    //   }
+        return eventRepository.save(d);
+    }
 
     @Override
-    public Event addEvent(Event p) {
+    public Event updateEvent(Event d) {
+        return eventRepository.save(d);
+    }
 
-            return eventRepository.save(p);
-
+    @Override
+    public void deleteEvent(Integer idEvent) {
+        eventRepository.deleteById(idEvent);
     }
 
 
 
     @Override
-    public Event editEvent(Event p)  throws RuntimeException {
-
-        if (p.getIdEvent() == null) {
-            throw new IllegalArgumentException("Event ID cannot be null");
-        }
-        try {
-            return eventRepository.save(p);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to update product", e);
-        }
+    public List<Event> retrieveAllEvents() {
+        return (List<Event>) eventRepository.findAll();
     }
+
     @Override
-    public void deleteEvent(Long idEvent) {
-        Optional<Event> event = eventRepository.findById(idEvent);
-
-        event.ifPresent(p -> {
-            eventRepository.delete(p);
-            log.info("Event with id " + idEvent + " has been deleted");
-        });
-
+    public Event retrieveEvent(Integer idEvent) {
+        return eventRepository.findById(idEvent).get();
     }
+
     @Override
-    public List<Event> retrieveAll() {
-        return eventRepository.findAll();
+    public List<Event> retrieveEventsByLocation(String location) {
+        return eventRepository.findByLocationEvent(location);
     }
+
+    @Override
+    public List<Event> retrieveEventsByName(String name) {
+        return eventRepository.findByNameEvent(name);
+    }
+
+    @Override
+    public List<Event> retrieveEventsByTimeRange(LocalDateTime beginsAtEvent, LocalDateTime endsAtEvent) {
+        return eventRepository.findByBeginsAtEventBetween(beginsAtEvent, endsAtEvent);
+    }
+
 
 
 }

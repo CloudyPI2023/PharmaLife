@@ -25,7 +25,6 @@ public class Product implements Serializable {
     private Integer idProduct;
     private String ReferenceProduct;
     private String NameProduct;
-    private String ImageProduct;
     private String DescriptionProduct;
     private Float PriceProduct;
     private Integer QuantityProduct;

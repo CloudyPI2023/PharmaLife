@@ -1,6 +1,10 @@
 package tn.esprit.Entities;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,20 +17,29 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table( name = "Reservation")
-@Builder
 public class Reservation implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idReservation")
     private Integer idReservation;
-    private LocalDate DateReservation;
+    private LocalDate dateReservation;
+
+
+    private Integer codeReservation ;
+
+        //nosql
+    private Integer idEvent;
+    private Integer idUser;
+
 
     @ManyToOne
-    User userReservation;
 
-    @ManyToOne
-    Event event;
+   User userReservation;
+
+  @ManyToOne
+  @JsonIgnore
+  Event event;
 
 
 }

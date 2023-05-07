@@ -1,4 +1,4 @@
 package tn.esprit.Repositories;
 
-public interface GiftRepository {
+public class GiftRepository {
 }
