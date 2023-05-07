@@ -42,6 +42,5 @@ public class Product implements Serializable {
     @OneToMany(mappedBy="product")
     private Set<Reclamation> ReclamationsProduct;
 
-    @OneToMany(mappedBy="productComment")
-    private Set<Comment> CommentProduct;
+
 }

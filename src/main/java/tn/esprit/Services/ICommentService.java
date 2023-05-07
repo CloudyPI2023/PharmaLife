@@ -1,7 +1,14 @@
 package tn.esprit.Services;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import tn.esprit.Entities.Comment;
+import java.util.List;
 
-public interface ICommentService extends JpaRepository<Comment, Long> {
+public interface ICommentService {
+    Comment editComment(Comment c)  throws RuntimeException;
+
+    Comment addComment(Comment c);
+
+    void deleteComment(Long idComment);
+
+    List<Comment> retrieveAll();
 }

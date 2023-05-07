@@ -1,8 +1,8 @@
 package tn.esprit.Services;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import tn.esprit.Entities.Article;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface IArticleService {
@@ -13,4 +13,12 @@ public interface IArticleService {
     void deleteArticle(Long idArticle);
 
     List<Article> retrieveAll();
+
+    HashMap<String, Integer> ArticlesByUsers();
+
+    Article findArticleById(Long id);
+
+
+
+   // List<Article> retrieveArticlesByName(String nameArticle);
 }
