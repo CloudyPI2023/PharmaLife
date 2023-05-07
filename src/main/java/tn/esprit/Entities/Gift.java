@@ -35,7 +35,7 @@ public class Gift implements Serializable {
     private Integer idUser;
     //private Integer idProduct;
 
-    private Integer quantityGift;
+    //private Integer quantityGift;
 
     @ManyToMany(cascade = CascadeType.REMOVE)
     private List<Product> ProductsGift;
