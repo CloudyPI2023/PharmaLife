@@ -3,39 +3,60 @@ package tn.esprit.Controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.Entities.Command;
-import tn.esprit.Services.CommandService;
 import tn.esprit.Services.ICommandService;
 
+import java.util.HashMap;
 import java.util.List;
 
-
-@CrossOrigin(origins = "http://localhost:8082")
 @RestController
+@CrossOrigin("*")
 @AllArgsConstructor
+@RequestMapping("/commands")
+
 public class CommandRestController {
-    private  final ICommandService commandService;
+    ICommandService iCommandService;
 
-    // http://localhost:8081/PharmaLife/all-commands
-    @GetMapping("/all-commands")
-    public List<Command> getCommands() {
-        return commandService.retrieveAll();
+    @PostMapping("/add-command")
+    public Command addCommand(@RequestBody Command d){
+        Command command = iCommandService.addCommand(d);
+        return command;
     }
 
-    // http://localhost:8081/PharmaLife/add-Command
-    @PostMapping("/add-commands")
-    public Command addCommand(@RequestBody Command p) {
-        return commandService.addCommand(p);
+    @PutMapping("/editCommand")
+    public Command updateCommand(@RequestBody Command d){
+        Command command = iCommandService.updateCommand(d);
+        return command;
     }
 
-    // http://localhost:8081/PharmaLife/edit-command
-    @PutMapping("/edit-commands")
-    public Command editProduct(@RequestBody Command p) {
-        return commandService.editCommand(p);
+    @DeleteMapping("/delete-command/{idCommand}")
+    public void deleteCommand(@PathVariable("idCommand") Integer IdCommand){
+        iCommandService.deleteCommand(IdCommand);
     }
 
-    // http://localhost:8081/PharmaLife/delet-command/id
-    @DeleteMapping("/delete-commands/{idCommand}")
-    public void deleteProduct(@PathVariable("idCommand") Long id) {
-        commandService.deleteCommand(id);
+    @GetMapping("/getMyCommand/{idUser}")
+    public List<Command> getCommandByUser (@PathVariable("idUser") Integer idUser)
+    {
+        return iCommandService.retrieveMyCommand(idUser);
+
     }
+
+
+    @GetMapping("/retrieveAllCommand")
+    public List<Command> retrieveAllCommand(){
+        List<Command> listCommand = iCommandService.retrieveAllCommand();
+        return listCommand;
+    }
+
+    @GetMapping("/retrieveCommand/{idCommand}")
+    public Command retrieveCommand(@PathVariable("idCommand")Integer IdCommand){
+        return iCommandService.retrieveCommand(IdCommand);
+    }
+
+    @GetMapping("/statisticsCommandStatus")
+    HashMap<String, Integer> CommandByStatus(){
+        return iCommandService.CommandByStatus();
+    }
+
+
+
 }

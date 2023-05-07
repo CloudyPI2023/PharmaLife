@@ -3,39 +3,58 @@ package tn.esprit.Controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.Entities.Purchase;
-import tn.esprit.Services.PurchaseService;
 import tn.esprit.Services.IPurchaseService;
 
+import java.util.HashMap;
 import java.util.List;
 
-
-@CrossOrigin(origins = "http://localhost:8082")
 @RestController
+@CrossOrigin("*")
 @AllArgsConstructor
+@RequestMapping("/purchases")
+
 public class PurchaseRestController {
-    private  final IPurchaseService purchaseService;
+    IPurchaseService iPurchaseService;
 
-    // http://localhost:8081/all-Purchase
-    @GetMapping("/all-purchases")
-    public List<Purchase> getPurchase() {
-        return purchaseService.retrieveAll();
+    @PostMapping("/addPurchase")
+    public Purchase addPurchase(@RequestBody Purchase d){
+        Purchase purchase = iPurchaseService.addPurchase(d);
+        return purchase;
     }
 
-    // http://localhost:8081/add-Purchase
-    @PostMapping("/add-purchases")
-    public Purchase addPurchase(@RequestBody Purchase p) {
-        return purchaseService.addPurchase(p);
+    @PutMapping("/updatePurchase")
+    public Purchase updatePurchase(@RequestBody Purchase d){
+        Purchase purchase = iPurchaseService.updatePurchase(d);
+        return purchase;
     }
 
-    // http://localhost:8081/edit-Purchase
-    @PutMapping("/edit-purchases")
-    public Purchase editPurchase(@RequestBody Purchase p) {
-        return purchaseService.editPurchase(p);
+    @DeleteMapping("/deletePurchase/{idPurchase}")
+    public void deletePurchase(@PathVariable("idPurchase") Integer idPurchase){
+        iPurchaseService.deletePurchase(idPurchase);
     }
 
-    // http://localhost:8081/delet-Purchase/id
-    @DeleteMapping("/delete-purchase/{idPurchase}")
-    public void deletePurchase(@PathVariable("idPurchase") Long id) {
-        purchaseService.deletePurchase(id);
+    @GetMapping("/getMyPurchase/{idUser}")
+    public List<Purchase> getPurchasesByUser (@PathVariable("idUser") Integer idUser)
+    {
+        return iPurchaseService.retrieveMyPurchase(idUser);
+
     }
+
+
+    @GetMapping("/retrieveAllPurchases")
+    public List<Purchase> retrieveAllPurchases(){
+        List<Purchase> listPurchases = iPurchaseService.retrieveAllPurchases();
+        return listPurchases;
+    }
+
+    @GetMapping("/retrievePurchase/{idPurchase}")
+    public Purchase retrievePurchase(@PathVariable("idPurchase")Integer idPurchase){
+        return iPurchaseService.retrievePurchase(idPurchase);
+    }
+
+  /* @GetMapping("/statisticsDonationStatus")
+    HashMap<String, Integer> DonationsByStatus(){
+        return iPurchaseService.DonationByStatus();
+    } */
+
 }

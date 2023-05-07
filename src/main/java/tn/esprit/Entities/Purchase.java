@@ -21,15 +21,16 @@ public class Purchase implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idPurchase")
     private Integer idPurchase;
-    private Integer QuantityPurchase;
-    private Integer TotalPurchase;
+    private Integer Quantity;
+    private Float Price_unit;
+    private Float TotalPurchase;
     private LocalDate DatePurchase;
-    private float FinalPricePurchase;
+    private Float FinalPricePurchase;
     @Enumerated(EnumType.STRING)
     private PurchaseType purchaseType;
 
-    @OneToOne
-    private Command CommandPurchase;
+
+    private Integer CommandPurchaseId;
 
     @ManyToOne
     User userPurchase;

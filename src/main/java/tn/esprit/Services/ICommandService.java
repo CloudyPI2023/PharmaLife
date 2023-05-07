@@ -1,16 +1,27 @@
 package tn.esprit.Services;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import tn.esprit.Entities.Command;
+import tn.esprit.Entities.Request;
+import tn.esprit.Entities.User;
 
+import java.util.HashMap;
 import java.util.List;
 
-public interface ICommandService  {
-    Command addCommand(Command p);
+public interface ICommandService {
 
-    Command editCommand(Command p)  throws RuntimeException;
+    Command addCommand (Command d);
+    Command updateCommand (Command d);
+    void deleteCommand (Integer idCommand);
+    List<Command> retrieveMyCommand(Integer idUser);
+    HashMap<String, Integer> CommandByStatus();
 
-    void deleteCommand(Long idCommand);
 
-    List<Command> retrieveAll();
+    List<Command> retrieveAllCommand();
+    Command retrieveCommand(Integer idCommand);
+
+
+
+
+
+
 }

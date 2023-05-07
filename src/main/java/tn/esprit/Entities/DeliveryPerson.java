@@ -25,8 +25,6 @@ public class DeliveryPerson implements Serializable {
     private String LocationDelivery;
     //NoSQL
     private Integer idUser;
-
-    @OneToMany(mappedBy="deliveryPerson")
-    private Set<Command> CommandsD;
+    private Integer CommandsID;
 
 }

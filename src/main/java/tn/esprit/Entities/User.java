@@ -29,10 +29,10 @@ public class User implements Serializable {
     private String Adress;
     private String City;
     private String Password;
-    private Boolean IsVerified;
-    private String Token;
+
     @Enumerated(EnumType.STRING)
     private Role role;
+
 
 
     @OneToMany(mappedBy="userReservation")
@@ -47,6 +47,9 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy="userProduct")
     private Set<Product> ProductsUser;
+
+    @OneToMany(mappedBy="userCommand")
+    private Set<Command> CommandUser;
 
 
 }
