@@ -1,49 +1,60 @@
 package tn.esprit.Entities;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
-@Table( name = "Product")
 public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idProduct")
-    private Integer idProduct;
+    private int idProduct;
     private String ReferenceProduct;
     private String NameProduct;
-    private Strig ImageProduct;
+    private String ImageProduct;
     private String DescriptionProduct;
     private Float PriceProduct;
     private Integer QuantityProduct;
-    private Integer AvailibilityProduct;
-    private LocalDate ExpirationDateProduct;
+    private Integer expired;
+   // private Integer AvailabilityProduct;
+    private LocalDate creationDate;
+    private LocalDate expirationDateProduct;
+
+
+    //noSQL
+    private Integer idCategory;
+    @ManyToOne(fetch = FetchType.LAZY)
+    //@JsonIgnore
+    private User userProduct;
 
     @ManyToOne
-    User userProduct;
+   // @JsonIgnore
+    private Category categoryProduct;
 
-    @ManyToOne
-    Category categoryProduct;
+    @ManyToMany(mappedBy = "ProductsGift" , cascade = CascadeType.ALL)
+    @JsonIgnore
+    List<Gift> gifts;
 
-    @ManyToOne
-    Gift giftProduct;
 
     @OneToMany(mappedBy="product")
+    @JsonIgnore
     private Set<Reclamation> ReclamationsProduct;
 
     @OneToMany(mappedBy="productComment")
+
     private Set<Comment> CommentProduct;
 }

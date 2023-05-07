@@ -1,5 +1,6 @@
 package tn.esprit.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,22 +17,25 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table( name = "Reclamation")
-public class Reclamation implements Serializable {
+public class Reclamation implements Serializable{
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idReclamation")
-    private Integer idReclamation;
+
+    private int idReclamation;
     private String DescriptionReclamation;
     private LocalDate DateReclamation;
     //NoSQL
     private Integer idUser;
+    private Integer idProduct;
+    private Boolean archived;
+    @ManyToOne(cascade = CascadeType.ALL)
+    //@JsonIgnore
+    private User userProduct;
 
-
-    @ManyToOne
-    Product product;
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Product product;
 
 
 }
