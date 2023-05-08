@@ -17,9 +17,9 @@ public class CommandRestController {
     ICommandService iCommandService;
 
     @PostMapping("/add-command")
-    public Command addCommand(@RequestBody Command d){
-        Command command = iCommandService.addCommand(d);
-        return command;
+    public String addCommand(@RequestBody Command d){
+       // Command command = iCommandService.addCommand(d);
+        return iCommandService.addCommand(d);
     }
 
     @PutMapping("/editCommand")
@@ -57,6 +57,10 @@ public class CommandRestController {
         return iCommandService.CommandByStatus();
     }
 
+    @PostMapping("/addCommandByMail")
+    public String addCommandByMail(@RequestBody Command d){
 
+        return iCommandService.addCommandByMail(d);
+    }
 
 }

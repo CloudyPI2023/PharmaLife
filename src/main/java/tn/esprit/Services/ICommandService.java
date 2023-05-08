@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ICommandService {
 
-    Command addCommand (Command d);
+    String addCommand (Command d);
     Command updateCommand (Command d);
     void deleteCommand (Integer idCommand);
     List<Command> retrieveMyCommand(Integer idUser);
@@ -18,10 +18,8 @@ public interface ICommandService {
 
     List<Command> retrieveAllCommand();
     Command retrieveCommand(Integer idCommand);
+    String addCommandByMail(Command d);
 
 
-
-
-
-
+    String sendSimpleMailForCommand(String email);
 }
