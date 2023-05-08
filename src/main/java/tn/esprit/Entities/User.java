@@ -136,14 +136,21 @@ public class User implements Serializable, UserDetails {
     private Set<Donation> DonationsUser;
 
     @OneToMany(mappedBy="userArticle")
+    @JsonIgnore
     private Set<Article> ArticleUser;
+
+
     @JsonIgnore
     @OneToMany(mappedBy="userProduct")
     private Set<Product> ProductsUser;
 
     @OneToMany(mappedBy="userAssociation")
+    @JsonIgnore
     private Set<Association> AssociationsUser;
 
+
+    @OneToMany(mappedBy="userCommand")
+    private Set<Command> CommandUser;
 
 ///constructeur
 public User(String firstName, String lastName, String email, String phoneNumber, LocalDate birthDate, String address,
@@ -162,6 +169,7 @@ public User(String firstName, String lastName, String email, String phoneNumber,
 
     //
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority =
                 new SimpleGrantedAuthority(role.name());

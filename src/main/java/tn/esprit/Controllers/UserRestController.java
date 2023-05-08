@@ -1,10 +1,13 @@
 package tn.esprit.Controllers;
 
 import lombok.AllArgsConstructor;
+import org.hibernate.annotations.NotFound;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.webjars.NotFoundException;
 import tn.esprit.Entities.Role;
 import tn.esprit.Entities.User;
 import tn.esprit.Services.IUserService;
@@ -55,7 +58,6 @@ public class UserRestController {
 
 
     @PutMapping("/update-User")
-    //@PreAuthorize("hasRole('Patient')")
     @ResponseBody
     public void updateUser(@RequestBody User user) {
         userService.updateUser(user);

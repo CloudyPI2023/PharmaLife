@@ -34,9 +34,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         ///EMNA
         http.authorizeRequests().antMatchers("/login/**","/registration/**").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/User/**").permitAll();
-        //    http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/User/**").hasAnyAuthority("Admin","Patient");
-        // http.authorizeRequests().antMatchers(PUT,"/User/update-User").hasAnyAuthority("Patient");
+        //http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/User/**").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/User/**").hasAnyAuthority("Admin","Patient");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT,"/User/update-User").hasAnyAuthority("Patient");
         http.authorizeRequests().antMatchers(HttpMethod.GET ,"/DeliveryPerson/**").hasAnyAuthority("Admin");
 
 
@@ -65,6 +65,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/events/***").hasAnyAuthority("Admin","Patient");
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/events/***").hasAnyAuthority("Admin");
         http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/events/***").hasAnyAuthority("Admin");
+
+        ///Elyesss
+        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/Article/***").hasAnyAuthority("Admin","Patient","Donator","AssociationMember","DrugsProvider");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/Article/***").hasAnyAuthority("Admin","Patient","Donator","AssociationMember","DrugsProvider");
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/Comment/***").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/Comment/***").hasAnyAuthority("Admin");
+
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/Comment/***").hasAnyAuthority("Patient","Donator","AssociationMember","DrugsProvider");
+
+
+        //Fakher
+        http.authorizeRequests().antMatchers(HttpMethod.PUT,"/commands/***").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/commands/***").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/commands/***").hasAnyAuthority("Admin");
+
+        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/purchases/***").hasAnyAuthority("Admin");
+
+
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/commands/***").hasAnyAuthority("Patient","Donator","AssociationMember","DrugsProvider");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/purchases/***").hasAnyAuthority("Patient","Donator","AssociationMember","DrugsProvider");
 
 
 

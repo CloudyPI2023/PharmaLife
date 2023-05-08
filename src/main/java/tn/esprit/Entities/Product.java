@@ -54,7 +54,4 @@ public class Product implements Serializable {
     @JsonIgnore
     private Set<Reclamation> ReclamationsProduct;
 
-    @OneToMany(mappedBy="productComment")
-
-    private Set<Comment> CommentProduct;
 }
