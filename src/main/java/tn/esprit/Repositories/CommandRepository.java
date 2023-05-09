@@ -15,4 +15,8 @@ public interface CommandRepository extends CrudRepository<Command, Integer> {
     @Query("SELECT r FROM Command r WHERE r.userCommand.idUser =:user")
     User findCommandByUserCommand (@Param("user") int user);
 
+
+    @Query("select d from Command d inner join d.userCommand ee where ee.idUser = ?1")
+    List<Command> getCommandsByUser(Integer idUser);
+
 }

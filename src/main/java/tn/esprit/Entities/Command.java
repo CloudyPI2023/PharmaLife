@@ -34,7 +34,7 @@ public class Command implements Serializable {
     private List<Integer> productList;
 
     @ManyToOne
-    // @JsonIgnore
+     @JsonIgnore
     User userCommand;
 
 

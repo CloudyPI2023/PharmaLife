@@ -22,4 +22,8 @@ public interface ICommandService {
 
 
     String sendSimpleMailForCommand(String email);
+
+    String assignCommandToProduct(Command r, Integer idProduct, Integer idUser);
+
+    List<Command> retrieveMyCommands(Integer idUser);
 }
