@@ -1,12 +1,16 @@
 package tn.esprit.Controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.Entities.Reservation;
 import tn.esprit.Services.IReservationService;
+import tn.esprit.Services.ReservationService;
 
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -21,6 +25,8 @@ public class ReservationRestController {
         Reservation reservation = iReservationService.addReservation(d);
         return reservation;
     }
+
+
 
     @PutMapping("/updateReservation")
     public Reservation updateReservation(@RequestBody Reservation d){
@@ -41,6 +47,7 @@ public class ReservationRestController {
         List<Reservation> listReservations = iReservationService.retrieveAllReservations();
         return listReservations;
     }
+
 
 
 
