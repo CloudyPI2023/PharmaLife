@@ -241,7 +241,7 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
 
-    @Scheduled(cron = "0 */6 * * * *") //chaque 6 min
+    @Scheduled(cron = "0 * */6 * * *") //chaque 6 min
     public void unlockExpiredUsers() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expirationTime = now.minusMinutes(5);

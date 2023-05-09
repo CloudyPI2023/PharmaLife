@@ -37,8 +37,9 @@ public class Product implements Serializable {
 
     //noSQL
     private Integer idCategory;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    //@JsonIgnore
     private User userProduct;
 
     @ManyToOne

@@ -148,7 +148,6 @@ public class User implements Serializable, UserDetails {
     @JsonIgnore
     private Set<Association> AssociationsUser;
 
-
     @OneToMany(mappedBy="userCommand")
     private Set<Command> CommandUser;
 

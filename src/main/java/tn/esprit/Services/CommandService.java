@@ -12,6 +12,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -127,10 +128,21 @@ public class CommandService implements ICommandService {
         }
     }
 
+    @Override
+    public String assignCommandToProduct(Command r, Integer idProduct, Integer idUser) {
+        User u = userRepository.findById(idUser).get();
+        r.setUserCommand(u);
+        r.setProductList(Collections.singletonList(idProduct));
+        commandRepository.save(r);
+        this.sendSimpleMailForCommand("fakher.karouida@esprit.tn");
+        return "add command";
+    }
 
-
-
-
+    @Override
+    public List<Command> retrieveMyCommands(Integer idUser) {
+        User user = userRepository.findById(idUser).orElse(null) ;
+        return commandRepository.getCommandsByUser(user.getIdUser());
+    }
 
 
 }
